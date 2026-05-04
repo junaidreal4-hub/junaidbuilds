@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  * { box-sizing: border-box; }
+}
+
+@layer utilities {
+  .section-pad { @apply py-20 md:py-28; }
+  .container-width { @apply max-w-6xl mx-auto px-6 md:px-10; }
+}
