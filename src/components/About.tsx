@@ -1,107 +1,64 @@
-const skills = [
-  'Next.js', 'React', 'TypeScript', 'Tailwind CSS',
-  'FastAPI', 'Python', 'PostgreSQL', 'Vercel',
-  'HTML / CSS', 'JavaScript', 'Node.js', 'Figma',
-]
-
-const stats = [
-  { num: '5+',  label: 'Websites Built'   },
-  { num: '3',   label: 'Live Client Sites' },
-  { num: '2+',  label: 'Years Building'    },
-  { num: '48h', label: 'Avg Response Time' },
+const experience = [
+  {
+    period: '2026 – Now',   role: 'Freelance Web Developer',   place: 'junaidbuilds.com',
+    desc: 'Building custom websites and web apps for businesses in Berlin and globally. React, Next.js, full-stack.',
+  },
+  {
+    period: '2025 – Now',   role: 'Full-Stack Developer',       place: 'Strebo (Personal Project)',
+    desc: 'Designed and built a full-stack SaaS app with Next.js, FastAPI, PostgreSQL, and OpenAI API for AI-powered job tracking.',
+  },
+  {
+    period: '2024 – 2025',  role: 'MS Data Analytics Student',  place: 'University, Berlin',
+    desc: 'Studying big data systems, Apache Spark, Python data engineering, and machine learning pipelines.',
+  },
+  {
+    period: '2023 – 2024',  role: 'Frontend Developer',         place: 'Freelance / PeoplePerHour',
+    desc: 'Delivered corporate sites, portfolios, and landing pages. React, Tailwind CSS, Vite.',
+  },
+  {
+    period: '2022 – 2023',  role: 'Content & Social Manager',   place: 'Various Clients',
+    desc: 'Managed digital marketing campaigns, social channels, and content strategy for small businesses.',
+  },
 ]
 
 export default function About() {
   return (
-    <section id="about" className="section-pad bg-surface">
+    <section id="about" className="section-pad bg-canvas">
       <div className="container-width">
 
-        <p className="label mb-16">About</p>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-28">
-
-          {/* Left */}
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
           <div>
-            <h2 className="font-serif-display text-[clamp(2.5rem,5vw,4.5rem)] text-heading leading-none mb-10">
-              Berlin-based.<br />Client-focused.
+            <p className="label mb-3">/ Background</p>
+            <h2 className="font-sans font-bold text-[clamp(2rem,5vw,4rem)] text-heading leading-none tracking-tight">
+              Experience
             </h2>
-
-            <div className="space-y-5 text-body text-sm leading-relaxed mb-10">
-              <p>
-                I&apos;m Junaid — a full-stack developer based in Berlin. I specialise in building
-                websites and web apps that look great, load fast, and actually help businesses grow.
-              </p>
-              <p>
-                I work directly with clients — no middlemen, no agency overhead. That means faster
-                turnaround, better communication, and fairer pricing.
-              </p>
-              <p>
-                Based in <span className="text-heading">Berlin, Germany</span>. Available for remote
-                projects worldwide.
-              </p>
-            </div>
-
-            <div className="flex flex-wrap gap-2 mb-10">
-              {skills.map((s) => (
-                <span key={s} className="label border border-border px-3 py-1.5">{s}</span>
-              ))}
-            </div>
-
-            <div className="flex flex-wrap gap-4">
-              <a
-                href="#contact"
-                className="label border border-heading text-heading px-6 py-3 hover:bg-heading hover:text-canvas transition-all duration-200"
-              >
-                Let&apos;s Work Together
-              </a>
-              <a
-                href="https://github.com/junaidreal4-hub"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="label border border-border px-6 py-3 hover:border-heading hover:text-heading transition-all duration-200"
-              >
-                GitHub
-              </a>
-            </div>
           </div>
+          <p className="text-sm leading-relaxed max-w-xs text-subtle">Based in Berlin, Germany. Available for remote work worldwide.</p>
+        </div>
 
-          {/* Right */}
-          <div className="flex flex-col gap-12">
-            {/* Stats */}
-            <div className="grid grid-cols-2 gap-8">
-              {stats.map((s) => (
-                <div key={s.label} className="border-t border-border pt-6">
-                  <div className="font-serif-display text-4xl text-heading mb-2">{s.num}</div>
-                  <div className="label">{s.label}</div>
-                </div>
-              ))}
-            </div>
+        {/* Big italic statement — like nikolaradeski.com */}
+        <p className="font-sans font-semibold text-heading text-xl md:text-2xl leading-relaxed max-w-3xl mb-20 italic">
+          I work with founders, startups, and businesses based on strategy and
+          execution. I set one goal, cut the noise, and move. When the job is done,
+          the result is live and measured — not just designed.
+        </p>
 
-            {/* Links card */}
-            <div className="border border-border p-8">
-              <p className="label mb-6">Find me on</p>
-              <div className="flex flex-col">
-                <a
-                  href="https://github.com/junaidreal4-hub"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-between group border-b border-border py-4"
-                >
-                  <span className="label group-hover:text-heading transition-colors">GitHub</span>
-                  <span className="label group-hover:text-heading transition-colors">&rarr;</span>
-                </a>
-                <a
-                  href="https://linkedin.com/in/junaid412"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-between group py-4"
-                >
-                  <span className="label group-hover:text-heading transition-colors">LinkedIn</span>
-                  <span className="label group-hover:text-heading transition-colors">&rarr;</span>
-                </a>
+        <div className="divide-y divide-border">
+          {experience.map((e) => (
+            <div
+              key={e.role}
+              className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-4 md:gap-16 py-10 group hover:bg-surface transition-colors duration-200 md:-mx-6 md:px-6 rounded-xl"
+            >
+              <div>
+                <div className="label mb-1">{e.period}</div>
+                <div className="label text-heading font-bold">{e.place}</div>
+              </div>
+              <div>
+                <h3 className="font-sans font-bold text-xl text-heading mb-2 tracking-tight">{e.role}</h3>
+                <p className="text-sm leading-relaxed text-subtle">{e.desc}</p>
               </div>
             </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>
