@@ -2,43 +2,42 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap');
-
 @layer base {
   html {
     scroll-behavior: smooth;
-    background-color: #0a0a0a;
-    color: #999999;
+    background-color: #ffffff;
+    color: #444444;
   }
   * { box-sizing: border-box; }
-  ::selection { background: #f0f0ee; color: #0a0a0a; }
-  ::-webkit-scrollbar { width: 3px; }
-  ::-webkit-scrollbar-track { background: #0a0a0a; }
-  ::-webkit-scrollbar-thumb { background: #222; border-radius: 2px; }
+
+  ::selection {
+    background-color: #111111;
+    color: #ffffff;
+  }
+
+  ::-webkit-scrollbar        { width: 3px; }
+  ::-webkit-scrollbar-track  { background: #ffffff; }
+  ::-webkit-scrollbar-thumb  { background: #ccc; border-radius: 2px; }
 }
 
 @layer utilities {
   .section-pad     { @apply py-28 md:py-40; }
   .container-width { @apply max-w-6xl mx-auto px-6 md:px-10; }
 
-  /* Small mono label */
+  /* Mono label — same style as nikolaradeski.com */
   .label {
     @apply font-mono text-[10px] tracking-[0.18em] uppercase text-muted;
   }
 
-  /* Display serif — used for hero name */
-  .font-serif-display {
-    font-family: 'DM Serif Display', serif;
-    font-style: italic;
-  }
-
-  /* Hover slide-up text effect (duplicate text trick) */
+  /* Hover slide-up nav effect */
   .hover-slide {
-    @apply relative overflow-hidden inline-flex flex-col h-[1.1em];
+    @apply relative overflow-hidden inline-flex flex-col;
+    height: 1.15em;
+    line-height: 1.15em;
   }
   .hover-slide span {
     @apply block transition-transform duration-300 ease-in-out;
-    line-height: 1.1em;
+    line-height: 1.15em;
   }
   .hover-slide:hover span {
     transform: translateY(-100%);
