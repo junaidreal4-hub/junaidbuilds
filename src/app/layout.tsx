@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter, JetBrains_Mono, Syne } from 'next/font/google'
+import { Inter, JetBrains_Mono, DM_Serif_Display } from 'next/font/google'
 import './globals.css'
 
 const inter = Inter({
@@ -13,10 +13,11 @@ const mono = JetBrains_Mono({
   weight: ['400', '700'],
 })
 
-const syne = Syne({
+const display = DM_Serif_Display({
   subsets: ['latin'],
-  variable: '--font-syne',
-  weight: ['700', '800'],
+  variable: '--font-display',
+  weight: '400',
+  style: ['normal', 'italic'],
 })
 
 export const metadata: Metadata = {
@@ -24,7 +25,7 @@ export const metadata: Metadata = {
   description:
     'I build fast, bespoke websites and web applications for Berlin businesses and international clients. No agency overhead. React, Next.js, full-stack.',
   keywords:
-    'freelance web developer Berlin, website designer Berlin, Next.js developer Berlin, React developer Berlin, full-stack developer Berlin',
+    'freelance web developer Berlin, website designer Berlin, Next.js developer Berlin, React developer Berlin',
   openGraph: {
     title: 'Freelance Web Developer Berlin — Junaid Builds',
     description:
@@ -42,7 +43,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body
         className={`${
           inter.variable
-        } ${mono.variable} ${syne.variable} font-sans bg-canvas text-body antialiased`}
+        } ${mono.variable} ${display.variable} font-sans bg-canvas text-body antialiased`}
       >
         {children}
       </body>

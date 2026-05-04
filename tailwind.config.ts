@@ -9,28 +9,26 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--font-inter)', 'sans-serif'],
-        mono: ['var(--font-mono)', 'monospace'],
-        display: ['var(--font-syne)', 'sans-serif'],
+        sans:    ['var(--font-inter)',    'sans-serif'],
+        mono:    ['var(--font-mono)',     'monospace'],
+        display: ['var(--font-display)', 'serif'],
       },
       colors: {
-        canvas:  '#090909',
+        canvas:  '#0a0a0a',
         surface: '#111111',
-        border:  '#1f1f1f',
-        muted:   '#555555',
-        subtle:  '#888888',
-        body:    '#b0b0b0',
+        border:  '#1e1e1e',
+        muted:   '#444444',
+        subtle:  '#666666',
+        body:    '#999999',
         heading: '#f0f0ee',
-        accent:  '#c8ff00',
       },
       animation: {
-        marquee: 'marquee 28s linear infinite',
+        marquee:   'marquee 30s linear infinite',
+        marquee2:  'marquee2 30s linear infinite',
       },
       keyframes: {
-        marquee: {
-          '0%':   { transform: 'translateX(0%)' },
-          '100%': { transform: 'translateX(-50%)' },
-        },
+        marquee:  { '0%': { transform: 'translateX(0%)' },   '100%': { transform: 'translateX(-100%)' } },
+        marquee2: { '0%': { transform: 'translateX(100%)' }, '100%': { transform: 'translateX(0%)' } },
       },
     },
   },

@@ -1,62 +1,66 @@
+'use client'
+import { useState } from 'react'
+
 const services = [
   {
     index: '01',
+    tag: 'Fast Turnaround',
     title: 'Landing Page',
     price: '€800 – €1,500',
     timeline: '3–5 days',
-    desc:
-      'A single, high-converting page to promote your product, service, or event. Mobile-first, fast-loading, SEO-optimised.',
+    desc: 'A single, high-converting page to promote your product, service, or event. Mobile-first, fast-loading, SEO-optimised.',
     features: ['Responsive design', 'Contact / lead form', 'SEO meta tags', 'Vercel deployment'],
   },
   {
     index: '02',
+    tag: 'Most Popular',
     title: 'Business Website',
     price: '€1,200 – €2,500',
     timeline: '1–2 weeks',
-    desc:
-      'A complete multi-page website for your business. Built entirely custom — no Wix, no WordPress templates.',
+    desc: 'A complete multi-page website for your business. Built entirely custom — no Wix, no WordPress templates.',
     features: ['Up to 6 pages', 'Mobile responsive', 'Contact form', 'Google Analytics'],
-    highlight: true,
   },
   {
     index: '03',
+    tag: 'Premium Design',
     title: 'Portfolio / Creative Site',
     price: '€1,500 – €3,000',
     timeline: '1–2 weeks',
-    desc:
-      'For photographers, designers, videographers, and creatives. Cinematic layouts, smooth animations, built to impress.',
+    desc: 'For photographers, designers, videographers, and creatives. Cinematic layouts, smooth animations, built to impress.',
     features: ['Custom animations', 'Gallery / showreel', 'Mobile optimised', 'Fast CDN delivery'],
   },
   {
     index: '04',
+    tag: 'Full Commerce',
     title: 'E-Commerce / Shop',
     price: '€3,000 – €6,000',
     timeline: '3–5 weeks',
-    desc:
-      'A full online store with product listings, cart, checkout, and payment integration.',
+    desc: 'A full online store with product listings, cart, checkout, and payment integration.',
     features: ['Product catalogue', 'Stripe payments', 'Admin dashboard', 'Order management'],
   },
   {
     index: '05',
+    tag: 'Custom Build',
     title: 'Full-Stack Web App',
     price: '€3,000 – €6,000',
     timeline: '4–8 weeks',
-    desc:
-      'Custom web applications with user authentication, database, and backend logic. Built with React and FastAPI.',
+    desc: 'Custom web applications with user authentication, database, and backend logic. Built with React and FastAPI.',
     features: ['User authentication', 'Database + API', 'Cloud deployment', 'Custom logic'],
   },
   {
     index: '06',
+    tag: 'Ongoing',
     title: 'Maintenance & Support',
     price: '€150 – €400 / mo',
-    timeline: 'Ongoing',
-    desc:
-      'Monthly retainer for updates, fixes, performance monitoring, and new feature additions.',
+    timeline: 'Monthly retainer',
+    desc: 'Monthly retainer for updates, fixes, performance monitoring, and new feature additions.',
     features: ['Monthly updates', 'Bug fixes', 'Performance checks', 'Priority support'],
   },
 ]
 
 export default function Services() {
+  const [open, setOpen] = useState<number | null>(0)
+
   return (
     <section id="services" className="section-pad bg-canvas">
       <div className="container-width">
@@ -65,60 +69,65 @@ export default function Services() {
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-20">
           <div>
             <p className="label mb-4">What I Offer</p>
-            <h2 className="heading-xl text-[clamp(2.5rem,5vw,4rem)]">
+            <h2 className="font-serif-display text-[clamp(2.5rem,5vw,4.5rem)] text-heading leading-none">
               Services &amp; Pricing
             </h2>
           </div>
-          <p className="text-body max-w-xs leading-relaxed">
-            Fixed-price packages. No surprise invoices. You know exactly what you&apos;re getting before we start.
+          <p className="text-body max-w-xs leading-relaxed text-sm">
+            Fixed-price packages. No surprise invoices.
+            You know exactly what you&apos;re getting before we start.
           </p>
         </div>
 
-        {/* Services list */}
+        {/* Accordion rows — like nikolaradeski.com skills section */}
         <div className="divide-y divide-border">
-          {services.map((s) => (
-            <div
-              key={s.title}
-              className={`group grid grid-cols-1 md:grid-cols-[80px_1fr_auto] gap-6 md:gap-10 py-10 transition-colors duration-200 ${
-                s.highlight ? 'md:-mx-6 md:px-6 bg-surface' : 'hover:bg-surface'
-              }`}
-            >
-              {/* Index */}
-              <div className="label pt-1">{s.index}</div>
-
-              {/* Content */}
-              <div>
-                <div className="flex flex-wrap items-center gap-4 mb-3">
-                  <h3 className="font-display font-bold text-2xl text-heading">{s.title}</h3>
-                  {s.highlight && (
-                    <span className="label border border-accent text-accent px-2 py-0.5">Most Popular</span>
-                  )}
+          {services.map((s, i) => (
+            <div key={s.title}>
+              <button
+                onClick={() => setOpen(open === i ? null : i)}
+                className="w-full text-left group py-8 flex items-start md:items-center justify-between gap-6 hover:text-heading transition-colors duration-200"
+              >
+                <div className="flex items-start md:items-center gap-6 md:gap-10 flex-1">
+                  <span className="label w-8 shrink-0 pt-0.5">{s.index}</span>
+                  <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-8 flex-1">
+                    <span className="label text-muted">{s.tag}</span>
+                    <span className="font-serif-display text-2xl md:text-3xl text-heading">{s.title}</span>
+                  </div>
                 </div>
-                <p className="text-body leading-relaxed mb-5 max-w-lg">{s.desc}</p>
-                <div className="flex flex-wrap gap-3">
-                  {s.features.map((f) => (
-                    <span
-                      key={f}
-                      className="font-mono text-xs text-muted border border-border px-3 py-1.5"
+                <div className="flex items-center gap-8 shrink-0">
+                  <span className="label hidden md:block">{s.price}</span>
+                  <span className={`label text-heading transition-transform duration-300 ${open === i ? 'rotate-45' : ''}`}>
+                    +
+                  </span>
+                </div>
+              </button>
+
+              {/* Expanded content */}
+              <div className={`overflow-hidden transition-all duration-400 ${
+                open === i ? 'max-h-96 pb-8' : 'max-h-0'
+              }`}>
+                <div className="ml-0 md:ml-[88px] grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div>
+                    <p className="text-body leading-relaxed text-sm mb-6">{s.desc}</p>
+                    <div className="flex flex-wrap gap-2">
+                      {s.features.map((f) => (
+                        <span key={f} className="label border border-border px-3 py-1.5">{f}</span>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="flex flex-col justify-between gap-4">
+                    <div>
+                      <div className="font-serif-display text-2xl text-heading mb-1">{s.price}</div>
+                      <div className="label">{s.timeline}</div>
+                    </div>
+                    <a
+                      href="#contact"
+                      className="inline-block label border border-heading text-heading px-6 py-3 hover:bg-heading hover:text-canvas transition-all duration-200 w-fit"
                     >
-                      {f}
-                    </span>
-                  ))}
+                      Get a Quote &rarr;
+                    </a>
+                  </div>
                 </div>
-              </div>
-
-              {/* Price + CTA */}
-              <div className="flex flex-col items-start md:items-end justify-between gap-4 min-w-[160px]">
-                <div>
-                  <div className="font-display font-bold text-xl text-heading">{s.price}</div>
-                  <div className="label mt-1">{s.timeline}</div>
-                </div>
-                <a
-                  href="#contact"
-                  className="label text-accent hover:text-heading transition-colors"
-                >
-                  Get a Quote &rarr;
-                </a>
               </div>
             </div>
           ))}

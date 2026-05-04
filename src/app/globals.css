@@ -2,53 +2,47 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap');
+
 @layer base {
   html {
     scroll-behavior: smooth;
-    background-color: #090909;
-    color: #b0b0b0;
+    background-color: #0a0a0a;
+    color: #999999;
   }
-
   * { box-sizing: border-box; }
-
-  ::selection {
-    background-color: #c8ff00;
-    color: #090909;
-  }
-
-  /* Custom scrollbar */
-  ::-webkit-scrollbar { width: 4px; }
-  ::-webkit-scrollbar-track { background: #090909; }
-  ::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 2px; }
+  ::selection { background: #f0f0ee; color: #0a0a0a; }
+  ::-webkit-scrollbar { width: 3px; }
+  ::-webkit-scrollbar-track { background: #0a0a0a; }
+  ::-webkit-scrollbar-thumb { background: #222; border-radius: 2px; }
 }
 
 @layer utilities {
-  .section-pad    { @apply py-28 md:py-36; }
+  .section-pad     { @apply py-28 md:py-40; }
   .container-width { @apply max-w-6xl mx-auto px-6 md:px-10; }
 
+  /* Small mono label */
   .label {
-    @apply font-mono text-xs tracking-[0.2em] uppercase text-muted;
+    @apply font-mono text-[10px] tracking-[0.18em] uppercase text-muted;
   }
 
-  .heading-xl {
-    @apply font-display font-bold leading-[0.95] tracking-[-0.04em] text-heading;
+  /* Display serif — used for hero name */
+  .font-serif-display {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
   }
 
-  .divider {
-    @apply border-t border-border;
+  /* Hover slide-up text effect (duplicate text trick) */
+  .hover-slide {
+    @apply relative overflow-hidden inline-flex flex-col h-[1.1em];
+  }
+  .hover-slide span {
+    @apply block transition-transform duration-300 ease-in-out;
+    line-height: 1.1em;
+  }
+  .hover-slide:hover span {
+    transform: translateY(-100%);
   }
 
-  .btn-primary {
-    @apply inline-flex items-center gap-3 bg-accent text-canvas font-mono text-sm font-bold
-           px-7 py-4 tracking-wide
-           transition-all duration-200
-           hover:bg-heading hover:text-canvas;
-  }
-
-  .btn-ghost {
-    @apply inline-flex items-center gap-3 border border-border text-body font-mono text-sm
-           px-7 py-4 tracking-wide
-           transition-all duration-200
-           hover:border-heading hover:text-heading;
-  }
+  .divider { @apply border-t border-border; }
 }

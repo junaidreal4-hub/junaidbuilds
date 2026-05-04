@@ -2,21 +2,9 @@
 import { useState } from 'react'
 
 const contactLinks = [
-  {
-    label: 'Email',
-    value: 'junaidreal4@gmail.com',
-    href: 'mailto:junaidreal4@gmail.com',
-  },
-  {
-    label: 'WhatsApp',
-    value: '+49 157 748 73835',
-    href: 'https://wa.me/4915774873835',
-  },
-  {
-    label: 'LinkedIn',
-    value: 'linkedin.com/in/junaid412',
-    href: 'https://linkedin.com/in/junaid412',
-  },
+  { label: 'Email',    value: 'junaidreal4@gmail.com', href: 'mailto:junaidreal4@gmail.com'        },
+  { label: 'WhatsApp', value: '+49 157 748 73835',      href: 'https://wa.me/4915774873835'         },
+  { label: 'LinkedIn', value: 'linkedin.com/in/junaid412', href: 'https://linkedin.com/in/junaid412' },
 ]
 
 export default function Contact() {
@@ -35,33 +23,28 @@ export default function Contact() {
       })
       if (res.ok) { setStatus('sent'); form.reset() }
       else setStatus('error')
-    } catch {
-      setStatus('error')
-    }
+    } catch { setStatus('error') }
   }
 
   return (
     <section id="contact" className="section-pad bg-canvas">
       <div className="container-width">
 
-        {/* Big heading */}
-        <div className="mb-20">
-          <p className="label mb-6">Get in Touch</p>
-          <h2 className="heading-xl text-[clamp(3rem,8vw,7rem)] leading-none">
-            Let&apos;s build<br />
-            <span className="text-accent">something great.</span>
-          </h2>
-        </div>
+        <p className="label mb-6">Get in Touch</p>
+
+        {/* Giant heading — like nikolaradeski.com contact */}
+        <h2 className="font-serif-display text-[clamp(3rem,10vw,9rem)] text-heading leading-[0.9] mb-16">
+          How can<br />I help?
+        </h2>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
 
-          {/* Left — contact details */}
+          {/* Left */}
           <div>
-            <p className="text-body leading-relaxed mb-10 max-w-sm">
+            <p className="text-body text-sm leading-relaxed mb-12 max-w-sm">
               Have a project in mind? Tell me what you need and I&apos;ll get back to you within
-              24 hours with a free quote.
+              24 hours with a free quote.
             </p>
-
             <div className="divide-y divide-border">
               {contactLinks.map((c) => (
                 <a
@@ -73,38 +56,31 @@ export default function Contact() {
                 >
                   <div>
                     <div className="label mb-1">{c.label}</div>
-                    <div className="text-body group-hover:text-heading transition-colors">{c.value}</div>
+                    <div className="text-body text-sm group-hover:text-heading transition-colors">{c.value}</div>
                   </div>
-                  <span className="label text-accent group-hover:text-heading transition-colors">&rarr;</span>
+                  <span className="label group-hover:text-heading transition-colors">&rarr;</span>
                 </a>
               ))}
             </div>
           </div>
 
-          {/* Right — form */}
+          {/* Form */}
           <form onSubmit={handleSubmit} className="flex flex-col gap-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
-                <label className="label block mb-2">Name</label>
+                <label className="label block mb-2">Full Name</label>
                 <input
-                  name="name"
-                  required
-                  placeholder="Your name"
-                  className="w-full bg-transparent border border-border text-heading placeholder-muted
-                             px-4 py-3 font-mono text-sm focus:outline-none focus:border-accent
-                             transition-colors"
+                  name="name" required placeholder="Your name"
+                  className="w-full bg-transparent border-b border-border text-heading placeholder-muted
+                             py-3 font-mono text-sm focus:outline-none focus:border-heading transition-colors"
                 />
               </div>
               <div>
                 <label className="label block mb-2">Email</label>
                 <input
-                  name="email"
-                  type="email"
-                  required
-                  placeholder="your@email.com"
-                  className="w-full bg-transparent border border-border text-heading placeholder-muted
-                             px-4 py-3 font-mono text-sm focus:outline-none focus:border-accent
-                             transition-colors"
+                  name="email" type="email" required placeholder="your@email.com"
+                  className="w-full bg-transparent border-b border-border text-heading placeholder-muted
+                             py-3 font-mono text-sm focus:outline-none focus:border-heading transition-colors"
                 />
               </div>
             </div>
@@ -113,9 +89,8 @@ export default function Contact() {
               <label className="label block mb-2">Service</label>
               <select
                 name="service"
-                className="w-full bg-canvas border border-border text-body
-                           px-4 py-3 font-mono text-sm focus:outline-none focus:border-accent
-                           transition-colors"
+                className="w-full bg-canvas border-b border-border text-body
+                           py-3 font-mono text-sm focus:outline-none focus:border-heading transition-colors"
               >
                 <option>Landing Page (€800 – €1,500)</option>
                 <option>Business Website (€1,200 – €2,500)</option>
@@ -129,22 +104,19 @@ export default function Contact() {
             <div>
               <label className="label block mb-2">Project Details</label>
               <textarea
-                name="message"
-                rows={5}
-                required
+                name="message" rows={5} required
                 placeholder="What do you need? Any deadline or budget in mind?"
-                className="w-full bg-transparent border border-border text-heading placeholder-muted
-                           px-4 py-3 font-mono text-sm focus:outline-none focus:border-accent
-                           transition-colors resize-none"
+                className="w-full bg-transparent border-b border-border text-heading placeholder-muted
+                           py-3 font-mono text-sm focus:outline-none focus:border-heading transition-colors resize-none"
               />
             </div>
 
             <button
               type="submit"
               disabled={status === 'sending' || status === 'sent'}
-              className="btn-primary justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+              className="label border border-heading text-heading px-6 py-4 hover:bg-heading hover:text-canvas transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed w-full text-center mt-2"
             >
-              {status === 'idle'    && 'Send Message'}
+              {status === 'idle'    && 'Submit'}
               {status === 'sending' && 'Sending...'}
               {status === 'sent'    && 'Message Sent'}
               {status === 'error'   && 'Failed — Try Again'}
