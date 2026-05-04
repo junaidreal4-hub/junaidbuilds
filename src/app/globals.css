@@ -3,11 +3,52 @@
 @tailwind utilities;
 
 @layer base {
-  html { scroll-behavior: smooth; }
+  html {
+    scroll-behavior: smooth;
+    background-color: #090909;
+    color: #b0b0b0;
+  }
+
   * { box-sizing: border-box; }
+
+  ::selection {
+    background-color: #c8ff00;
+    color: #090909;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: #090909; }
+  ::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 2px; }
 }
 
 @layer utilities {
-  .section-pad { @apply py-20 md:py-28; }
+  .section-pad    { @apply py-28 md:py-36; }
   .container-width { @apply max-w-6xl mx-auto px-6 md:px-10; }
+
+  .label {
+    @apply font-mono text-xs tracking-[0.2em] uppercase text-muted;
+  }
+
+  .heading-xl {
+    @apply font-display font-bold leading-[0.95] tracking-[-0.04em] text-heading;
+  }
+
+  .divider {
+    @apply border-t border-border;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center gap-3 bg-accent text-canvas font-mono text-sm font-bold
+           px-7 py-4 tracking-wide
+           transition-all duration-200
+           hover:bg-heading hover:text-canvas;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center gap-3 border border-border text-body font-mono text-sm
+           px-7 py-4 tracking-wide
+           transition-all duration-200
+           hover:border-heading hover:text-heading;
+  }
 }
