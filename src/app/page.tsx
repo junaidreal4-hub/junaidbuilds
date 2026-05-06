@@ -1,25 +1,25 @@
-import BottomNav   from '@/components/BottomNav'
-import Hero        from '@/components/Hero'
-import Skills      from '@/components/Skills'
-import StatsStrip  from '@/components/StatsStrip'
-import Awards      from '@/components/Awards'
-import About       from '@/components/About'
+import Navbar       from '@/components/Navbar'
+import Hero         from '@/components/Hero'
+import AboutStrip   from '@/components/AboutStrip'
+import FeaturedWork from '@/components/FeaturedWork'
+import Works        from '@/components/Works'
+import Services     from '@/components/Services'
+import Team         from '@/components/Team'
 import Testimonials from '@/components/Testimonials'
-import FAQ         from '@/components/FAQ'
-import Contact     from '@/components/Contact'
-import Footer      from '@/components/Footer'
+import Contact      from '@/components/Contact'
+import Footer       from '@/components/Footer'
 
 export default function Home() {
   return (
-    <main>
-      <BottomNav />
+    <main className="bg-canvas">
+      <Navbar />
       <Hero />
-      <Skills />
-      <StatsStrip />
-      <Awards />
-      <About />
+      <AboutStrip />
+      <FeaturedWork />
+      <Works />
+      <Services />
+      <Team />
       <Testimonials />
-      <FAQ />
       <Contact />
       <Footer />
     </main>

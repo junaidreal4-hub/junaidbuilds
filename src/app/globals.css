@@ -3,23 +3,22 @@
 @tailwind utilities;
 
 @layer base {
-  html { scroll-behavior: smooth; background-color: #f0f0ee; color: #444; }
-  * { box-sizing: border-box; }
-  ::selection { background: #111; color: #fff; }
-  ::-webkit-scrollbar { width: 3px; }
-  ::-webkit-scrollbar-track { background: #f0f0ee; }
-  ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 2px; }
+  html { scroll-behavior: smooth; background-color: #0f0f0d; color: rgba(255,255,255,0.75); }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  ::selection { background: #f97316; color: #0f0f0d; }
+  ::-webkit-scrollbar { width: 2px; }
+  ::-webkit-scrollbar-track { background: #0f0f0d; }
+  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
 }
 
 @layer utilities {
   .section-pad     { @apply py-28 md:py-40; }
-  .container-width { @apply max-w-6xl mx-auto px-6 md:px-10; }
+  .container-width { @apply max-w-7xl mx-auto px-6 md:px-12; }
 
   .label {
-    @apply font-mono text-[10px] tracking-[0.18em] uppercase text-muted;
+    @apply font-mono text-[10px] tracking-[0.2em] uppercase text-muted;
   }
 
-  /* Hover slide-up nav effect — same as nikolaradeski */
   .hover-slide {
     @apply relative overflow-hidden inline-flex flex-col;
     height: 1.15em;
@@ -31,13 +30,7 @@
   }
   .hover-slide:hover span { transform: translateY(-100%); }
 
-  .divider { @apply border-t border-border; }
-
-  /* Hexagon background — CSS only */
-  .hex-bg {
-    background-color: #ececea;
-    background-image:
-      radial-gradient(circle at 1px 1px, #d8d8d5 1px, transparent 0);
-    background-size: 40px 40px;
-  }
+  .divider { @apply border-t border-white/[0.08]; }
+  .btn-primary { @apply bg-orange text-canvas font-mono text-[11px] tracking-widest uppercase px-6 py-3 rounded-full hover:bg-orange/90 transition-colors; }
+  .btn-ghost   { @apply border border-white/20 text-body font-mono text-[11px] tracking-widest uppercase px-6 py-3 rounded-full hover:border-orange hover:text-orange transition-all duration-200; }
 }

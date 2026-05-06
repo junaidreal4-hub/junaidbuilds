@@ -3,139 +3,87 @@ import { useState } from 'react'
 
 const services = [
   {
-    index: '01',
-    tag: 'Fast Turnaround',
-    title: 'Landing Page',
-    price: '€800 – €1,500',
-    timeline: '3–5 days',
-    desc: 'A single, high-converting page to promote your product, service, or event. Mobile-first, fast-loading, SEO-optimised.',
-    features: ['Responsive design', 'Contact / lead form', 'SEO meta tags', 'Vercel deployment'],
+    index: '01', title: 'Web Development',
+    sub: 'React / Next.js / TypeScript',
+    desc: 'Fully custom websites built with React and Next.js. No drag-and-drop builders, no templates. Every site is fast, accessible, responsive, and SEO-ready from the ground up.',
+    tools: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'GSAP', 'Vercel'],
   },
   {
-    index: '02',
-    tag: 'Most Popular',
-    title: 'Business Website',
-    price: '€1,200 – €2,500',
-    timeline: '1–2 weeks',
-    desc: 'A complete multi-page website for your business. Built entirely custom — no Wix, no WordPress templates.',
-    features: ['Up to 6 pages', 'Mobile responsive', 'Contact form', 'Google Analytics'],
+    index: '02', title: 'Backend & APIs',
+    sub: 'FastAPI / Node.js / PostgreSQL',
+    desc: 'REST APIs, auth systems, and complete database architecture. I handle the full backend stack — deployed, monitored, and production-ready.',
+    tools: ['FastAPI', 'Python', 'PostgreSQL', 'SQLAlchemy', 'Alembic', 'Render', 'Supabase', 'Google Cloud'],
   },
   {
-    index: '03',
-    tag: 'Premium Design',
-    title: 'Portfolio / Creative Site',
-    price: '€1,500 – €3,000',
-    timeline: '1–2 weeks',
-    desc: 'For photographers, designers, videographers, and creatives. Cinematic layouts, smooth animations, built to impress.',
-    features: ['Custom animations', 'Gallery / showreel', 'Mobile optimised', 'Fast CDN delivery'],
+    index: '03', title: 'Full-Stack SaaS',
+    sub: 'End-to-End Product Development',
+    desc: 'Custom web applications with auth, dashboards, subscriptions, and complex business logic. From zero to production-ready MVP.',
+    tools: ['Next.js', 'FastAPI', 'PostgreSQL', 'OpenAI API', 'Stripe', 'Cloudinary', 'JWT Auth'],
   },
   {
-    index: '04',
-    tag: 'Full Commerce',
-    title: 'E-Commerce / Shop',
-    price: '€3,000 – €6,000',
-    timeline: '3–5 weeks',
-    desc: 'A full online store with product listings, cart, checkout, and payment integration.',
-    features: ['Product catalogue', 'Stripe payments', 'Admin dashboard', 'Order management'],
+    index: '04', title: 'E-Commerce',
+    sub: 'Shops / Payments / CMS',
+    desc: 'Full online stores with product catalogues, cart, checkout, and Stripe payment integration. Built for conversion.',
+    tools: ['Next.js', 'Stripe', 'Sanity CMS', 'Vercel', 'Tailwind CSS'],
   },
   {
-    index: '05',
-    tag: 'Custom Build',
-    title: 'Full-Stack Web App',
-    price: '€3,000 – €6,000',
-    timeline: '4–8 weeks',
-    desc: 'Custom web applications with user authentication, database, and backend logic. Built with React and FastAPI.',
-    features: ['User authentication', 'Database + API', 'Cloud deployment', 'Custom logic'],
-  },
-  {
-    index: '06',
-    tag: 'Ongoing',
-    title: 'Maintenance & Support',
-    price: '€150 – €400 / mo',
-    timeline: 'Monthly retainer',
-    desc: 'Monthly retainer for updates, fixes, performance monitoring, and new feature additions.',
-    features: ['Monthly updates', 'Bug fixes', 'Performance checks', 'Priority support'],
+    index: '05', title: 'Maintenance & Support',
+    sub: 'Monthly Retainer',
+    desc: 'Ongoing updates, performance monitoring, bug fixes, and new feature additions. Monthly retainer from €150/mo.',
+    tools: ['Performance audits', 'Bug fixes', 'New features', 'Priority support'],
   },
 ]
 
 export default function Services() {
-  const [open, setOpen] = useState<number | null>(0)
+  const [open, setOpen] = useState<number | null>(null)
 
   return (
     <section id="services" className="section-pad bg-canvas">
       <div className="container-width">
-
-        {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-20">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
           <div>
-            <p className="label mb-4">What I Offer</p>
-            <h2 className="font-serif-display text-[clamp(2.5rem,5vw,4.5rem)] text-heading leading-none">
-              Services &amp; Pricing
-            </h2>
+            <p className="label mb-4">/ Core Services</p>
+            <h2 className="font-sans font-black text-[clamp(2rem,5vw,4rem)] text-heading tracking-tight leading-none">What I offer</h2>
           </div>
-          <p className="text-body max-w-xs leading-relaxed text-sm">
-            Fixed-price packages. No surprise invoices.
-            You know exactly what you&apos;re getting before we start.
-          </p>
+          <p className="text-sm text-muted max-w-xs">Handcrafted digital solutions for founders and businesses.</p>
         </div>
 
-        {/* Accordion rows — like nikolaradeski.com skills section */}
-        <div className="divide-y divide-border">
+        <div className="divide-y divide-white/[0.06]">
           {services.map((s, i) => (
             <div key={s.title}>
               <button
                 onClick={() => setOpen(open === i ? null : i)}
-                className="w-full text-left group py-8 flex items-start md:items-center justify-between gap-6 hover:text-heading transition-colors duration-200"
+                className="w-full text-left py-8 flex items-start md:items-center justify-between gap-6 group"
               >
                 <div className="flex items-start md:items-center gap-6 md:gap-10 flex-1">
-                  <span className="label w-8 shrink-0 pt-0.5">{s.index}</span>
-                  <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-8 flex-1">
-                    <span className="label text-muted">{s.tag}</span>
-                    <span className="font-serif-display text-2xl md:text-3xl text-heading">{s.title}</span>
+                  <span className="label w-8 shrink-0 text-orange">{s.index}</span>
+                  <div className="flex flex-col md:flex-row md:items-center gap-1 md:gap-6">
+                    <span className={`font-sans font-bold text-2xl md:text-3xl tracking-tight transition-colors duration-200 ${
+                      open === i ? 'text-heading' : 'text-subtle group-hover:text-heading'
+                    }`}>{s.title}</span>
+                    <span className="label">{s.sub}</span>
                   </div>
                 </div>
-                <div className="flex items-center gap-8 shrink-0">
-                  <span className="label hidden md:block">{s.price}</span>
-                  <span className={`label text-heading transition-transform duration-300 ${open === i ? 'rotate-45' : ''}`}>
-                    +
-                  </span>
-                </div>
+                <span className={`text-heading text-2xl font-light shrink-0 transition-transform duration-300 ${
+                  open === i ? 'rotate-45' : ''
+                }`}>+</span>
               </button>
 
-              {/* Expanded content */}
-              <div className={`overflow-hidden transition-all duration-400 ${
-                open === i ? 'max-h-96 pb-8' : 'max-h-0'
+              <div className={`overflow-hidden transition-all duration-500 ease-in-out ${
+                open === i ? 'max-h-72 pb-10' : 'max-h-0'
               }`}>
-                <div className="ml-0 md:ml-[88px] grid grid-cols-1 md:grid-cols-2 gap-8">
-                  <div>
-                    <p className="text-body leading-relaxed text-sm mb-6">{s.desc}</p>
-                    <div className="flex flex-wrap gap-2">
-                      {s.features.map((f) => (
-                        <span key={f} className="label border border-border px-3 py-1.5">{f}</span>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="flex flex-col justify-between gap-4">
-                    <div>
-                      <div className="font-serif-display text-2xl text-heading mb-1">{s.price}</div>
-                      <div className="label">{s.timeline}</div>
-                    </div>
-                    <a
-                      href="#contact"
-                      className="inline-block label border border-heading text-heading px-6 py-3 hover:bg-heading hover:text-canvas transition-all duration-200 w-fit"
-                    >
-                      Get a Quote &rarr;
-                    </a>
+                <div className="ml-0 md:ml-[112px] grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <p className="text-sm leading-relaxed text-body">{s.desc}</p>
+                  <div className="flex flex-wrap gap-2">
+                    {s.tools.map((t) => (
+                      <span key={t} className="label border border-white/10 px-3 py-1.5 rounded-full">{t}</span>
+                    ))}
                   </div>
                 </div>
               </div>
             </div>
           ))}
         </div>
-
-        <p className="label mt-12">
-          All prices exclude domain, hosting, and third-party service costs. VAT not included.
-        </p>
       </div>
     </section>
   )

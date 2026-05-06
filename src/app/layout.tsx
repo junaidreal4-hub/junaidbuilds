@@ -2,27 +2,18 @@ import type { Metadata } from 'next'
 import { Space_Grotesk, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 
-const space = Space_Grotesk({
-  subsets:  ['latin'],
-  variable: '--font-space',
-  weight:   ['300', '400', '500', '600', '700'],
-})
-
-const mono = JetBrains_Mono({
-  subsets:  ['latin'],
-  variable: '--font-mono',
-  weight:   ['400', '700'],
-})
+const space = Space_Grotesk({ subsets: ['latin'], variable: '--font-space', weight: ['300','400','500','600','700'] })
+const mono  = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono',  weight: ['400','700'] })
 
 export const metadata: Metadata = {
-  title: 'Freelance Web Developer Berlin — Junaid Builds',
-  description: 'I build fast, bespoke websites and web applications for Berlin businesses and international clients. React, Next.js, full-stack.',
-  keywords: 'freelance web developer Berlin, Next.js developer Berlin, React developer Berlin',
+  title: 'mdjk.dev — Freelance Web Developer Berlin',
+  description: 'I build fast, bespoke websites and web applications for businesses in Berlin and worldwide. React, Next.js, full-stack development.',
+  keywords: 'freelance web developer Berlin, Next.js developer, React developer Berlin, full-stack developer',
   openGraph: {
-    title:       'Freelance Web Developer Berlin — Junaid Builds',
+    title:       'mdjk.dev — Freelance Web Developer Berlin',
     description: 'Bespoke websites and web applications. No templates. No agency markup.',
-    url:         'https://junaidbuilds.vercel.app',
-    siteName:    'Junaid Builds',
+    url:         'https://mdjk.vercel.app',
+    siteName:    'mdjk.dev',
     locale:      'en_DE',
     type:        'website',
   },

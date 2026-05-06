@@ -1,6 +1,18 @@
 'use client'
 import { useEffect, useState } from 'react'
-import Image from 'next/image'
+
+const WORDS = [
+  { text: 'I',          size: 'text-5xl md:text-7xl', weight: 'font-light',  color: 'text-muted'   },
+  { text: 'build',      size: 'text-6xl md:text-8xl', weight: 'font-black',  color: 'text-heading' },
+  { text: 'websites',   size: 'text-5xl md:text-7xl', weight: 'font-bold',   color: 'text-heading' },
+  { text: 'through',    size: 'text-4xl md:text-5xl', weight: 'font-light',  color: 'text-muted'   },
+  { text: 'logic,',     size: 'text-5xl md:text-6xl', weight: 'font-bold',   color: 'text-subtle'  },
+  { text: 'clean',      size: 'text-6xl md:text-8xl', weight: 'font-black',  color: 'text-heading' },
+  { text: 'code,',      size: 'text-5xl md:text-7xl', weight: 'font-bold',   color: 'text-orange'  },
+  { text: 'and',        size: 'text-3xl md:text-4xl', weight: 'font-light',  color: 'text-muted'   },
+  { text: 'human',      size: 'text-5xl md:text-6xl', weight: 'font-bold',   color: 'text-subtle'  },
+  { text: 'precision.', size: 'text-6xl md:text-8xl', weight: 'font-black',  color: 'text-heading' },
+]
 
 export default function Hero() {
   const [time, setTime] = useState('')
@@ -8,7 +20,8 @@ export default function Hero() {
   useEffect(() => {
     const update = () =>
       setTime(new Date().toLocaleTimeString('en-DE', {
-        hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Berlin', hour12: false,
+        hour: '2-digit', minute: '2-digit', second: '2-digit',
+        timeZone: 'Europe/Berlin', hour12: false,
       }))
     update()
     const id = setInterval(update, 1000)
@@ -16,85 +29,46 @@ export default function Hero() {
   }, [])
 
   return (
-    <section className="relative min-h-screen flex flex-col overflow-hidden bg-[#ececea]">
+    <section className="relative min-h-screen flex flex-col pt-16 overflow-hidden bg-canvas">
 
-      {/* Hexagonal SVG background */}
-      <div className="absolute inset-0 opacity-60" aria-hidden>
-        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <pattern id="hex" x="0" y="0" width="60" height="52" patternUnits="userSpaceOnUse">
-              <polygon
-                points="15,2 45,2 58,26 45,50 15,50 2,26"
-                fill="none" stroke="#c8c8c4" strokeWidth="1"
-              />
-              <polygon
-                points="45,2 75,2 88,26 75,50 45,50 32,26"
-                fill="none" stroke="#c8c8c4" strokeWidth="1"
-              />
-              <polygon
-                points="15,50 45,50 58,74 45,98 15,98 2,74"
-                fill="none" stroke="#c8c8c4" strokeWidth="1"
-              />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#hex)" />
-        </svg>
-      </div>
+      {/* Subtle radial glow top-left */}
+      <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-orange/5 rounded-full blur-[120px] pointer-events-none" />
 
-      {/* Top labels — like nikolaradeski.com */}
-      <div className="relative container-width pt-10 flex items-start justify-between">
-        <div>
-          <p className="label">Award Winning</p>
-          <p className="label mt-0.5">Full-Stack Developer</p>
-        </div>
-        <div className="text-right">
-          <p className="label">Developer &amp; Builder</p>
-        </div>
-      </div>
-
-      {/* SPLIT NAME + PHOTO — exact nikolaradeski.com layout */}
+      {/* Scattered word-by-word hero — exact sirnik.co style */}
       <div className="relative flex-1 flex items-center">
-        <div className="w-full container-width grid grid-cols-[1fr_auto_1fr] items-center gap-4 md:gap-8">
-
-          {/* Left name */}
-          <h1 className="font-sans font-black text-[clamp(3.5rem,12vw,9.5rem)] leading-none tracking-[-0.04em] text-heading text-left">
-            JUNAID
-          </h1>
-
-          {/* Center photo */}
-          <div className="relative w-[180px] md:w-[260px] lg:w-[320px] aspect-[3/4] rounded-3xl overflow-hidden shadow-2xl flex-shrink-0">
-            <Image
-              src="/photo.jpg"
-              alt="Junaid Khan"
-              fill
-              className="object-cover object-top"
-              priority
-            />
-            {/* Fallback gradient if no photo */}
-            <div className="absolute inset-0 bg-gradient-to-b from-orange/30 to-heading/60 mix-blend-multiply" />
+        <div className="container-width w-full">
+          <div className="flex flex-wrap items-end gap-x-5 gap-y-2 leading-none py-16">
+            {WORDS.map((w, i) => (
+              <span
+                key={i}
+                className={`${w.size} ${w.weight} ${w.color} tracking-tight leading-none animate-fade-up`}
+                style={{ animationDelay: `${i * 80}ms`, animationFillMode: 'both', opacity: 0 }}
+              >
+                {w.text}
+              </span>
+            ))}
           </div>
-
-          {/* Right name */}
-          <h1 className="font-sans font-black text-[clamp(3.5rem,12vw,9.5rem)] leading-none tracking-[-0.04em] text-heading text-right">
-            BUILDS
-          </h1>
         </div>
       </div>
 
-      {/* Bottom location + clock — like nikolaradeski.com bottom-right */}
-      <div className="relative container-width pb-10 flex items-end justify-between">
-        <div className="flex items-center gap-3">
-          <span className="relative flex h-1.5 w-1.5">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange opacity-70" />
-            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-orange" />
-          </span>
-          <span className="label">Available for new projects</span>
-        </div>
-        <div className="text-right">
-          <p className="label">Berlin, Germany &mdash;&nbsp;
-            <span className="tabular-nums">{time}</span>
-            &nbsp;GMT+2
-          </p>
+      {/* Bottom bar — location left, CTA right */}
+      <div className="relative container-width pb-10 divider pt-8">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <div className="flex flex-col gap-1.5">
+            <div className="flex items-center gap-3">
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange opacity-60" />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-orange" />
+              </span>
+              <span className="label">Available for new projects</span>
+            </div>
+            <p className="label">Berlin, Germany &nbsp;·&nbsp; <span className="tabular-nums">{time}</span> &nbsp;GMT+2</p>
+            <p className="label">Founded in India &nbsp;·&nbsp; Based in Berlin since 2022</p>
+          </div>
+          <div className="flex flex-wrap gap-4">
+            <a href="#work" className="btn-primary">Explore my work →</a>
+            <a href="#contact" className="btn-ghost">Start a project</a>
+          </div>
         </div>
       </div>
     </section>
