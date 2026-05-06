@@ -9,7 +9,6 @@ const projects = [
     stack: ['HTML', 'CSS', 'JavaScript', 'GSAP'],
     live: 'https://visualsbyriju.vercel.app',
     github: 'https://github.com/junaidreal4-hub/visualsbyriju',
-    status: 'Live',
   },
   {
     index: '02', title: 'Cookie & Dough',
@@ -18,7 +17,6 @@ const projects = [
     stack: ['HTML', 'CSS', 'JavaScript'],
     live: null,
     github: 'https://github.com/junaidreal4-hub/Cookie-Dough',
-    status: 'Live',
   },
   {
     index: '03', title: 'N88E Build',
@@ -27,7 +25,6 @@ const projects = [
     stack: ['React', 'TypeScript', 'Vite', 'Tailwind', 'Google Sheets API'],
     live: null,
     github: 'https://github.com/junaidreal4-hub/N88E-Build-Website',
-    status: 'Live',
   },
   {
     index: '04', title: 'Strebo',
@@ -36,7 +33,6 @@ const projects = [
     stack: ['Next.js', 'FastAPI', 'PostgreSQL', 'OpenAI API', 'Render'],
     live: null,
     github: 'https://github.com/junaidreal4-hub/Strebo',
-    status: 'In Progress',
   },
   {
     index: '05', title: 'mdjk.dev',
@@ -45,71 +41,68 @@ const projects = [
     stack: ['Next.js', 'Tailwind CSS', 'TypeScript', 'GSAP', 'Vercel'],
     live: 'https://mdjk.vercel.app',
     github: 'https://github.com/junaidreal4-hub/junaidbuilds',
-    status: 'Live',
   },
 ]
 
+const N = projects.length
+
 export default function Works() {
-  const sectionRef = useRef<HTMLElement>(null)
-  const itemRefs   = useRef<(HTMLDivElement | null)[]>([])
+  const sectionRef  = useRef<HTMLElement>(null)
   const [active, setActive] = useState(0)
 
   useEffect(() => {
-    let ctx: import('gsap').Context | null = null
+    if (typeof window === 'undefined') return
+    let st: import('gsap/ScrollTrigger').ScrollTrigger | undefined
 
     async function init() {
       const { gsap }          = await import('gsap')
       const { ScrollTrigger } = await import('gsap/ScrollTrigger')
       gsap.registerPlugin(ScrollTrigger)
 
-      ctx = gsap.context(() => {
-        const totalScroll = window.innerHeight * (projects.length + 0.5)
-
-        ScrollTrigger.create({
-          trigger:       sectionRef.current,
-          start:         'top top',
-          end:           `+=${totalScroll}`,
-          pin:           true,
-          anticipatePin: 1,
-        })
-
-        projects.forEach((_, i) => {
-          ScrollTrigger.create({
-            trigger: sectionRef.current,
-            start:   `top+=${(i / projects.length) * totalScroll} top`,
-            end:     `top+=${((i + 1) / projects.length) * totalScroll} top`,
-            onEnter:     () => setActive(i),
-            onEnterBack: () => setActive(i),
-          })
-        })
-      }, sectionRef)
+      st = ScrollTrigger.create({
+        trigger:       sectionRef.current,
+        start:         'top top',
+        // pin for N full viewport-heights so each project gets one screen
+        end:           () => `+=${window.innerHeight * N}`,
+        pin:           true,
+        anticipatePin: 1,
+        scrub:         false,
+        onUpdate(self) {
+          // progress 0→1 → map to 0→N-1
+          const idx = Math.min(N - 1, Math.floor(self.progress * N))
+          setActive(idx)
+        },
+      })
     }
 
     init()
-    return () => { ctx?.revert() }
+    return () => { st?.kill() }
   }, [])
 
   const p = projects[active]
 
   return (
-    <section id="work" ref={sectionRef} className="relative min-h-screen bg-surface">
+    <section id="work" ref={sectionRef} className="relative bg-surface overflow-hidden">
       <div className="container-width h-screen flex flex-col py-16">
 
+        {/* Header */}
         <div className="flex items-end justify-between mb-12 shrink-0">
           <div>
             <p className="label mb-3">/ Selected Work</p>
-            <h2 className="font-sans font-black text-[clamp(2rem,5vw,4rem)] text-heading tracking-tight leading-none">Projects</h2>
+            <h2 className="font-sans font-black text-[clamp(2rem,5vw,4rem)] text-heading tracking-tight leading-none">
+              Projects
+            </h2>
           </div>
           <p className="text-sm text-muted hidden md:block">Scroll to explore</p>
         </div>
 
-        {/* Body */}
+        {/* Body: LEFT detail + RIGHT list */}
         <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20 min-h-0">
 
-          {/* LEFT — detail panel, no card border */}
-          <div className="hidden md:flex flex-col justify-center gap-8">
+          {/* LEFT — detail panel */}
+          <div className="hidden md:flex flex-col justify-center">
             <div key={active} className="animate-fade-up">
-              <div className="flex flex-wrap gap-2 mb-6">
+              <div className="flex flex-wrap gap-x-3 gap-y-1 mb-6">
                 {p.stack.map((t) => (
                   <span key={t} className="label text-orange">{t} &nbsp;·</span>
                 ))}
@@ -127,12 +120,11 @@ export default function Works() {
             </div>
           </div>
 
-          {/* RIGHT — project list */}
+          {/* RIGHT — project name list */}
           <div className="flex flex-col justify-center">
             {projects.map((proj, i) => (
               <div
                 key={proj.title}
-                ref={el => { itemRefs.current[i] = el }}
                 className="py-6 flex items-center justify-between"
               >
                 <div className="flex items-center gap-5">
@@ -157,7 +149,7 @@ export default function Works() {
       </div>
 
       {/* Mobile fallback */}
-      <div className="md:hidden container-width pb-20 flex flex-col gap-10">
+      <div className="md:hidden container-width pb-20 pt-8 flex flex-col gap-0">
         {projects.map((proj) => (
           <div key={proj.title} className="py-6 border-b border-white/[0.05]">
             <div className="flex items-center gap-3 mb-3">
