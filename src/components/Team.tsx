@@ -1,6 +1,10 @@
+'use client'
 import Image from 'next/image'
+import { useState } from 'react'
 
 export default function Team() {
+  const [imgError, setImgError] = useState(false)
+
   return (
     <section className="section-pad bg-surface">
       <div className="container-width">
@@ -9,19 +13,23 @@ export default function Team() {
           The person<br />behind the code
         </h2>
 
-        {/* Team card — sirnik.co style */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="bg-card border border-white/[0.08] rounded-2xl overflow-hidden">
             {/* Photo area */}
             <div className="relative h-72 bg-canvas flex items-center justify-center overflow-hidden">
-              <Image
-                src="/photo.jpg"
-                alt="Junaid Khan"
-                fill
-                className="object-cover object-top"
-                onError={() => {}}
-              />
-              {/* Fallback overlay */}
+              {!imgError ? (
+                <Image
+                  src="/photo.jpg"
+                  alt="Junaid Khan"
+                  fill
+                  className="object-cover object-top"
+                  onError={() => setImgError(true)}
+                />
+              ) : (
+                <div className="w-full h-full bg-gradient-to-br from-orange/20 to-surface flex items-center justify-center">
+                  <span className="font-mono text-4xl font-bold text-orange/40">MJK</span>
+                </div>
+              )}
               <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent" />
             </div>
             {/* Info */}
@@ -47,8 +55,8 @@ export default function Team() {
               { num: '15+',     label: 'Projects Delivered'  },
               { num: '4+',      label: 'Years Experience'     },
               { num: '100%',    label: 'Client Satisfaction'  },
-              { num: '€150/mo', label: 'Maintenance Retainer' },
-              { num: '1–3 wks', label: 'Avg. Delivery Time'   },
+              { num: '\u20ac150/mo', label: 'Maintenance Retainer' },
+              { num: '1\u20133 wks', label: 'Avg. Delivery Time'   },
               { num: '2',       label: 'Languages (EN / DE)'  },
             ].map((s) => (
               <div key={s.label} className="bg-card p-8 flex flex-col justify-between gap-4">
