@@ -15,11 +15,11 @@ export default function Team() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-start">
 
-          {/* Photo — no card border */}
+          {/* Photo */}
           <div>
             <div className="relative h-96 overflow-hidden rounded-xl bg-canvas mb-8">
               {!imgError ? (
-                <Image src="/photo.jpg" alt="Junaid Khan" fill
+                <Image src="/photo.png" alt="Junaid Khan" fill
                   className="object-cover object-top"
                   onError={() => setImgError(true)} />
               ) : (
@@ -43,14 +43,14 @@ export default function Team() {
             </p>
           </div>
 
-          {/* Stats — clean list, no grid boxes */}
+          {/* Stats */}
           <div className="flex flex-col gap-0">
             {[
               { num: '15+',      label: 'Projects Delivered'  },
               { num: '4+',       label: 'Years Experience'     },
               { num: '100%',     label: 'Client Satisfaction'  },
-              { num: '€150/mo',  label: 'Maintenance Retainer' },
-              { num: '1–3 wks',  label: 'Avg. Delivery Time'   },
+              { num: '\u20ac150/mo',  label: 'Maintenance Retainer' },
+              { num: '1\u20133 wks',  label: 'Avg. Delivery Time'   },
               { num: '2',        label: 'Languages (EN / DE)'  },
             ].map((s) => (
               <div key={s.label} className="flex items-center justify-between py-6 border-b border-white/[0.05]">
