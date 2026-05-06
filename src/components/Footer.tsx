@@ -1,19 +1,6 @@
-const MARQUEE = 'Let\u2019s work together  \u2737  mdjk.dev  \u2737  Let\u2019s work together  \u2737  mdjk.dev  \u2737  Let\u2019s work together  \u2737  mdjk.dev  \u2737  '
-
 export default function Footer() {
   return (
     <footer className="bg-canvas border-t border-white/[0.06]">
-
-      {/* Marquee */}
-      <div className="overflow-hidden border-b border-white/[0.06] py-5">
-        <div className="flex whitespace-nowrap animate-marquee" style={{ width: 'max-content' }}>
-          <span className="font-sans font-black text-[clamp(1.4rem,2.8vw,2.4rem)] text-heading/30 tracking-tight pr-0">
-            {MARQUEE}{MARQUEE}
-          </span>
-        </div>
-      </div>
-
-      {/* Body */}
       <div className="container-width py-16">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
 
