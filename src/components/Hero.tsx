@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const WORDS = [
   { text: 'I',          cls: 'text-5xl md:text-7xl  font-light  text-white/30'  },
@@ -15,11 +15,8 @@ const WORDS = [
 ]
 
 export default function Hero() {
-  const sectionRef = useRef<HTMLElement>(null)
-  const wordsRef   = useRef<(HTMLSpanElement | null)[]>([])
   const [time, setTime] = useState('')
 
-  // Live clock
   useEffect(() => {
     const update = () =>
       setTime(new Date().toLocaleTimeString('en-DE', {
@@ -31,61 +28,19 @@ export default function Hero() {
     return () => clearInterval(id)
   }, [])
 
-  // GSAP ScrollTrigger — pin section, reveal words one by one as user scrolls
-  useEffect(() => {
-    let ctx: import('gsap').Context | null = null
-
-    async function init() {
-      const { gsap }          = await import('gsap')
-      const { ScrollTrigger } = await import('gsap/ScrollTrigger')
-      gsap.registerPlugin(ScrollTrigger)
-
-      ctx = gsap.context(() => {
-        const words = wordsRef.current.filter(Boolean) as HTMLSpanElement[]
-
-        // Start all words dim
-        gsap.set(words, { opacity: 0.08 })
-
-        // Scrub timeline — pin the section, reveal each word sequentially
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger:  sectionRef.current,
-            start:    'top top',
-            end:      `+=${window.innerHeight * 3}`,
-            pin:      true,
-            scrub:    0.8,
-            anticipatePin: 1,
-          },
-        })
-
-        words.forEach((word) => {
-          tl.to(word, { opacity: 1, duration: 1, ease: 'none' }, '>')
-        })
-
-      }, sectionRef)
-    }
-
-    init()
-    return () => { ctx?.revert() }
-  }, [])
-
   return (
-    <section
-      ref={sectionRef}
-      className="relative min-h-screen flex flex-col pt-16 overflow-hidden bg-canvas"
-    >
-      {/* Glow */}
+    <section className="relative min-h-screen flex flex-col pt-16 overflow-hidden bg-canvas">
       <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-orange/5 rounded-full blur-[120px] pointer-events-none" />
 
-      {/* Words */}
+      {/* Static hero text — simple staggered fade-up on load */}
       <div className="relative flex-1 flex items-center">
         <div className="container-width w-full">
           <div className="flex flex-wrap items-end gap-x-5 gap-y-2 leading-none py-16">
             {WORDS.map((w, i) => (
               <span
                 key={i}
-                ref={el => { wordsRef.current[i] = el }}
-                className={`${w.cls} tracking-tight leading-none`}
+                className={`${w.cls} tracking-tight leading-none opacity-0 animate-fade-up`}
+                style={{ animationDelay: `${i * 60}ms`, animationFillMode: 'forwards' }}
               >
                 {w.text}
               </span>
@@ -95,7 +50,7 @@ export default function Hero() {
       </div>
 
       {/* Bottom bar */}
-      <div className="relative container-width pb-10 border-t border-white/[0.08] pt-8">
+      <div className="relative container-width pb-10 border-t border-white/[0.06] pt-8">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div className="flex flex-col gap-1.5">
             <div className="flex items-center gap-3">

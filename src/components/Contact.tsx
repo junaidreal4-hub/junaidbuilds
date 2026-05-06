@@ -38,9 +38,8 @@ export default function Contact() {
         </p>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-
           {/* Left: contact links */}
-          <div className="divide-y divide-white/[0.06]">
+          <div>
             {[
               { label: 'Email',    value: 'junaidreal4@gmail.com',    href: 'mailto:junaidreal4@gmail.com'       },
               { label: 'WhatsApp', value: '+49 157 748 73835',         href: 'https://wa.me/4915774873835'        },
@@ -50,7 +49,7 @@ export default function Contact() {
               <a key={c.label} href={c.href}
                 target={c.href.startsWith('mailto') ? undefined : '_blank'}
                 rel="noopener noreferrer"
-                className="flex items-center justify-between py-6 group"
+                className="flex items-center justify-between py-6 border-b border-white/[0.05] group"
               >
                 <div>
                   <div className="label mb-1">{c.label}</div>
@@ -61,10 +60,8 @@ export default function Contact() {
             ))}
           </div>
 
-          {/* Right: 2-step form — exact sirnik.co flow */}
+          {/* Right: 2-step form */}
           <form onSubmit={handleSubmit} className="flex flex-col gap-10">
-
-            {/* Step indicator */}
             <div className="flex items-center gap-4">
               {[1, 2].map((s) => (
                 <div key={s} className="flex items-center gap-2">
@@ -97,9 +94,7 @@ export default function Contact() {
                 <button type="button"
                   onClick={() => { if (form.name && form.email) setStep(2) }}
                   disabled={!form.name || !form.email}
-                  className="btn-primary w-fit disabled:opacity-40">
-                  Next step →
-                </button>
+                  className="btn-primary w-fit disabled:opacity-40">Next step →</button>
               </div>
             )}
 
@@ -112,8 +107,7 @@ export default function Contact() {
                       <button key={r} type="button" onClick={() => setRole(r)}
                         className={`label px-5 py-3 rounded-full border transition-all ${
                           role === r ? 'border-orange bg-orange text-canvas' : 'border-white/20 hover:border-orange hover:text-heading'
-                        }`}>{r}
-                      </button>
+                        }`}>{r}</button>
                     ))}
                   </div>
                 </div>
@@ -124,15 +118,13 @@ export default function Contact() {
                     className={`${inputClass} resize-none`} />
                 </div>
                 <div className="flex gap-4">
-                  <button type="button" onClick={() => setStep(1)} className="btn-ghost">
-                    ← Back
-                  </button>
+                  <button type="button" onClick={() => setStep(1)} className="btn-ghost">← Back</button>
                   <button type="submit" disabled={status === 'sending' || status === 'sent'}
                     className="btn-primary disabled:opacity-40">
-                    {status === 'idle'    && 'Submit →'}
+                    {status === 'idle' && 'Submit →'}
                     {status === 'sending' && 'Sending...'}
-                    {status === 'sent'    && 'Message Sent ✓'}
-                    {status === 'error'   && 'Error — Try Again'}
+                    {status === 'sent' && 'Message Sent ✓'}
+                    {status === 'error' && 'Error — Try Again'}
                   </button>
                 </div>
               </div>
