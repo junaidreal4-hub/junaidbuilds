@@ -1,22 +1,25 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 const WORDS = [
-  { text: 'I',          size: 'text-5xl md:text-7xl', weight: 'font-light',  color: 'text-muted'   },
-  { text: 'build',      size: 'text-6xl md:text-8xl', weight: 'font-black',  color: 'text-heading' },
-  { text: 'websites',   size: 'text-5xl md:text-7xl', weight: 'font-bold',   color: 'text-heading' },
-  { text: 'through',    size: 'text-4xl md:text-5xl', weight: 'font-light',  color: 'text-muted'   },
-  { text: 'logic,',     size: 'text-5xl md:text-6xl', weight: 'font-bold',   color: 'text-subtle'  },
-  { text: 'clean',      size: 'text-6xl md:text-8xl', weight: 'font-black',  color: 'text-heading' },
-  { text: 'code,',      size: 'text-5xl md:text-7xl', weight: 'font-bold',   color: 'text-orange'  },
-  { text: 'and',        size: 'text-3xl md:text-4xl', weight: 'font-light',  color: 'text-muted'   },
-  { text: 'human',      size: 'text-5xl md:text-6xl', weight: 'font-bold',   color: 'text-subtle'  },
-  { text: 'precision.', size: 'text-6xl md:text-8xl', weight: 'font-black',  color: 'text-heading' },
+  { text: 'I',          cls: 'text-5xl md:text-7xl  font-light  text-white/30'  },
+  { text: 'build',      cls: 'text-6xl md:text-8xl  font-black  text-heading'   },
+  { text: 'websites',   cls: 'text-5xl md:text-7xl  font-bold   text-heading'   },
+  { text: 'through',    cls: 'text-4xl md:text-5xl  font-light  text-white/30'  },
+  { text: 'logic,',     cls: 'text-5xl md:text-6xl  font-bold   text-white/60'  },
+  { text: 'clean',      cls: 'text-6xl md:text-8xl  font-black  text-heading'   },
+  { text: 'code,',      cls: 'text-5xl md:text-7xl  font-bold   text-orange'    },
+  { text: 'and',        cls: 'text-3xl md:text-4xl  font-light  text-white/30'  },
+  { text: 'human',      cls: 'text-5xl md:text-6xl  font-bold   text-white/60'  },
+  { text: 'precision.', cls: 'text-6xl md:text-8xl  font-black  text-heading'   },
 ]
 
 export default function Hero() {
+  const sectionRef = useRef<HTMLElement>(null)
+  const wordsRef   = useRef<(HTMLSpanElement | null)[]>([])
   const [time, setTime] = useState('')
 
+  // Live clock
   useEffect(() => {
     const update = () =>
       setTime(new Date().toLocaleTimeString('en-DE', {
@@ -28,21 +31,61 @@ export default function Hero() {
     return () => clearInterval(id)
   }, [])
 
-  return (
-    <section className="relative min-h-screen flex flex-col pt-16 overflow-hidden bg-canvas">
+  // GSAP ScrollTrigger — pin section, reveal words one by one as user scrolls
+  useEffect(() => {
+    let ctx: import('gsap').Context | null = null
 
-      {/* Subtle radial glow top-left */}
+    async function init() {
+      const { gsap }          = await import('gsap')
+      const { ScrollTrigger } = await import('gsap/ScrollTrigger')
+      gsap.registerPlugin(ScrollTrigger)
+
+      ctx = gsap.context(() => {
+        const words = wordsRef.current.filter(Boolean) as HTMLSpanElement[]
+
+        // Start all words dim
+        gsap.set(words, { opacity: 0.08 })
+
+        // Scrub timeline — pin the section, reveal each word sequentially
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger:  sectionRef.current,
+            start:    'top top',
+            end:      `+=${window.innerHeight * 3}`,
+            pin:      true,
+            scrub:    0.8,
+            anticipatePin: 1,
+          },
+        })
+
+        words.forEach((word) => {
+          tl.to(word, { opacity: 1, duration: 1, ease: 'none' }, '>')
+        })
+
+      }, sectionRef)
+    }
+
+    init()
+    return () => { ctx?.revert() }
+  }, [])
+
+  return (
+    <section
+      ref={sectionRef}
+      className="relative min-h-screen flex flex-col pt-16 overflow-hidden bg-canvas"
+    >
+      {/* Glow */}
       <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-orange/5 rounded-full blur-[120px] pointer-events-none" />
 
-      {/* Scattered word-by-word hero — exact sirnik.co style */}
+      {/* Words */}
       <div className="relative flex-1 flex items-center">
         <div className="container-width w-full">
           <div className="flex flex-wrap items-end gap-x-5 gap-y-2 leading-none py-16">
             {WORDS.map((w, i) => (
               <span
                 key={i}
-                className={`${w.size} ${w.weight} ${w.color} tracking-tight leading-none animate-fade-up`}
-                style={{ animationDelay: `${i * 80}ms`, animationFillMode: 'both', opacity: 0 }}
+                ref={el => { wordsRef.current[i] = el }}
+                className={`${w.cls} tracking-tight leading-none`}
               >
                 {w.text}
               </span>
@@ -51,8 +94,8 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Bottom bar — location left, CTA right */}
-      <div className="relative container-width pb-10 divider pt-8">
+      {/* Bottom bar */}
+      <div className="relative container-width pb-10 border-t border-white/[0.08] pt-8">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div className="flex flex-col gap-1.5">
             <div className="flex items-center gap-3">
