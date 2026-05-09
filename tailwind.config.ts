@@ -9,7 +9,7 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--font-space)', 'sans-serif'],
+        sans: ['var(--font-syne)', 'sans-serif'],
         mono: ['var(--font-mono)',  'monospace'],
       },
       colors: {
@@ -21,7 +21,11 @@ const config: Config = {
         subtle:  'rgba(255,255,255,0.50)',
         body:    'rgba(255,255,255,0.70)',
         heading: '#f5f5f0',
-        orange:  '#f97316',
+        // new dual accents
+        blue:    '#3B82F6',
+        cyan:    '#06B6D4',
+        // keep orange alias for any leftovers
+        orange:  '#3B82F6',
       },
       animation: {
         marquee:   'marquee 28s linear infinite',
