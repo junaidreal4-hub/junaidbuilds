@@ -69,6 +69,11 @@
   ::-webkit-scrollbar { width: 2px; }
   ::-webkit-scrollbar-track { background: #080808; }
   ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 2px; }
+
+  /* shadcn/ui v3 compat — outline-ring/50 */
+  :root {
+    --ring: 215 20.2% 65.1%;
+  }
 }
 
 @layer utilities {
@@ -93,4 +98,9 @@
   .divider     { @apply border-t border-white/[0.06]; }
   .btn-primary { @apply bg-orange text-canvas font-mono text-[11px] tracking-widest uppercase px-6 py-3 rounded-full hover:bg-orange/90 transition-colors; }
   .btn-ghost   { @apply border border-white/20 text-body font-mono text-[11px] tracking-widest uppercase px-6 py-3 rounded-full hover:border-orange hover:text-orange transition-all duration-200; }
+
+  /* shadcn/ui Tailwind v3 compat */
+  .outline-ring\/50 {
+    outline-color: hsl(var(--ring) / 0.5);
+  }
 }
