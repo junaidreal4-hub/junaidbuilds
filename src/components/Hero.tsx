@@ -41,24 +41,32 @@ export default function Hero() {
       {/* ══ TOP: 4 info columns ══ */}
       <div className="absolute top-0 left-0 right-0 z-20 pointer-events-none">
         <div className="grid grid-cols-4 border-b border-white/[0.06]">
+
+          {/* Col 1: Full name */}
           <div className="px-6 md:px-8 py-6 border-r border-white/[0.06]">
-            <p className="text-sm text-white uppercase tracking-widest mb-3 font-medium">Md Junaid</p>
+            <p className="text-sm text-white uppercase tracking-widest mb-1 font-medium">Mohammed Junaid</p>
             <p className="text-sm text-white uppercase tracking-widest font-medium">Khan</p>
             <p className="text-[11px] text-white/30 mt-3 leading-relaxed font-mono">
-              mdjk.dev is my personal brand &mdash; building fast, bespoke digital experiences since 2022.
+              Building fast, bespoke digital experiences since 2022.
             </p>
           </div>
+
+          {/* Col 2: Discipline */}
           <div className="px-6 md:px-8 py-6 border-r border-white/[0.06]">
             <p className="text-sm text-white uppercase tracking-widest leading-snug font-medium">
               Full-Stack<br />Development<br />&amp; Design
             </p>
           </div>
+
+          {/* Col 3: What I do */}
           <div className="px-6 md:px-8 py-6 border-r border-white/[0.06]">
             <p className="text-[10px] uppercase tracking-[0.2em] text-white/30 mb-3 font-mono">What I do</p>
             <p className="text-[11px] text-white/60 leading-relaxed">
               I build high-performance websites and web apps for startups and businesses &mdash; from concept to deployment.
             </p>
           </div>
+
+          {/* Col 4: Services */}
           <div className="px-6 md:px-8 py-6">
             <p className="text-[10px] uppercase tracking-[0.2em] text-white/30 mb-3 font-mono">Services</p>
             <ul className="text-[11px] text-white/60 space-y-1">
@@ -72,7 +80,7 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* ══ BOTTOM: small headline + CTAs ══ */}
+      {/* ══ BOTTOM: headline + CTAs ══ */}
       <div className="absolute bottom-0 left-0 right-0 z-20 pointer-events-none">
         <div className="px-5 md:px-8 pt-4">
           <h1 className="uppercase leading-[0.9] tracking-wide text-white block"
