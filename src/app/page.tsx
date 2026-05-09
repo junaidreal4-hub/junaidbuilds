@@ -1,7 +1,6 @@
 import Navbar       from '@/components/Navbar'
 import Hero         from '@/components/Hero'
 import AboutStrip   from '@/components/AboutStrip'
-import FeaturedWork from '@/components/FeaturedWork'
 import Works        from '@/components/Works'
 import Services     from '@/components/Services'
 import Team         from '@/components/Team'
@@ -15,7 +14,6 @@ export default function Home() {
       <Navbar />
       <Hero />
       <AboutStrip />
-      <FeaturedWork />
       <Works />
       <Services />
       <Team />
