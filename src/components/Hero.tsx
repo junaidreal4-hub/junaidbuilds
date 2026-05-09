@@ -72,7 +72,7 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* ══ BOTTOM: headline + CTAs ══ */}
+      {/* ══ BOTTOM: headline + meta bar ══ */}
       <div className="absolute bottom-0 left-0 right-0 z-20 pointer-events-none">
         <div className="px-5 md:px-8 pt-4">
           <h1 className="uppercase leading-[0.9] tracking-wide text-white block"
@@ -88,12 +88,8 @@ export default function Hero() {
             <SpecialText speed={10} delay={0.6}>Websites.</SpecialText>
           </h1>
         </div>
-        <div className="mt-4 px-5 md:px-8 py-4 border-t border-white/[0.06] flex items-center justify-between pointer-events-auto">
-          <div className="flex gap-3">
-            <a href="#work" className="btn-primary">See my work →</a>
-            <a href="#contact" className="btn-ghost">Start a project</a>
-          </div>
-          <div className="hidden md:flex items-center gap-6">
+        <div className="mt-4 px-5 md:px-8 py-4 border-t border-white/[0.06] flex items-center justify-end">
+          <div className="flex items-center gap-6">
             <span className="font-mono text-[10px] text-white/20 uppercase tracking-widest">{time} CET</span>
             <span className="font-mono text-[10px] text-white/20 uppercase tracking-widest">Berlin, DE</span>
             <span className="font-mono text-[10px] text-white/20 uppercase tracking-widest">mdjk.dev © 2026</span>
