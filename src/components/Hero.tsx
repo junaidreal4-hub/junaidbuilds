@@ -19,19 +19,21 @@ export default function Hero() {
       className="relative flex flex-col pt-16 overflow-hidden bg-[#080808]"
       style={{ minHeight: '100dvh' }}
     >
-      {/* Spline 3D full background */}
-      <div className="absolute inset-0 z-0">
+      {/* Spline 3D full background — pointer-events-auto so cursor tracking works */}
+      <div className="absolute inset-0 z-0 pointer-events-auto">
         <SplineScene
           scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
           className="w-full h-full"
         />
       </div>
 
-      {/* Dark overlay so text stays readable */}
-      <div className="absolute inset-0 z-10 bg-[#080808]/60 pointer-events-none" />
+      {/* Dark overlay — pointer-events-none so mouse passes through to Spline */}
+      <div className="absolute inset-0 z-10 pointer-events-none"
+        style={{ background: 'linear-gradient(to bottom, rgba(8,8,8,0.45) 0%, rgba(8,8,8,0.25) 50%, rgba(8,8,8,0.65) 100%)' }}
+      />
 
       {/* Main content */}
-      <div className="relative z-20 flex-1 flex items-start pt-24 md:pt-32">
+      <div className="relative z-20 flex-1 flex items-start pt-24 md:pt-32 pointer-events-none">
         <div className="w-full px-6 md:px-10">
 
           {/* Line 1 */}
@@ -78,8 +80,8 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Bottom bar */}
-      <div className="relative z-20 w-full px-6 md:px-10 py-5 border-t border-white/[0.06] shrink-0">
+      {/* Bottom bar — pointer-events-auto so buttons remain clickable */}
+      <div className="relative z-20 w-full px-6 md:px-10 py-5 border-t border-white/[0.06] shrink-0 pointer-events-auto">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-2">
