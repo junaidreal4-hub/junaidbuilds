@@ -5,21 +5,21 @@ const PANELS = [
   {
     num: '01',
     title: 'Design',
-    sub: '( it’s intention )',
-    desc: 'Every pixel has a reason. I work at the intersection of aesthetics and function — sharp layouts, editorial typography, and interfaces that feel inevitable. No decoration for decoration’s sake.',
+    sub: '( it\'s intention )',
+    desc: 'Every pixel has a reason. I work at the intersection of aesthetics and function — sharp layouts, editorial typography, and interfaces that feel inevitable. No decoration for decoration\'s sake.',
     tools: ['Figma', 'Tailwind CSS', 'GSAP', 'Framer Motion', 'Responsive UI', 'Dark / Light Systems'],
   },
   {
     num: '02',
     title: 'Engineering',
-    sub: '( it’s precision )',
+    sub: '( it\'s precision )',
     desc: 'Clean, typed, maintainable code built to last. React, Next.js, FastAPI, PostgreSQL — full stack from frontend to database. Deployed, monitored, and production-ready from day one.',
     tools: ['Next.js', 'React', 'TypeScript', 'FastAPI', 'PostgreSQL', 'Vercel', 'Render', 'REST APIs'],
   },
   {
     num: '03',
     title: 'Strategy',
-    sub: '( it’s clarity )',
+    sub: '( it\'s clarity )',
     desc: 'I help you define what to build and why before writing a single line of code. Goal alignment, audience mapping, scope definition — so every decision compounds toward results, not just features.',
     tools: ['Project Scoping', 'SEO Strategy', 'Performance Audits', 'Roadmap Planning', 'Direct Communication'],
   },
@@ -53,36 +53,33 @@ const SERVICES = [
   },
 ]
 
+const TOTAL = PANELS.length.toString().padStart(2, '0')
+
 export default function Services() {
-  const trackRef  = useRef<HTMLDivElement>(null)
+  const trackRef   = useRef<HTMLDivElement>(null)
   const sectionRef = useRef<HTMLElement>(null)
-  const [open, setOpen] = useState<number | null>(null)
+  const [open, setOpen]     = useState<number | null>(null)
   const [active, setActive] = useState(0)
 
-  // Horizontal scroll pin via GSAP
   useEffect(() => {
     let ctx: import('gsap').Context | null = null
-
     async function init() {
       const { gsap }          = await import('gsap')
       const { ScrollTrigger } = await import('gsap/ScrollTrigger')
       gsap.registerPlugin(ScrollTrigger)
-
       ctx = gsap.context(() => {
         const panels = trackRef.current
         if (!panels) return
-
         const totalWidth = panels.scrollWidth - panels.offsetWidth
-
         gsap.to(panels, {
           x: -totalWidth,
           ease: 'none',
           scrollTrigger: {
-            trigger:  sectionRef.current,
-            start:    'top top',
-            end:      () => `+=${totalWidth * 1.2}`,
-            pin:      true,
-            scrub:    1,
+            trigger: sectionRef.current,
+            start:   'top top',
+            end:     () => `+=${totalWidth * 1.2}`,
+            pin:     true,
+            scrub:   1,
             anticipatePin: 1,
             onUpdate(self) {
               setActive(Math.min(PANELS.length - 1, Math.floor(self.progress * PANELS.length)))
@@ -91,7 +88,6 @@ export default function Services() {
         })
       })
     }
-
     init()
     return () => { ctx?.revert() }
   }, [])
@@ -99,13 +95,12 @@ export default function Services() {
   return (
     <section id="services" className="bg-[#080808]">
 
-      {/* ── PART 1: 3-panel horizontal scroll ── */}
+      {/* PART 1: horizontal scroll panels */}
       <div ref={sectionRef} className="relative overflow-hidden">
         <div className="container-width pt-24 pb-6 shrink-0">
           <p className="font-mono text-xs text-white/30 uppercase tracking-widest mb-2">/ What I Offer</p>
         </div>
 
-        {/* Horizontal track */}
         <div ref={trackRef} className="flex" style={{ width: `${PANELS.length * 100}vw` }}>
           {PANELS.map((panel, i) => (
             <div
@@ -113,9 +108,9 @@ export default function Services() {
               className="flex flex-col justify-between"
               style={{ width: '100vw', minHeight: '100vh', padding: '6rem 3rem 4rem' }}
             >
-              {/* Top — number + title */}
               <div>
-                <p className="font-mono text-xs text-white/20 mb-6">{panel.num} / 03</p>
+                {/* ✅ Dynamic counter */}
+                <p className="font-mono text-xs text-white/20 mb-6">{panel.num} / {TOTAL}</p>
                 <h2
                   className={`font-sans font-black uppercase leading-none tracking-tighter transition-colors duration-500 ${
                     active === i ? 'text-white' : 'text-white/20'
@@ -127,7 +122,6 @@ export default function Services() {
                 <p className="font-mono text-sm text-orange/70 italic mt-4">{panel.sub}</p>
               </div>
 
-              {/* Bottom — desc + tools */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-16 pt-10 border-t border-white/[0.06]">
                 <p className="text-white/50 text-base leading-relaxed max-w-md">{panel.desc}</p>
                 <div className="flex flex-wrap gap-3 content-start">
@@ -142,7 +136,6 @@ export default function Services() {
           ))}
         </div>
 
-        {/* Panel dots indicator */}
         <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-10">
           {PANELS.map((_, i) => (
             <span key={i} className={`block h-px transition-all duration-500 ${
@@ -152,10 +145,9 @@ export default function Services() {
         </div>
       </div>
 
-      {/* ── PART 2: Detailed services accordion ── */}
+      {/* PART 2: services accordion */}
       <div className="container-width py-24 border-t border-white/[0.06]">
         <p className="font-mono text-xs text-white/30 uppercase tracking-widest mb-16">/ Services & Pricing</p>
-
         <div className="flex flex-col">
           {SERVICES.map((s, i) => (
             <div key={s.title} className="border-b border-white/[0.06]">
@@ -178,7 +170,6 @@ export default function Services() {
                   open === i ? 'rotate-45' : ''
                 }`}>+</span>
               </button>
-
               <div className={`overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] ${
                 open === i ? 'max-h-64 pb-8' : 'max-h-0'
               }`}>
