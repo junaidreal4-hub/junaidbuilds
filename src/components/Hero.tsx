@@ -44,11 +44,11 @@ export default function Hero() {
       </div>
 
       {/* ── Bottom-left hero text ── */}
-      <div className="absolute bottom-24 left-6 md:left-10 z-20 pointer-events-none max-w-3xl">
+      <div className="absolute bottom-24 left-6 md:left-10 z-20 pointer-events-none max-w-xl">
 
         {/* Eyebrow */}
         <p
-          className="font-mono text-[10px] uppercase tracking-[0.25em] mb-5 opacity-0 animate-fade-up"
+          className="font-mono text-[10px] uppercase tracking-[0.25em] mb-4 opacity-0 animate-fade-up"
           style={{ color: '#f97316', animationDelay: '0ms', animationFillMode: 'forwards' }}
         >
           Full-Stack Developer &amp; Designer &nbsp;/&nbsp; Berlin
@@ -59,7 +59,7 @@ export default function Hero() {
           <h1
             className="font-sans font-bold uppercase tracking-tight leading-[0.92] opacity-0 animate-fade-up"
             style={{
-              fontSize: 'clamp(2.8rem, 7vw, 7.5rem)',
+              fontSize: 'clamp(1.6rem, 3.5vw, 3.8rem)',
               color: '#ffffff',
               animationDelay: '80ms',
               animationFillMode: 'forwards',
@@ -74,7 +74,7 @@ export default function Hero() {
           <h1
             className="font-sans font-bold uppercase tracking-tight leading-[0.92] opacity-0 animate-fade-up"
             style={{
-              fontSize: 'clamp(2.8rem, 7vw, 7.5rem)',
+              fontSize: 'clamp(1.6rem, 3.5vw, 3.8rem)',
               color: 'rgba(255,255,255,0.18)',
               animationDelay: '140ms',
               animationFillMode: 'forwards',
@@ -89,7 +89,7 @@ export default function Hero() {
           <h1
             className="font-sans font-bold uppercase tracking-tight leading-[0.92] opacity-0 animate-fade-up"
             style={{
-              fontSize: 'clamp(2.8rem, 7vw, 7.5rem)',
+              fontSize: 'clamp(1.6rem, 3.5vw, 3.8rem)',
               color: '#ffffff',
               animationDelay: '200ms',
               animationFillMode: 'forwards',
@@ -101,7 +101,7 @@ export default function Hero() {
 
         {/* CTA row */}
         <div
-          className="flex flex-wrap gap-3 mt-8 opacity-0 animate-fade-up pointer-events-auto"
+          className="flex flex-wrap gap-3 mt-6 opacity-0 animate-fade-up pointer-events-auto"
           style={{ animationDelay: '300ms', animationFillMode: 'forwards' }}
         >
           <a href="#work" className="btn-primary">See my work →</a>
