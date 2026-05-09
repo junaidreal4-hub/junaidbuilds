@@ -12,49 +12,64 @@ export default function Hero() {
     update(); const id = setInterval(update, 1000); return () => clearInterval(id)
   }, [])
 
+  const FS = 'clamp(2.8rem, 10.5vw, 12rem)'
+
   return (
     <section
       className="relative flex flex-col pt-16 overflow-hidden bg-[#080808]"
       style={{ minHeight: '100dvh' }}
     >
       <Waves strokeColor="rgba(255,255,255,0.05)" backgroundColor="transparent" pointerSize={0.3} />
-
-      {/* Cyan glow blob */}
       <div
         className="absolute top-[-80px] left-[-80px] w-[500px] h-[500px] rounded-full blur-[120px] pointer-events-none z-10"
         style={{ background: 'rgba(6,182,212,0.06)' }}
       />
 
-      {/* Main content */}
       <div className="relative z-20 flex-1 flex items-center">
         <div className="w-full px-6 md:px-10">
 
-          {/* Line 1: full width */}
+          {/* Line 1: I Build Modern */}
           <div className="overflow-hidden">
             <p
-              className="font-sans font-black uppercase tracking-tighter opacity-0 animate-fade-up whitespace-nowrap"
+              className="font-sans font-black uppercase tracking-tighter opacity-0 animate-fade-up"
               style={{
-                fontSize: 'clamp(2.2rem, 11.8vw, 13rem)',
-                lineHeight: 0.88,
+                fontSize: FS,
+                lineHeight: 0.9,
                 color: '#f5f5f0',
                 animationDelay: '0ms',
                 animationFillMode: 'forwards',
               }}
             >
-              I Build Modern{' '}
-              <span style={{ color: '#06B6D4', fontStyle: 'italic' }}>Websites</span>
+              I Build Modern
             </p>
           </div>
 
-          {/* Line 2: That Works. right aligned */}
+          {/* Line 2: Websites — cyan, left aligned */}
+          <div className="overflow-hidden">
+            <p
+              className="font-sans font-black uppercase tracking-tighter opacity-0 animate-fade-up"
+              style={{
+                fontSize: FS,
+                lineHeight: 0.9,
+                color: '#06B6D4',
+                fontStyle: 'italic',
+                animationDelay: '60ms',
+                animationFillMode: 'forwards',
+              }}
+            >
+              Websites
+            </p>
+          </div>
+
+          {/* Line 3: That Works. — right aligned */}
           <div className="overflow-hidden flex justify-end">
             <p
               className="font-sans font-black uppercase tracking-tighter opacity-0 animate-fade-up"
               style={{
-                fontSize: 'clamp(2.2rem, 11.8vw, 13rem)',
-                lineHeight: 0.88,
+                fontSize: FS,
+                lineHeight: 0.9,
                 color: '#f5f5f0',
-                animationDelay: '80ms',
+                animationDelay: '120ms',
                 animationFillMode: 'forwards',
               }}
             >
@@ -65,7 +80,7 @@ export default function Hero() {
           {/* Tagline */}
           <p
             className="font-mono text-[11px] md:text-xs uppercase tracking-widest opacity-0 animate-fade-up mt-8"
-            style={{ color: 'rgba(255,255,255,0.4)', animationDelay: '180ms', animationFillMode: 'forwards' }}
+            style={{ color: 'rgba(255,255,255,0.4)', animationDelay: '200ms', animationFillMode: 'forwards' }}
           >
             Full-Stack Developer &amp; Designer &nbsp;&middot;&nbsp; Berlin, Germany
           </p>
