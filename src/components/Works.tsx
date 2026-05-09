@@ -91,7 +91,7 @@ export default function Works() {
       <div className="container-width h-screen flex flex-col py-16">
 
         {/* Header */}
-        <div className="flex items-end justify-between mb-12 shrink-0">
+        <div className="flex items-end justify-between mb-8 shrink-0">
           <div>
             <p className="label mb-3">/ Selected Work</p>
             <h2 className="font-sans font-black text-[clamp(2rem,5vw,4rem)] text-heading tracking-tight leading-none">Projects</h2>
@@ -100,20 +100,20 @@ export default function Works() {
         </div>
 
         {/* Body */}
-        <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20 min-h-0">
+        <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 min-h-0">
 
           {/* LEFT — screenshot + detail */}
-          <div className="hidden md:flex flex-col justify-center gap-6">
-            <div key={active} className="animate-fade-up flex flex-col gap-6">
+          <div className="hidden md:flex flex-col justify-center">
+            <div key={active} className="animate-fade-up flex flex-col gap-5">
 
-              {/* Screenshot */}
-              <div className="relative w-full h-52 rounded-xl overflow-hidden bg-canvas">
+              {/* Full screenshot — 16:9 aspect ratio, contain so nothing crops */}
+              <div className="w-full aspect-video rounded-xl overflow-hidden bg-canvas relative">
                 {!imgErrors[active] ? (
                   <Image
                     src={p.image}
                     alt={p.title}
                     fill
-                    className="object-cover object-top"
+                    className="object-contain"
                     onError={() => setImgErrors(prev => { const n = [...prev]; n[active] = true; return n })}
                   />
                 ) : (
@@ -121,19 +121,24 @@ export default function Works() {
                     <span className="font-mono font-bold text-4xl text-orange/20">{p.index}</span>
                   </div>
                 )}
-                <div className="absolute inset-0 bg-gradient-to-t from-surface/40 to-transparent" />
               </div>
 
-              {/* Detail */}
-              <div className="flex flex-wrap gap-x-3 gap-y-1 mb-2">
+              {/* Stack tags */}
+              <div className="flex flex-wrap gap-x-3 gap-y-1">
                 {p.stack.map((t) => (
                   <span key={t} className="label text-orange">{t} &nbsp;·</span>
                 ))}
               </div>
-              <h3 className="font-sans font-black text-[clamp(2rem,4vw,3.5rem)] text-heading tracking-tight leading-none">
+
+              {/* Title */}
+              <h3 className="font-sans font-black text-[clamp(1.8rem,3.5vw,3rem)] text-heading tracking-tight leading-none">
                 {p.title}
               </h3>
+
+              {/* Description */}
               <p className="text-body text-sm leading-relaxed max-w-sm">{p.desc}</p>
+
+              {/* Links */}
               <div className="flex flex-wrap gap-4">
                 {p.live && (
                   <a href={p.live} target="_blank" rel="noopener noreferrer" className="btn-primary">Live Site →</a>
@@ -146,7 +151,7 @@ export default function Works() {
           {/* RIGHT — project name list */}
           <div className="flex flex-col justify-center">
             {projects.map((proj, i) => (
-              <div key={proj.title} className="py-6 flex items-center justify-between">
+              <div key={proj.title} className="py-5 flex items-center justify-between">
                 <div className="flex items-center gap-5">
                   <span className={`font-mono text-xs transition-colors duration-300 ${
                     active === i ? 'text-orange' : 'text-white/20'
@@ -170,14 +175,13 @@ export default function Works() {
       <div className="md:hidden container-width pb-20 pt-8 flex flex-col gap-0">
         {projects.map((proj, i) => (
           <div key={proj.title} className="py-6 border-b border-white/[0.05]">
-            {/* Mobile screenshot */}
-            <div className="relative w-full h-36 rounded-lg overflow-hidden bg-canvas mb-4">
+            <div className="w-full aspect-video rounded-lg overflow-hidden bg-canvas relative mb-4">
               {!imgErrors[i] ? (
                 <Image
                   src={proj.image}
                   alt={proj.title}
                   fill
-                  className="object-cover object-top"
+                  className="object-contain"
                   onError={() => setImgErrors(prev => { const n = [...prev]; n[i] = true; return n })}
                 />
               ) : (
