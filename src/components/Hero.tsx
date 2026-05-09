@@ -16,6 +16,7 @@ export default function Hero() {
   const hl = {
     fontSize: 'clamp(1.6rem, 3.5vw, 3.8rem)',
     fontWeight: 300,
+    fontFamily: 'var(--font-mono)',
     WebkitFontSmoothing: 'auto' as const,
     MozOsxFontSmoothing: 'auto' as const,
   }
@@ -41,14 +42,10 @@ export default function Hero() {
         }}
       />
 
-      {/* ── TOP-LEFT: name / role tag ── */}
+      {/* ── TOP-LEFT: name / role ── */}
       <div className="absolute top-24 left-6 md:left-10 z-20 pointer-events-none">
-        <p className="font-mono text-[10px] uppercase tracking-[0.25em] mb-1" style={{ color: '#f97316' }}>
-          <SpecialText speed={18} delay={0.2}>mdjk.dev</SpecialText>
-        </p>
-        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/30">
-          <SpecialText speed={18} delay={0.5}>Full-Stack Dev & Designer</SpecialText>
-        </p>
+        <p className="font-mono text-[10px] uppercase tracking-[0.25em] mb-1" style={{ color: '#f97316' }}>mdjk.dev</p>
+        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/30">Full-Stack Dev &amp; Designer</p>
       </div>
 
       {/* ── TOP-RIGHT: availability ── */}
@@ -57,29 +54,18 @@ export default function Hero() {
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-60" style={{ background: '#f97316' }} />
           <span className="relative inline-flex h-1.5 w-1.5 rounded-full" style={{ background: '#f97316' }} />
         </span>
-        <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest">
-          <SpecialText speed={18} delay={0.8}>Available for work</SpecialText>
-        </span>
+        <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest">Available for work</span>
       </div>
 
-      {/* ── BOTTOM-LEFT: main headlines ── */}
+      {/* ── BOTTOM-LEFT: headline with scramble ── */}
       <div className="absolute bottom-20 left-6 md:left-10 z-20 pointer-events-none max-w-lg">
-        <h1
-          className="subpixel-antialiased uppercase tracking-tight leading-[0.92] block"
-          style={{ ...hl, color: '#ffffff' }}
-        >
-          <SpecialText speed={15} delay={0.3}>Turning Ideas</SpecialText>
+        <h1 className="subpixel-antialiased uppercase tracking-tight leading-[0.92] block" style={{ ...hl, color: '#ffffff' }}>
+          <SpecialText speed={15} delay={0.2}>Turning Ideas Into</SpecialText>
         </h1>
-        <h1
-          className="subpixel-antialiased uppercase tracking-tight leading-[0.92] block"
-          style={{ ...hl, color: 'rgba(255,255,255,0.2)' }}
-        >
-          <SpecialText speed={15} delay={0.55}>Into Interactive</SpecialText>
+        <h1 className="subpixel-antialiased uppercase tracking-tight leading-[0.92] block" style={{ ...hl, color: 'rgba(255,255,255,0.2)' }}>
+          <SpecialText speed={15} delay={0.5}>Modern & Interactive</SpecialText>
         </h1>
-        <h1
-          className="subpixel-antialiased uppercase tracking-tight leading-[0.92] block"
-          style={{ ...hl, color: '#ffffff' }}
-        >
+        <h1 className="subpixel-antialiased uppercase tracking-tight leading-[0.92] block" style={{ ...hl, color: '#ffffff' }}>
           <SpecialText speed={15} delay={0.8}>Websites.</SpecialText>
         </h1>
 
@@ -90,12 +76,11 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* ── BOTTOM-RIGHT: descriptor ── */}
-      <div className="absolute bottom-20 right-6 md:right-10 z-20 pointer-events-none text-right max-w-[200px]">
-        <p className="font-mono text-[10px] uppercase tracking-widest text-white/25 leading-relaxed">
-          <SpecialText speed={18} delay={1.1}>React & Next.js</SpecialText>
-          <br />
-          <SpecialText speed={18} delay={1.4}>Berlin, Germany</SpecialText>
+      {/* ── BOTTOM-RIGHT: stack + location ── */}
+      <div className="absolute bottom-20 right-6 md:right-10 z-20 pointer-events-none text-right">
+        <p className="font-mono text-[10px] uppercase tracking-widest text-white/25 leading-loose">
+          React &amp; Next.js<br />
+          Berlin, Germany
         </p>
       </div>
 
