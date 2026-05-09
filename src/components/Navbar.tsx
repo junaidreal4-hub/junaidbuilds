@@ -2,119 +2,77 @@
 import { useState, useEffect } from 'react'
 
 const links = [
-  { index: '01', label: 'Work',     href: '#work'     },
-  { index: '02', label: 'About',    href: '#about'    },
-  { index: '03', label: 'Services', href: '#services' },
-  { index: '04', label: 'Contact',  href: '#contact'  },
-]
-
-const socials = [
-  { label: 'GitHub',    href: 'https://github.com/junaidreal4-hub' },
-  { label: 'LinkedIn',  href: 'https://linkedin.com/in/junaidreal4' },
-  { label: 'Instagram', href: 'https://instagram.com/junaidreal4'  },
+  { label: 'Work',     href: '#work'     },
+  { label: 'About',    href: '#about'    },
+  { label: 'Services', href: '#services' },
+  { label: 'Contact',  href: '#contact'  },
 ]
 
 export default function Navbar() {
-  const [open, setOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+  const [active, setActive] = useState('')
 
   useEffect(() => {
-    document.body.style.overflow = open ? 'hidden' : ''
-    return () => { document.body.style.overflow = '' }
-  }, [open])
-
-  const close = () => setOpen(false)
+    const onScroll = () => setScrolled(window.scrollY > 40)
+    window.addEventListener('scroll', onScroll)
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   return (
-    <>
-      {/* Top bar — MDJK.DEV hard left, MENU hard right, full bleed */}
-      <header className="fixed top-0 left-0 right-0 z-50 mix-blend-difference">
-        <div className="flex items-center justify-between h-16 px-6 md:px-10">
+    <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-10 h-16 pointer-events-none">
 
-          {/* Wordmark — far left */}
-          <a
-            href="/"
-            onClick={close}
-            className="font-mono font-bold text-white text-sm tracking-widest uppercase"
-          >
-            mdjk.dev
-          </a>
-
-          {/* Menu toggle — far right */}
-          <button
-            onClick={() => setOpen((v) => !v)}
-            aria-label={open ? 'Close menu' : 'Open menu'}
-            className="font-mono text-white text-xs tracking-widest uppercase flex items-center gap-3 group"
-          >
-            <span className="relative w-6 h-3.5 flex flex-col justify-between">
-              <span className={`block h-px bg-white transition-all duration-500 origin-center ${
-                open ? 'rotate-45 translate-y-[7px]' : ''
-              }`} />
-              <span className={`block h-px bg-white transition-all duration-300 ${
-                open ? 'opacity-0 scale-x-0' : ''
-              }`} />
-              <span className={`block h-px bg-white transition-all duration-500 origin-center ${
-                open ? '-rotate-45 -translate-y-[7px]' : ''
-              }`} />
-            </span>
-            <span>{open ? 'CLOSE' : 'MENU'}</span>
-          </button>
-        </div>
-      </header>
-
-      {/* Full-screen overlay */}
-      <div
-        className={`fixed inset-0 z-40 bg-[#0a0a0a] flex flex-col transition-all duration-700 ease-[cubic-bezier(0.76,0,0.24,1)] ${
-          open ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-full pointer-events-none'
-        }`}
+      {/* Wordmark — left */}
+      <a
+        href="/"
+        className="pointer-events-auto font-mono font-bold text-white text-sm tracking-widest uppercase mix-blend-difference"
       >
-        <div className="flex flex-col justify-between h-full pt-28 pb-12 px-6 md:px-10">
-          <nav className="flex flex-col gap-0">
-            {links.map((l, i) => (
-              <a
-                key={l.href}
-                href={l.href}
-                onClick={close}
-                className={`group flex items-end justify-between border-b border-white/10 py-7 transition-all duration-700 ${
-                  open ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-                }`}
-                style={{ transitionDelay: open ? `${150 + i * 80}ms` : '0ms' }}
-              >
-                <div className="flex items-end gap-6">
-                  <span className="font-mono text-xs text-white/30 mb-1">{l.index}</span>
-                  <span className="font-sans font-black text-[clamp(3rem,10vw,8rem)] text-white tracking-tight leading-none group-hover:text-cyan transition-colors duration-300">
-                    {l.label}
-                  </span>
-                </div>
-                <span className="font-mono text-xs text-white/30 mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">→</span>
-              </a>
-            ))}
-          </nav>
+        mdjk.dev
+      </a>
 
-          <div
-            className={`flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pt-8 transition-all duration-700 ${
-              open ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-            }`}
-            style={{ transitionDelay: open ? '550ms' : '0ms' }}
+      {/* Bubble nav — center */}
+      <nav
+        className="pointer-events-auto flex items-center gap-1 px-2 py-2 rounded-full transition-all duration-500"
+        style={{
+          background: scrolled ? 'rgba(255,255,255,0.06)' : 'rgba(255,255,255,0.04)',
+          backdropFilter: 'blur(12px)',
+          WebkitBackdropFilter: 'blur(12px)',
+          border: '1px solid rgba(255,255,255,0.08)',
+          boxShadow: scrolled ? '0 8px 32px rgba(0,0,0,0.4)' : 'none',
+        }}
+      >
+        {links.map((l) => (
+          <a
+            key={l.href}
+            href={l.href}
+            onClick={() => setActive(l.href)}
+            className="relative px-4 py-1.5 rounded-full font-mono text-[11px] uppercase tracking-widest transition-all duration-200"
+            style={{
+              color: active === l.href ? '#080808' : 'rgba(255,255,255,0.55)',
+              background: active === l.href ? '#ffffff' : 'transparent',
+            }}
+            onMouseEnter={e => {
+              if (active !== l.href) (e.currentTarget as HTMLElement).style.color = '#ffffff'
+            }}
+            onMouseLeave={e => {
+              if (active !== l.href) (e.currentTarget as HTMLElement).style.color = 'rgba(255,255,255,0.55)'
+            }}
           >
-            <div className="flex gap-8">
-              {socials.map((s) => (
-                <a
-                  key={s.label}
-                  href={s.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-mono text-xs text-white/40 hover:text-white tracking-widest uppercase transition-colors duration-200"
-                >
-                  {s.label}
-                </a>
-              ))}
-            </div>
-            <p className="font-mono text-xs text-white/30 tracking-widest uppercase">
-              Berlin, Germany &nbsp;·&nbsp; Available Now
-            </p>
-          </div>
-        </div>
-      </div>
-    </>
+            {l.label}
+          </a>
+        ))}
+      </nav>
+
+      {/* CTA — right */}
+      <a
+        href="#contact"
+        className="pointer-events-auto font-mono text-[11px] uppercase tracking-widest px-5 py-2 rounded-full transition-all duration-200"
+        style={{
+          background: '#f97316',
+          color: '#080808',
+        }}
+      >
+        Let’s Talk
+      </a>
+    </header>
   )
 }
