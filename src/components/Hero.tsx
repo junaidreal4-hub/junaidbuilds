@@ -25,7 +25,7 @@ export default function Hero() {
       className="relative overflow-hidden bg-[#080808]"
       style={{ minHeight: '100dvh' }}
     >
-      {/* ── Spline 3D — anchored to bottom half ── */}
+      {/* ── Spline 3D ── */}
       <div className="absolute left-0 right-0 bottom-0 z-0 pointer-events-auto" style={{ top: '35%' }}>
         <SplineScene
           scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
@@ -33,13 +33,13 @@ export default function Hero() {
         />
       </div>
 
-      {/* ── Fade: heavy top, soft bottom ── */}
+      {/* ── Fade ── */}
       <div className="absolute inset-0 z-10 pointer-events-none" style={{
         background: 'linear-gradient(to bottom, rgba(8,8,8,1) 0%, rgba(8,8,8,0.85) 30%, rgba(8,8,8,0.0) 55%, rgba(8,8,8,0.5) 100%)',
       }} />
 
       {/* ══ TOP: 4 info columns ══ */}
-      <div className="absolute top-0 left-0 right-0 z-20 pointer-events-none">
+      <div className="absolute left-0 right-0 z-20 pointer-events-none" style={{ top: '8%' }}>
         <div className="grid grid-cols-4">
           <div className="px-6 md:px-8 py-6">
             <p className="text-sm text-white uppercase tracking-widest mb-1 font-medium">Mohammed Junaid</p>
@@ -88,7 +88,6 @@ export default function Hero() {
             <SpecialText speed={10} delay={0.6}>Websites.</SpecialText>
           </h1>
         </div>
-
         <div className="mt-4 px-5 md:px-8 py-4 border-t border-white/[0.06] flex items-center justify-between pointer-events-auto">
           <div className="flex gap-3">
             <a href="#work" className="btn-primary">See my work →</a>
