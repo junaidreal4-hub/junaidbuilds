@@ -28,16 +28,16 @@ export function Waves({
     backgroundColor = "transparent",
     pointerSize = 0.4
 }: WavesProps) {
-    const containerRef  = useRef<HTMLDivElement>(null)
-    const svgRef        = useRef<SVGSVGElement>(null)
-    const mouseRef      = useRef({
+    const containerRef = useRef<HTMLDivElement>(null)
+    const svgRef = useRef<SVGSVGElement>(null)
+    const mouseRef = useRef({
         x: -10, y: 0, lx: 0, ly: 0,
         sx: 0, sy: 0, v: 0, vs: 0, a: 0, set: false,
     })
-    const pathsRef    = useRef<SVGPathElement[]>([])
-    const linesRef    = useRef<Point[][]>([])
-    const noiseRef    = useRef<((x: number, y: number) => number) | null>(null)
-    const rafRef      = useRef<number | null>(null)
+    const pathsRef   = useRef<SVGPathElement[]>([])
+    const linesRef   = useRef<Point[][]>([])
+    const noiseRef   = useRef<((x: number, y: number) => number) | null>(null)
+    const rafRef     = useRef<number | null>(null)
     const boundingRef = useRef<DOMRect | null>(null)
 
     useEffect(() => {
@@ -116,6 +116,10 @@ export function Waves({
             mouse.lx = mouse.x; mouse.ly = mouse.y
             mouse.set = true
         }
+        if (containerRef.current) {
+            containerRef.current.style.setProperty('--x', `${mouse.sx}px`)
+            containerRef.current.style.setProperty('--y', `${mouse.sy}px`)
+        }
     }
 
     const movePoints = (time: number) => {
@@ -131,28 +135,24 @@ export function Waves({
                 ) * 8
                 p.wave.x = Math.cos(move) * 12
                 p.wave.y = Math.sin(move) * 6
-
                 const dx = p.x - mouse.sx
                 const dy = p.y - mouse.sy
                 const d  = Math.hypot(dx, dy)
-                // Larger influence radius + stronger force for more dramatic effect
-                const l  = Math.max(220, mouse.vs)
+                const l  = Math.max(175, mouse.vs)
                 if (d < l) {
                     const s = 1 - d / l
                     const f = Math.cos(d * 0.001) * s
-                    p.cursor.vx += Math.cos(mouse.a) * f * l * mouse.vs * 0.00045
-                    p.cursor.vy += Math.sin(mouse.a) * f * l * mouse.vs * 0.00045
+                    p.cursor.vx += Math.cos(mouse.a) * f * l * mouse.vs * 0.00035
+                    p.cursor.vy += Math.sin(mouse.a) * f * l * mouse.vs * 0.00035
                 }
-                // Slower return-to-rest = longer trailing ripple
-                p.cursor.vx += (0 - p.cursor.x) * 0.006
-                p.cursor.vy += (0 - p.cursor.y) * 0.006
-                // Less damping = smoother, longer wave tail
-                p.cursor.vx *= 0.97
-                p.cursor.vy *= 0.97
+                p.cursor.vx += (0 - p.cursor.x) * 0.01
+                p.cursor.vy += (0 - p.cursor.y) * 0.01
+                p.cursor.vx *= 0.95
+                p.cursor.vy *= 0.95
                 p.cursor.x += p.cursor.vx
                 p.cursor.y += p.cursor.vy
-                p.cursor.x = Math.min(60, Math.max(-60, p.cursor.x))
-                p.cursor.y = Math.min(60, Math.max(-60, p.cursor.y))
+                p.cursor.x = Math.min(50, Math.max(-50, p.cursor.x))
+                p.cursor.y = Math.min(50, Math.max(-50, p.cursor.y))
             })
         })
     }
@@ -168,12 +168,8 @@ export function Waves({
             const first = moved(points[0], false)
             let d = `M ${first.x} ${first.y}`
             for (let i = 1; i < points.length; i++) {
-                const cur  = moved(points[i])
-                const prev = moved(points[i - 1])
-                // Quadratic bezier instead of straight lines = smoother curves
-                const mx = (prev.x + cur.x) / 2
-                const my = (prev.y + cur.y) / 2
-                d += ` Q ${prev.x} ${prev.y} ${mx} ${my}`
+                const cur = moved(points[i])
+                d += ` L ${cur.x} ${cur.y}`
             }
             pathsRef.current[lIndex].setAttribute('d', d)
         })
@@ -181,14 +177,13 @@ export function Waves({
 
     const tick = (time: number) => {
         const mouse = mouseRef.current
-        // Smoother lerp: 0.06 instead of 0.1 so pointer influence glides
-        mouse.sx += (mouse.x - mouse.sx) * 0.06
-        mouse.sy += (mouse.y - mouse.sy) * 0.06
+        mouse.sx += (mouse.x - mouse.sx) * 0.1
+        mouse.sy += (mouse.y - mouse.sy) * 0.1
         const dx = mouse.x - mouse.lx
         const dy = mouse.y - mouse.ly
         const d  = Math.hypot(dx, dy)
         mouse.v  = d
-        mouse.vs += (d - mouse.vs) * 0.08
+        mouse.vs += (d - mouse.vs) * 0.1
         mouse.vs  = Math.min(100, mouse.vs)
         mouse.lx  = mouse.x
         mouse.ly  = mouse.y
@@ -219,6 +214,20 @@ export function Waves({
                 ref={svgRef}
                 className="block w-full h-full"
                 xmlns="http://www.w3.org/2000/svg"
+            />
+            <div
+                style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: `${pointerSize}rem`,
+                    height: `${pointerSize}rem`,
+                    background: strokeColor,
+                    borderRadius: '50%',
+                    transform: 'translate3d(calc(var(--x) - 50%), calc(var(--y) - 50%), 0)',
+                    willChange: 'transform',
+                    pointerEvents: 'none',
+                }}
             />
         </div>
     )
