@@ -1,76 +1,194 @@
 'use client'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
-const services = [
+const PANELS = [
+  {
+    num: '01',
+    title: 'Design',
+    sub: '( it’s intention )',
+    desc: 'Every pixel has a reason. I work at the intersection of aesthetics and function — sharp layouts, editorial typography, and interfaces that feel inevitable. No decoration for decoration’s sake.',
+    tools: ['Figma', 'Tailwind CSS', 'GSAP', 'Framer Motion', 'Responsive UI', 'Dark / Light Systems'],
+  },
+  {
+    num: '02',
+    title: 'Engineering',
+    sub: '( it’s precision )',
+    desc: 'Clean, typed, maintainable code built to last. React, Next.js, FastAPI, PostgreSQL — full stack from frontend to database. Deployed, monitored, and production-ready from day one.',
+    tools: ['Next.js', 'React', 'TypeScript', 'FastAPI', 'PostgreSQL', 'Vercel', 'Render', 'REST APIs'],
+  },
+  {
+    num: '03',
+    title: 'Strategy',
+    sub: '( it’s clarity )',
+    desc: 'I help you define what to build and why before writing a single line of code. Goal alignment, audience mapping, scope definition — so every decision compounds toward results, not just features.',
+    tools: ['Project Scoping', 'SEO Strategy', 'Performance Audits', 'Roadmap Planning', 'Direct Communication'],
+  },
+]
+
+const SERVICES = [
   {
     index: '01', title: 'Web Development', sub: 'React / Next.js / TypeScript',
-    desc: 'Fully custom websites built with React and Next.js. No drag-and-drop builders, no templates. Every site is fast, accessible, responsive, and SEO-ready from the ground up.',
-    tools: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'GSAP', 'Vercel'],
+    desc: 'Fully custom websites built with React and Next.js. Fast, accessible, responsive, and SEO-ready from the ground up.',
+    tools: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'GSAP', 'Vercel'],
   },
   {
     index: '02', title: 'Backend & APIs', sub: 'FastAPI / Node.js / PostgreSQL',
-    desc: 'REST APIs, auth systems, and complete database architecture. I handle the full backend stack — deployed, monitored, and production-ready.',
-    tools: ['FastAPI', 'Python', 'PostgreSQL', 'SQLAlchemy', 'Alembic', 'Render', 'Supabase', 'Google Cloud'],
+    desc: 'REST APIs, auth systems, and complete database architecture. Deployed, monitored, and production-ready.',
+    tools: ['FastAPI', 'Python', 'PostgreSQL', 'SQLAlchemy', 'Render', 'Google Cloud'],
   },
   {
     index: '03', title: 'Full-Stack SaaS', sub: 'End-to-End Product Development',
-    desc: 'Custom web applications with auth, dashboards, subscriptions, and complex business logic. From zero to production-ready MVP.',
-    tools: ['Next.js', 'FastAPI', 'PostgreSQL', 'OpenAI API', 'Stripe', 'Cloudinary', 'JWT Auth'],
+    desc: 'Custom web applications with auth, dashboards, subscriptions, and business logic. Zero to production-ready MVP.',
+    tools: ['Next.js', 'FastAPI', 'PostgreSQL', 'OpenAI API', 'Stripe', 'JWT Auth'],
   },
   {
     index: '04', title: 'E-Commerce', sub: 'Shops / Payments / CMS',
-    desc: 'Full online stores with product catalogues, cart, checkout, and Stripe payment integration. Built for conversion.',
-    tools: ['Next.js', 'Stripe', 'Sanity CMS', 'Vercel', 'Tailwind CSS'],
+    desc: 'Full online stores with product catalogues, cart, checkout, and Stripe integration. Built for conversion.',
+    tools: ['Next.js', 'Stripe', 'Sanity CMS', 'Vercel'],
   },
   {
-    index: '05', title: 'Maintenance & Support', sub: 'Monthly Retainer',
-    desc: 'Ongoing updates, performance monitoring, bug fixes, and new feature additions. Monthly retainer from €150/mo.',
-    tools: ['Performance audits', 'Bug fixes', 'New features', 'Priority support'],
+    index: '05', title: 'Maintenance & Support', sub: 'Monthly Retainer from €150',
+    desc: 'Ongoing updates, performance monitoring, bug fixes, and new feature additions. Priority support included.',
+    tools: ['Performance Audits', 'Bug Fixes', 'New Features', 'Priority Support'],
   },
 ]
 
 export default function Services() {
+  const trackRef  = useRef<HTMLDivElement>(null)
+  const sectionRef = useRef<HTMLElement>(null)
   const [open, setOpen] = useState<number | null>(null)
+  const [active, setActive] = useState(0)
+
+  // Horizontal scroll pin via GSAP
+  useEffect(() => {
+    let ctx: import('gsap').Context | null = null
+
+    async function init() {
+      const { gsap }          = await import('gsap')
+      const { ScrollTrigger } = await import('gsap/ScrollTrigger')
+      gsap.registerPlugin(ScrollTrigger)
+
+      ctx = gsap.context(() => {
+        const panels = trackRef.current
+        if (!panels) return
+
+        const totalWidth = panels.scrollWidth - panels.offsetWidth
+
+        gsap.to(panels, {
+          x: -totalWidth,
+          ease: 'none',
+          scrollTrigger: {
+            trigger:  sectionRef.current,
+            start:    'top top',
+            end:      () => `+=${totalWidth * 1.2}`,
+            pin:      true,
+            scrub:    1,
+            anticipatePin: 1,
+            onUpdate(self) {
+              setActive(Math.min(PANELS.length - 1, Math.floor(self.progress * PANELS.length)))
+            },
+          },
+        })
+      })
+    }
+
+    init()
+    return () => { ctx?.revert() }
+  }, [])
 
   return (
-    <section id="services" className="section-pad bg-canvas">
-      <div className="container-width">
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
-          <div>
-            <p className="label mb-4">/ Core Services</p>
-            <h2 className="font-sans font-black text-[clamp(2rem,5vw,4rem)] text-heading tracking-tight leading-none">What I offer</h2>
-          </div>
-          <p className="text-sm text-muted max-w-xs">Handcrafted digital solutions for founders and businesses.</p>
+    <section id="services" className="bg-[#080808]">
+
+      {/* ── PART 1: 3-panel horizontal scroll ── */}
+      <div ref={sectionRef} className="relative overflow-hidden">
+        <div className="container-width pt-24 pb-6 shrink-0">
+          <p className="font-mono text-xs text-white/30 uppercase tracking-widest mb-2">/ What I Offer</p>
         </div>
 
-        <div>
-          {services.map((s, i) => (
-            <div key={s.title} className="border-b border-white/[0.05]">
+        {/* Horizontal track */}
+        <div ref={trackRef} className="flex" style={{ width: `${PANELS.length * 100}vw` }}>
+          {PANELS.map((panel, i) => (
+            <div
+              key={panel.num}
+              className="flex flex-col justify-between"
+              style={{ width: '100vw', minHeight: '100vh', padding: '6rem 3rem 4rem' }}
+            >
+              {/* Top — number + title */}
+              <div>
+                <p className="font-mono text-xs text-white/20 mb-6">{panel.num} / 03</p>
+                <h2
+                  className={`font-sans font-black uppercase leading-none tracking-tighter transition-colors duration-500 ${
+                    active === i ? 'text-white' : 'text-white/20'
+                  }`}
+                  style={{ fontSize: 'clamp(4rem, 14vw, 12rem)' }}
+                >
+                  {panel.title}
+                </h2>
+                <p className="font-mono text-sm text-orange/70 italic mt-4">{panel.sub}</p>
+              </div>
+
+              {/* Bottom — desc + tools */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-16 pt-10 border-t border-white/[0.06]">
+                <p className="text-white/50 text-base leading-relaxed max-w-md">{panel.desc}</p>
+                <div className="flex flex-wrap gap-3 content-start">
+                  {panel.tools.map((t) => (
+                    <span key={t} className="font-mono text-xs text-white/30 border border-white/10 px-3 py-1.5 rounded-full">
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Panel dots indicator */}
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+          {PANELS.map((_, i) => (
+            <span key={i} className={`block h-px transition-all duration-500 ${
+              active === i ? 'w-8 bg-orange' : 'w-4 bg-white/20'
+            }`} />
+          ))}
+        </div>
+      </div>
+
+      {/* ── PART 2: Detailed services accordion ── */}
+      <div className="container-width py-24 border-t border-white/[0.06]">
+        <p className="font-mono text-xs text-white/30 uppercase tracking-widest mb-16">/ Services & Pricing</p>
+
+        <div className="flex flex-col">
+          {SERVICES.map((s, i) => (
+            <div key={s.title} className="border-b border-white/[0.06]">
               <button
                 onClick={() => setOpen(open === i ? null : i)}
-                className="w-full text-left py-8 flex items-start md:items-center justify-between gap-6 group"
+                className="w-full text-left py-7 flex items-center justify-between gap-6 group"
               >
-                <div className="flex items-start md:items-center gap-6 md:gap-10 flex-1">
-                  <span className="label w-8 shrink-0 text-orange">{s.index}</span>
-                  <div className="flex flex-col md:flex-row md:items-center gap-1 md:gap-6">
-                    <span className={`font-sans font-bold text-2xl md:text-3xl tracking-tight transition-colors duration-200 ${
-                      open === i ? 'text-heading' : 'text-white/40 group-hover:text-heading'
-                    }`}>{s.title}</span>
-                    <span className="label">{s.sub}</span>
+                <div className="flex items-center gap-8">
+                  <span className="font-mono text-xs text-white/20">{s.index}</span>
+                  <div className="flex flex-col md:flex-row md:items-center gap-1 md:gap-8">
+                    <span className={`font-sans font-black uppercase tracking-tight transition-colors duration-300 group-hover:text-orange ${
+                      open === i ? 'text-orange' : 'text-white'
+                    }`} style={{ fontSize: 'clamp(1.4rem, 3vw, 2.4rem)' }}>
+                      {s.title}
+                    </span>
+                    <span className="font-mono text-xs text-white/30 uppercase tracking-widest">{s.sub}</span>
                   </div>
                 </div>
-                <span className={`text-heading text-2xl font-light shrink-0 transition-transform duration-300 ${
+                <span className={`font-mono text-white/30 text-xl transition-transform duration-500 shrink-0 ${
                   open === i ? 'rotate-45' : ''
                 }`}>+</span>
               </button>
-              <div className={`overflow-hidden transition-all duration-500 ease-in-out ${
-                open === i ? 'max-h-72 pb-10' : 'max-h-0'
+
+              <div className={`overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] ${
+                open === i ? 'max-h-64 pb-8' : 'max-h-0'
               }`}>
-                <div className="ml-0 md:ml-[112px] grid grid-cols-1 md:grid-cols-2 gap-8">
-                  <p className="text-sm leading-relaxed text-body">{s.desc}</p>
-                  <div className="flex flex-wrap gap-x-4 gap-y-2">
+                <div className="flex flex-col md:flex-row gap-10 pl-14">
+                  <p className="text-white/40 text-sm leading-relaxed max-w-md">{s.desc}</p>
+                  <div className="flex flex-wrap gap-2 content-start">
                     {s.tools.map((t) => (
-                      <span key={t} className="label text-orange">{t}</span>
+                      <span key={t} className="font-mono text-xs text-orange/60 border border-orange/20 px-3 py-1 rounded-full">
+                        {t}
+                      </span>
                     ))}
                   </div>
                 </div>
