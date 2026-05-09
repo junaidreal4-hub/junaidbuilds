@@ -13,13 +13,14 @@ export default function Hero() {
     update(); const id = setInterval(update, 1000); return () => clearInterval(id)
   }, [])
 
-  const hl = {
-    fontSize: 'clamp(0.95rem, 1.6vw, 1.5rem)',
-    fontWeight: 300,
+  const word = {
     fontFamily: 'var(--font-mono)',
+    fontWeight: 300,
+    fontSize: 'clamp(0.9rem, 1.5vw, 1.4rem)',
     WebkitFontSmoothing: 'auto' as const,
     MozOsxFontSmoothing: 'auto' as const,
-    lineHeight: 1.3,
+    lineHeight: 1,
+    letterSpacing: '-0.01em',
   }
 
   return (
@@ -35,12 +36,9 @@ export default function Hero() {
         />
       </div>
 
-      {/* ── Gradient overlay ── */}
-      <div
-        className="absolute inset-0 z-10 pointer-events-none"
-        style={{
-          background: 'linear-gradient(to top, rgba(8,8,8,0.88) 0%, rgba(8,8,8,0.2) 45%, rgba(8,8,8,0.88) 100%)',
-        }}
+      {/* ── Subtle vignette ── */}
+      <div className="absolute inset-0 z-10 pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse at center, transparent 40%, rgba(8,8,8,0.7) 100%)' }}
       />
 
       {/* ── TOP-LEFT: name + role ── */}
@@ -61,28 +59,68 @@ export default function Hero() {
         <p className="font-mono text-[10px] text-white/20 tabular-nums tracking-widest">{time} CET</p>
       </div>
 
-      {/* ── BOTTOM-LEFT: headline lines 1 + 2 ── */}
-      <div className="absolute bottom-20 left-6 md:left-10 z-20 pointer-events-none">
-        <h1 className="subpixel-antialiased uppercase tracking-tight block" style={{ ...hl, color: '#ffffff' }}>
-          <SpecialText speed={15} delay={0.2}>Turning Ideas Into</SpecialText>
+      {/* ── SCATTERED HEADLINE WORDS ── */}
+
+      {/* "Turning" — mid-left */}
+      <div className="absolute z-20 pointer-events-none" style={{ top: '38%', left: '5%' }}>
+        <h1 className="subpixel-antialiased uppercase" style={{ ...word, color: '#ffffff' }}>
+          <SpecialText speed={14} delay={0.2}>Turning</SpecialText>
         </h1>
-        <h1 className="subpixel-antialiased uppercase tracking-tight block" style={{ ...hl, color: 'rgba(255,255,255,0.22)' }}>
-          <SpecialText speed={15} delay={0.45}>Modern &amp; Interactive</SpecialText>
+      </div>
+
+      {/* "Ideas" — upper-center-left */}
+      <div className="absolute z-20 pointer-events-none" style={{ top: '28%', left: '28%' }}>
+        <h1 className="subpixel-antialiased uppercase" style={{ ...word, color: 'rgba(255,255,255,0.5)' }}>
+          <SpecialText speed={14} delay={0.35}>Ideas</SpecialText>
         </h1>
-        <h1 className="subpixel-antialiased uppercase tracking-tight block" style={{ ...hl, color: '#ffffff' }}>
-          <SpecialText speed={15} delay={0.7}>Websites.</SpecialText>
+      </div>
+
+      {/* "Into" — upper-center-right */}
+      <div className="absolute z-20 pointer-events-none" style={{ top: '26%', right: '22%' }}>
+        <h1 className="subpixel-antialiased uppercase" style={{ ...word, color: '#ffffff' }}>
+          <SpecialText speed={14} delay={0.5}>Into</SpecialText>
         </h1>
-        <div className="flex flex-wrap gap-2 mt-4 pointer-events-auto">
+      </div>
+
+      {/* "Modern" — lower-center-left */}
+      <div className="absolute z-20 pointer-events-none" style={{ top: '58%', left: '12%' }}>
+        <h1 className="subpixel-antialiased uppercase" style={{ ...word, color: 'rgba(255,255,255,0.22)' }}>
+          <SpecialText speed={14} delay={0.65}>Modern</SpecialText>
+        </h1>
+      </div>
+
+      {/* "&" — center */}
+      <div className="absolute z-20 pointer-events-none" style={{ top: '60%', left: '34%' }}>
+        <h1 className="subpixel-antialiased uppercase" style={{ ...word, color: 'rgba(255,255,255,0.15)' }}>
+          <SpecialText speed={14} delay={0.75}>&amp;</SpecialText>
+        </h1>
+      </div>
+
+      {/* "Interactive" — lower-center-right */}
+      <div className="absolute z-20 pointer-events-none" style={{ top: '62%', right: '10%' }}>
+        <h1 className="subpixel-antialiased uppercase" style={{ ...word, color: 'rgba(255,255,255,0.5)' }}>
+          <SpecialText speed={14} delay={0.85}>Interactive</SpecialText>
+        </h1>
+      </div>
+
+      {/* "Websites." — bottom-center */}
+      <div className="absolute z-20 pointer-events-none" style={{ bottom: '22%', left: '50%', transform: 'translateX(-50%)' }}>
+        <h1 className="subpixel-antialiased uppercase" style={{ ...word, color: '#ffffff' }}>
+          <SpecialText speed={14} delay={1.0}>Websites.</SpecialText>
+        </h1>
+      </div>
+
+      {/* ── BOTTOM-LEFT: CTAs ── */}
+      <div className="absolute bottom-20 left-6 md:left-10 z-20 pointer-events-auto">
+        <div className="flex flex-wrap gap-2">
           <a href="#work" className="btn-primary">See my work →</a>
           <a href="#contact" className="btn-ghost">Start a project</a>
         </div>
       </div>
 
-      {/* ── BOTTOM-RIGHT: stack + location ── */}
+      {/* ── BOTTOM-RIGHT: location ── */}
       <div className="absolute bottom-20 right-6 md:right-10 z-20 pointer-events-none text-right">
         <p className="font-mono text-[10px] uppercase tracking-widest text-white/25 leading-loose">
-          React &amp; Next.js<br />
-          Node.js &amp; FastAPI<br />
           Berlin, Germany
         </p>
       </div>
