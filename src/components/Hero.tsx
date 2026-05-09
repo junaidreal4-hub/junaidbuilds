@@ -38,40 +38,6 @@ export default function Hero() {
         background: 'linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,0.75) 22%, rgba(255,255,255,0.0) 45%, rgba(255,255,255,0.5) 100%)',
       }} />
 
-      {/* ══ TOP: 4 info columns ══ */}
-      <div className="absolute left-0 right-0 z-20 pointer-events-none" style={{ top: '8%' }}>
-        <div className="grid grid-cols-4">
-          <div className="px-6 md:px-8 py-6">
-            <p className="text-sm text-[#080808] uppercase tracking-widest mb-1 font-medium">Mohammed Junaid</p>
-            <p className="text-sm text-[#080808] uppercase tracking-widest font-medium">Khan</p>
-            <p className="text-[11px] text-black/40 mt-3 leading-relaxed font-mono">
-              Building fast, bespoke digital experiences since 2022.
-            </p>
-          </div>
-          <div className="px-6 md:px-8 py-6">
-            <p className="text-sm text-[#080808] uppercase tracking-widest leading-snug font-medium">
-              Full-Stack<br />Development<br />&amp; Design
-            </p>
-          </div>
-          <div className="px-6 md:px-8 py-6">
-            <p className="text-[10px] uppercase tracking-[0.2em] text-black/30 mb-3 font-mono">What I do</p>
-            <p className="text-[11px] text-black/60 leading-relaxed">
-              I build high-performance websites and web apps for startups and businesses &mdash; from concept to deployment.
-            </p>
-          </div>
-          <div className="px-6 md:px-8 py-6">
-            <p className="text-[10px] uppercase tracking-[0.2em] text-black/30 mb-3 font-mono">Services</p>
-            <ul className="text-[11px] text-black/60 space-y-1">
-              <li>Web Design &amp; Branding</li>
-              <li>React / Next.js Development</li>
-              <li>Full-Stack Applications</li>
-              <li>API &amp; Backend (Node, FastAPI)</li>
-              <li>Deployment &amp; DevOps</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
       {/* ══ BOTTOM: headline + meta bar ══ */}
       <div className="absolute bottom-0 left-0 right-0 z-20 pointer-events-none">
         <div className="px-5 md:px-8 pt-4">
