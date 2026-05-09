@@ -1,5 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
+import { Waves } from './Waves'
 
 const WORDS = [
   { text: 'I',          cls: 'text-5xl md:text-7xl  font-light  text-white/30'  },
@@ -30,10 +31,19 @@ export default function Hero() {
 
   return (
     <section className="relative min-h-screen flex flex-col pt-16 overflow-hidden bg-canvas">
-      <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-orange/5 rounded-full blur-[120px] pointer-events-none" />
 
-      {/* Static hero text — simple staggered fade-up on load */}
-      <div className="relative flex-1 flex items-center">
+      {/* Wave background — sits behind everything */}
+      <Waves
+        strokeColor="rgba(255,255,255,0.07)"
+        backgroundColor="transparent"
+        pointerSize={0.4}
+      />
+
+      {/* Subtle orange glow — above waves, below text */}
+      <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-orange/5 rounded-full blur-[120px] pointer-events-none z-10" />
+
+      {/* Hero text */}
+      <div className="relative z-20 flex-1 flex items-center">
         <div className="container-width w-full">
           <div className="flex flex-wrap items-end gap-x-5 gap-y-2 leading-none py-16">
             {WORDS.map((w, i) => (
@@ -50,7 +60,7 @@ export default function Hero() {
       </div>
 
       {/* Bottom bar */}
-      <div className="relative container-width pb-10 border-t border-white/[0.06] pt-8">
+      <div className="relative z-20 container-width pb-10 border-t border-white/[0.06] pt-8">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div className="flex flex-col gap-1.5">
             <div className="flex items-center gap-3">
