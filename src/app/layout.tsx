@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Space_Grotesk, DM_Sans, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 import PageTransition from '@/components/PageTransition'
+import Grain from '@/components/Grain'
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
@@ -37,6 +38,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className={`${spaceGrotesk.variable} ${dmSans.variable} ${mono.variable} font-sans bg-[#080808] text-body subpixel-antialiased`}>
+        <Grain opacity={0.06} />
         <PageTransition />
         {children}
       </body>
