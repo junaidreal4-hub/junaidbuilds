@@ -9,8 +9,11 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--font-syne)', 'sans-serif'],
-        mono: ['var(--font-mono)',  'monospace'],
+        // Inter — Neue Haas Grotesk substitute (headings, UI)
+        sans: ['var(--font-inter)', 'sans-serif'],
+        // DM Sans — Helvetica Neue substitute (body, descriptions)
+        body: ['var(--font-dm)', 'sans-serif'],
+        mono: ['var(--font-mono)', 'monospace'],
       },
       colors: {
         canvas:  '#080808',
@@ -21,10 +24,8 @@ const config: Config = {
         subtle:  'rgba(255,255,255,0.50)',
         body:    'rgba(255,255,255,0.70)',
         heading: '#f5f5f0',
-        // new dual accents
         blue:    '#3B82F6',
         cyan:    '#06B6D4',
-        // keep orange alias for any leftovers
         orange:  '#3B82F6',
       },
       animation: {
