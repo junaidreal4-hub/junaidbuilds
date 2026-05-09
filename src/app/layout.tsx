@@ -1,23 +1,25 @@
 import type { Metadata } from 'next'
-import { Space_Grotesk, DM_Sans, JetBrains_Mono } from 'next/font/google'
+import { Barlow, JetBrains_Mono, Bebas_Neue } from 'next/font/google'
 import './globals.css'
 import PageTransition from '@/components/PageTransition'
 import Grain from '@/components/Grain'
 
-const spaceGrotesk = Space_Grotesk({
+const barlow = Barlow({
   subsets: ['latin'],
   variable: '--font-sans',
-  weight: ['300','400','500','600','700'],
+  weight: ['300', '400', '500', '600', '700'],
 })
-const dmSans = DM_Sans({
+
+const bebasNeue = Bebas_Neue({
   subsets: ['latin'],
-  variable: '--font-dm',
-  weight: ['300','400','500','600'],
+  variable: '--font-display',
+  weight: ['400'],
 })
+
 const mono = JetBrains_Mono({
   subsets: ['latin'],
   variable: '--font-mono',
-  weight: ['400','700'],
+  weight: ['400', '500', '700'],
 })
 
 export const metadata: Metadata = {
@@ -37,7 +39,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${spaceGrotesk.variable} ${dmSans.variable} ${mono.variable} font-sans bg-[#080808] text-body subpixel-antialiased`}>
+      <body className={`${barlow.variable} ${bebasNeue.variable} ${mono.variable} font-sans bg-[#080808] text-body subpixel-antialiased`}>
         <Grain opacity={0.06} />
         <PageTransition />
         {children}
