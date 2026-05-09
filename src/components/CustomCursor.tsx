@@ -1,90 +1,111 @@
 'use client'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 export default function CustomCursor() {
-  const dotRef  = useRef<HTMLDivElement>(null)
-  const ringRef = useRef<HTMLDivElement>(null)
-  const target  = useRef({ x: -100, y: -100 })
-  const ring    = useRef({ x: -100, y: -100 })
-  const rafRef  = useRef<number | null>(null)
-  const hovering = useRef(false)
+  const cursorRef = useRef<HTMLDivElement>(null)
+  const pos = useRef({ x: -100, y: -100 })
+  const current = useRef({ x: -100, y: -100 })
+  const [label, setLabel] = useState('')
+  const [visible, setVisible] = useState(false)
+  const [clicked, setClicked] = useState(false)
 
   useEffect(() => {
-    document.documentElement.style.cursor = 'none'
-
     const onMove = (e: MouseEvent) => {
-      target.current.x = e.clientX
-      target.current.y = e.clientY
+      pos.current = { x: e.clientX, y: e.clientY }
+      if (!visible) setVisible(true)
+
+      const el = document.elementFromPoint(e.clientX, e.clientY)
+      const link = el?.closest('a, button, [data-cursor]')
+      if (link) {
+        const attr = link.getAttribute('data-cursor')
+        setLabel(attr || 'VIEW')
+      } else {
+        setLabel('')
+      }
     }
 
-    const onEnter = () => { hovering.current = true }
-    const onLeave = () => { hovering.current = false }
-
-    document.querySelectorAll('a, button, [data-cursor]').forEach(el => {
-      el.addEventListener('mouseenter', onEnter)
-      el.addEventListener('mouseleave', onLeave)
-    })
+    const onDown = () => setClicked(true)
+    const onUp   = () => setClicked(false)
+    const onLeave = () => setVisible(false)
+    const onEnter = () => setVisible(true)
 
     window.addEventListener('mousemove', onMove)
+    window.addEventListener('mousedown', onDown)
+    window.addEventListener('mouseup', onUp)
+    document.documentElement.addEventListener('mouseleave', onLeave)
+    document.documentElement.addEventListener('mouseenter', onEnter)
 
-    const loop = () => {
-      // Dot: instant — no lag at all
-      if (dotRef.current) {
-        dotRef.current.style.transform =
-          `translate3d(${target.current.x}px, ${target.current.y}px, 0) translate(-50%, -50%)`
+    let raf: number
+    const lerp = (a: number, b: number, t: number) => a + (b - a) * t
+    const tick = () => {
+      current.current.x = lerp(current.current.x, pos.current.x, 0.12)
+      current.current.y = lerp(current.current.y, pos.current.y, 0.12)
+      if (cursorRef.current) {
+        cursorRef.current.style.transform =
+          `translate(${current.current.x}px, ${current.current.y}px)`
       }
-
-      // Ring: gentle lag at 0.18 — noticeable trail but not slow
-      ring.current.x += (target.current.x - ring.current.x) * 0.18
-      ring.current.y += (target.current.y - ring.current.y) * 0.18
-
-      if (ringRef.current) {
-        ringRef.current.style.transform =
-          `translate3d(${ring.current.x}px, ${ring.current.y}px, 0) translate(-50%, -50%)`
-        ringRef.current.style.width        = hovering.current ? '52px' : '36px'
-        ringRef.current.style.height       = hovering.current ? '52px' : '36px'
-        ringRef.current.style.borderColor  = hovering.current ? '#f97316' : 'rgba(255,255,255,0.5)'
-      }
-
-      rafRef.current = requestAnimationFrame(loop)
+      raf = requestAnimationFrame(tick)
     }
-    rafRef.current = requestAnimationFrame(loop)
+    raf = requestAnimationFrame(tick)
 
     return () => {
-      document.documentElement.style.cursor = ''
       window.removeEventListener('mousemove', onMove)
-      if (rafRef.current) cancelAnimationFrame(rafRef.current)
+      window.removeEventListener('mousedown', onDown)
+      window.removeEventListener('mouseup', onUp)
+      document.documentElement.removeEventListener('mouseleave', onLeave)
+      document.documentElement.removeEventListener('mouseenter', onEnter)
+      cancelAnimationFrame(raf)
     }
-  }, [])
+  }, [visible])
+
+  const hasLabel = label.length > 0
+  const size = clicked ? 44 : hasLabel ? 72 : 12
 
   return (
     <>
-      {/* Dot — locks to cursor with zero lag */}
+      {/* Hide default cursor globally */}
+      <style>{`* { cursor: none !important; }`}</style>
+
+      {/* Cursor element */}
       <div
-        ref={dotRef}
-        className="fixed top-0 left-0 z-[9999] pointer-events-none"
+        ref={cursorRef}
         style={{
-          width: '6px',
-          height: '6px',
-          borderRadius: '50%',
-          backgroundColor: '#f97316',
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          zIndex: 99999,
+          pointerEvents: 'none',
           willChange: 'transform',
-        }}
-      />
-      {/* Ring — trails slightly behind */}
-      <div
-        ref={ringRef}
-        className="fixed top-0 left-0 z-[9998] pointer-events-none"
-        style={{
-          width: '36px',
-          height: '36px',
+          marginLeft: `-${size / 2}px`,
+          marginTop: `-${size / 2}px`,
+          width: `${size}px`,
+          height: `${size}px`,
           borderRadius: '50%',
-          border: '1.5px solid rgba(255,255,255,0.5)',
-          backgroundColor: 'transparent',
-          willChange: 'transform',
-          transition: 'width 0.25s ease, height 0.25s ease, border-color 0.25s ease',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          transition: 'width 0.25s ease, height 0.25s ease, margin 0.25s ease, background 0.25s ease, border-color 0.25s ease',
+          opacity: visible ? 1 : 0,
+          background: hasLabel ? '#080808' : 'transparent',
+          border: hasLabel ? '1.5px solid #080808' : '1.5px solid rgba(8,8,8,0.5)',
+          mixBlendMode: hasLabel ? 'normal' : 'normal',
         }}
-      />
+      >
+        {hasLabel && (
+          <span style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: '9px',
+            fontWeight: 500,
+            letterSpacing: '0.15em',
+            textTransform: 'uppercase',
+            color: '#ffffff',
+            userSelect: 'none',
+            whiteSpace: 'nowrap',
+          }}>
+            {label}
+          </span>
+        )}
+      </div>
     </>
   )
 }

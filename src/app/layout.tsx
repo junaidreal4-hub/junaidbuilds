@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Barlow, JetBrains_Mono, Bebas_Neue } from 'next/font/google'
 import './globals.css'
 import PageTransition from '@/components/PageTransition'
+import CustomCursor from '@/components/CustomCursor'
 
 const barlow = Barlow({
   subsets: ['latin'],
@@ -39,6 +40,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className={`${barlow.variable} ${bebasNeue.variable} ${mono.variable} font-sans bg-white text-body subpixel-antialiased`}>
+        <CustomCursor />
         <PageTransition />
         {children}
       </body>
