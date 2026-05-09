@@ -36,7 +36,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${spaceGrotesk.variable} ${dmSans.variable} ${mono.variable} font-sans bg-[#080808] text-body antialiased`}>
+      <body className={`${spaceGrotesk.variable} ${dmSans.variable} ${mono.variable} font-sans bg-[#080808] text-body subpixel-antialiased`}>
         <PageTransition />
         {children}
       </body>
