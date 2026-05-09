@@ -13,22 +13,12 @@ export default function Hero() {
     update(); const id = setInterval(update, 1000); return () => clearInterval(id)
   }, [])
 
-  const word = {
-    fontFamily: 'var(--font-mono)',
-    fontWeight: 300,
-    fontSize: 'clamp(0.9rem, 1.5vw, 1.4rem)',
-    WebkitFontSmoothing: 'auto' as const,
-    MozOsxFontSmoothing: 'auto' as const,
-    lineHeight: 1,
-    letterSpacing: '-0.01em',
-  }
-
   return (
     <section
       className="relative overflow-hidden bg-[#080808]"
       style={{ minHeight: '100dvh' }}
     >
-      {/* ── Spline 3D background ── */}
+      {/* ── Spline 3D – centered, takes up middle band ── */}
       <div className="absolute inset-0 z-0 pointer-events-auto">
         <SplineScene
           scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
@@ -36,84 +26,99 @@ export default function Hero() {
         />
       </div>
 
-      {/* ── Vignette ── */}
-      <div className="absolute inset-0 z-10 pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse at center, transparent 35%, rgba(8,8,8,0.65) 100%)' }}
-      />
+      {/* ── Dark fade top & bottom ── */}
+      <div className="absolute inset-0 z-10 pointer-events-none" style={{
+        background: 'linear-gradient(to bottom, rgba(8,8,8,0.95) 0%, rgba(8,8,8,0.0) 25%, rgba(8,8,8,0.0) 60%, rgba(8,8,8,0.97) 85%)',
+      }} />
 
-      {/* ── TOP-LEFT meta ── */}
-      <div className="absolute top-24 left-6 md:left-10 z-20 pointer-events-none">
-        <p className="font-mono text-[10px] uppercase tracking-[0.25em]" style={{ color: '#f97316' }}>mdjk.dev</p>
-        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/30 mt-1">Full-Stack Dev &amp; Designer</p>
-      </div>
+      {/* ════════════════════════════════════
+          TOP ROW – 4 info columns
+      ════════════════════════════════════ */}
+      <div className="absolute top-0 left-0 right-0 z-20 pointer-events-none">
+        <div className="grid grid-cols-4 border-b border-white/[0.06]">
 
-      {/* ── TOP-RIGHT meta ── */}
-      <div className="absolute top-24 right-6 md:right-10 z-20 pointer-events-none text-right">
-        <div className="flex items-center justify-end gap-2 mb-1">
-          <span className="relative flex h-1.5 w-1.5">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-60" style={{ background: '#f97316' }} />
-            <span className="relative inline-flex h-1.5 w-1.5 rounded-full" style={{ background: '#f97316' }} />
-          </span>
-          <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest">Available for work</span>
-        </div>
-        <p className="font-mono text-[10px] text-white/20 tabular-nums tracking-widest">{time} CET</p>
-      </div>
+          {/* Col 1: name */}
+          <div className="px-6 md:px-8 py-6 border-r border-white/[0.06]">
+            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/30 mb-2">Developer</p>
+            <p className="font-mono text-xs text-white/80 uppercase tracking-widest">Md Junaid Khan</p>
+          </div>
 
-      {/* ── SCENE TOP-LEFT: "Turning Ideas" ── */}
-      <div className="absolute z-20 pointer-events-none" style={{ top: '28%', left: '6%' }}>
-        <h1 className="subpixel-antialiased uppercase" style={{ ...word, color: '#ffffff' }}>
-          <SpecialText speed={14} delay={0.2}>Turning</SpecialText>
-        </h1>
-        <h1 className="subpixel-antialiased uppercase mt-1" style={{ ...word, color: 'rgba(255,255,255,0.45)' }}>
-          <SpecialText speed={14} delay={0.38}>Ideas</SpecialText>
-        </h1>
-      </div>
+          {/* Col 2: role */}
+          <div className="px-6 md:px-8 py-6 border-r border-white/[0.06]">
+            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/30 mb-2">Discipline</p>
+            <p className="font-mono text-xs text-white/80 uppercase tracking-widest">Full-Stack &amp; Design</p>
+          </div>
 
-      {/* ── SCENE TOP-RIGHT: "Into" ── */}
-      <div className="absolute z-20 pointer-events-none text-right" style={{ top: '28%', right: '6%' }}>
-        <h1 className="subpixel-antialiased uppercase" style={{ ...word, color: '#ffffff' }}>
-          <SpecialText speed={14} delay={0.5}>Into</SpecialText>
-        </h1>
-      </div>
+          {/* Col 3: status */}
+          <div className="px-6 md:px-8 py-6 border-r border-white/[0.06] pointer-events-auto">
+            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/30 mb-2">Status</p>
+            <div className="flex items-center gap-2">
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" style={{ background: '#f97316' }} />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full" style={{ background: '#f97316' }} />
+              </span>
+              <span className="font-mono text-xs text-white/80 uppercase tracking-widest">Available</span>
+            </div>
+          </div>
 
-      {/* ── SCENE BOTTOM-LEFT: "Modern &" ── */}
-      <div className="absolute z-20 pointer-events-none" style={{ bottom: '28%', left: '6%' }}>
-        <h1 className="subpixel-antialiased uppercase" style={{ ...word, color: 'rgba(255,255,255,0.45)' }}>
-          <SpecialText speed={14} delay={0.65}>Modern</SpecialText>
-        </h1>
-        <h1 className="subpixel-antialiased uppercase mt-1" style={{ ...word, color: 'rgba(255,255,255,0.2)' }}>
-          <SpecialText speed={14} delay={0.8}>&amp;</SpecialText>
-        </h1>
-      </div>
-
-      {/* ── SCENE BOTTOM-RIGHT: "Interactive Websites" ── */}
-      <div className="absolute z-20 pointer-events-none text-right" style={{ bottom: '28%', right: '6%' }}>
-        <h1 className="subpixel-antialiased uppercase" style={{ ...word, color: 'rgba(255,255,255,0.45)' }}>
-          <SpecialText speed={14} delay={0.9}>Interactive</SpecialText>
-        </h1>
-        <h1 className="subpixel-antialiased uppercase mt-1" style={{ ...word, color: '#ffffff' }}>
-          <SpecialText speed={14} delay={1.05}>Websites.</SpecialText>
-        </h1>
-      </div>
-
-      {/* ── BOTTOM-LEFT: CTAs ── */}
-      <div className="absolute bottom-16 left-6 md:left-10 z-20 pointer-events-auto">
-        <div className="flex flex-wrap gap-2">
-          <a href="#work" className="btn-primary">See my work →</a>
-          <a href="#contact" className="btn-ghost">Start a project</a>
+          {/* Col 4: location + time */}
+          <div className="px-6 md:px-8 py-6">
+            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/30 mb-2">Location</p>
+            <p className="font-mono text-xs text-white/80 uppercase tracking-widest">Berlin &mdash; <span className="tabular-nums text-white/40">{time}</span></p>
+          </div>
         </div>
       </div>
 
-      {/* ── BOTTOM-RIGHT: location ── */}
-      <div className="absolute bottom-16 right-6 md:right-10 z-20 pointer-events-none text-right">
-        <p className="font-mono text-[10px] uppercase tracking-widest text-white/25">Berlin, Germany</p>
-      </div>
+      {/* ════════════════════════════════════
+          BOTTOM – large headline + CTAs
+      ════════════════════════════════════ */}
+      <div className="absolute bottom-0 left-0 right-0 z-20 pointer-events-none">
 
-      {/* ── Bottom bar ── */}
-      <div className="absolute bottom-0 left-0 right-0 z-20 pointer-events-auto">
-        <div className="w-full px-6 md:px-10 py-3 border-t border-white/[0.06] flex items-center justify-between">
-          <span className="font-mono text-[10px] text-white/20 uppercase tracking-widest">mdjk.dev</span>
-          <span className="font-mono text-[10px] text-white/20 tabular-nums">© 2026</span>
+        {/* Big headline */}
+        <div className="px-5 md:px-8 pt-6">
+          <h1
+            className="uppercase subpixel-antialiased leading-[0.88] tracking-tight text-white"
+            style={{
+              fontFamily: 'var(--font-mono)',
+              fontWeight: 300,
+              fontSize: 'clamp(3rem, 8.5vw, 9rem)',
+              WebkitFontSmoothing: 'auto',
+            }}
+          >
+            <SpecialText speed={12} delay={0.1}>Turning Ideas Into</SpecialText>
+          </h1>
+          <h1
+            className="uppercase subpixel-antialiased leading-[0.88] tracking-tight"
+            style={{
+              fontFamily: 'var(--font-mono)',
+              fontWeight: 300,
+              fontSize: 'clamp(3rem, 8.5vw, 9rem)',
+              color: 'rgba(255,255,255,0.22)',
+              WebkitFontSmoothing: 'auto',
+            }}
+          >
+            <SpecialText speed={12} delay={0.4}>Modern &amp; Interactive</SpecialText>
+          </h1>
+          <h1
+            className="uppercase subpixel-antialiased leading-[0.88] tracking-tight text-white"
+            style={{
+              fontFamily: 'var(--font-mono)',
+              fontWeight: 300,
+              fontSize: 'clamp(3rem, 8.5vw, 9rem)',
+              WebkitFontSmoothing: 'auto',
+            }}
+          >
+            <SpecialText speed={12} delay={0.7}>Websites.</SpecialText>
+          </h1>
+        </div>
+
+        {/* Bottom bar */}
+        <div className="mt-4 px-5 md:px-8 py-4 border-t border-white/[0.06] flex items-center justify-between pointer-events-auto">
+          <div className="flex gap-3">
+            <a href="#work" className="btn-primary">See my work →</a>
+            <a href="#contact" className="btn-ghost">Start a project</a>
+          </div>
+          <span className="font-mono text-[10px] text-white/20 uppercase tracking-widest hidden md:block">mdjk.dev © 2026</span>
         </div>
       </div>
     </section>
