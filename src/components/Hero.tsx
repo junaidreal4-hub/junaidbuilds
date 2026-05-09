@@ -12,6 +12,13 @@ export default function Hero() {
     update(); const id = setInterval(update, 1000); return () => clearInterval(id)
   }, [])
 
+  const headlineStyle = {
+    fontSize: 'clamp(1.6rem, 3.5vw, 3.8rem)',
+    fontWeight: 300,
+    WebkitFontSmoothing: 'auto' as const,
+    MozOsxFontSmoothing: 'auto' as const,
+  }
+
   return (
     <section
       className="relative flex flex-col pt-16 overflow-hidden bg-[#080808]"
@@ -57,14 +64,8 @@ export default function Hero() {
         {/* Headline line 1 */}
         <div className="overflow-hidden">
           <h1
-            className="font-sans uppercase tracking-tight leading-[0.92] opacity-0 animate-fade-up"
-            style={{
-              fontSize: 'clamp(1.6rem, 3.5vw, 3.8rem)',
-              fontWeight: 300,
-              color: '#ffffff',
-              animationDelay: '80ms',
-              animationFillMode: 'forwards',
-            }}
+            className="subpixel-antialiased uppercase tracking-tight leading-[0.92] opacity-0 animate-fade-up"
+            style={{ ...headlineStyle, color: '#ffffff', animationDelay: '80ms', animationFillMode: 'forwards' }}
           >
             Turning Ideas
           </h1>
@@ -73,14 +74,8 @@ export default function Hero() {
         {/* Headline line 2 */}
         <div className="overflow-hidden">
           <h1
-            className="font-sans uppercase tracking-tight leading-[0.92] opacity-0 animate-fade-up"
-            style={{
-              fontSize: 'clamp(1.6rem, 3.5vw, 3.8rem)',
-              fontWeight: 300,
-              color: 'rgba(255,255,255,0.18)',
-              animationDelay: '140ms',
-              animationFillMode: 'forwards',
-            }}
+            className="subpixel-antialiased uppercase tracking-tight leading-[0.92] opacity-0 animate-fade-up"
+            style={{ ...headlineStyle, color: 'rgba(255,255,255,0.18)', animationDelay: '140ms', animationFillMode: 'forwards' }}
           >
             Into Interactive
           </h1>
@@ -89,14 +84,8 @@ export default function Hero() {
         {/* Headline line 3 */}
         <div className="overflow-hidden">
           <h1
-            className="font-sans uppercase tracking-tight leading-[0.92] opacity-0 animate-fade-up"
-            style={{
-              fontSize: 'clamp(1.6rem, 3.5vw, 3.8rem)',
-              fontWeight: 300,
-              color: '#ffffff',
-              animationDelay: '200ms',
-              animationFillMode: 'forwards',
-            }}
+            className="subpixel-antialiased uppercase tracking-tight leading-[0.92] opacity-0 animate-fade-up"
+            style={{ ...headlineStyle, color: '#ffffff', animationDelay: '200ms', animationFillMode: 'forwards' }}
           >
             Websites.
           </h1>
