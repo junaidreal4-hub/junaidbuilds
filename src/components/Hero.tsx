@@ -12,7 +12,7 @@ export default function Hero() {
     update(); const id = setInterval(update, 1000); return () => clearInterval(id)
   }, [])
 
-  const FS = 'clamp(2.2rem, 7.5vw, 9rem)'
+  const FS = 'clamp(2.5rem, 9vw, 10.5rem)'
 
   return (
     <section
@@ -28,7 +28,6 @@ export default function Hero() {
       <div className="relative z-20 flex-1 flex items-center">
         <div className="w-full px-6 md:px-10">
 
-          {/* Line 1 */}
           <div className="overflow-hidden">
             <p
               className="font-sans font-black uppercase tracking-tighter opacity-0 animate-fade-up"
@@ -44,7 +43,6 @@ export default function Hero() {
             </p>
           </div>
 
-          {/* Line 2 */}
           <div className="overflow-hidden">
             <p
               className="font-sans font-black uppercase tracking-tighter opacity-0 animate-fade-up"
@@ -60,7 +58,6 @@ export default function Hero() {
             </p>
           </div>
 
-          {/* Tagline */}
           <p
             className="font-mono text-[11px] md:text-xs uppercase tracking-widest opacity-0 animate-fade-up mt-8"
             style={{ color: 'rgba(255,255,255,0.4)', animationDelay: '180ms', animationFillMode: 'forwards' }}
@@ -71,7 +68,6 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Bottom bar */}
       <div className="relative z-20 w-full px-6 md:px-10 py-5 border-t border-white/[0.06] shrink-0">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
           <div className="flex items-center gap-6">
