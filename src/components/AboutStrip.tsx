@@ -13,7 +13,7 @@ const APPROACH = [
     num: '02',
     title: 'Clean Engineering',
     desc: 'Maintainable, typed, documented code. No copy-paste spaghetti. Every component is purpose-built and yours to own long after I hand it over.',
-    bg: '#4a7c59',
+    bg: '#2d4a38',
     fg: '#ffffff',
   },
   {
@@ -27,7 +27,7 @@ const APPROACH = [
     num: '04',
     title: 'Direct Communication',
     desc: 'No middlemen, no account managers. You work directly with me. Fast replies, clear updates, and no surprises on delivery day.',
-    bg: '#080808',
+    bg: '#2d4a38',
     fg: '#ffffff',
   },
   {
@@ -42,7 +42,7 @@ const APPROACH = [
 export default function AboutStrip() {
   const sectionRef   = useRef<HTMLElement>(null)
   const statementRef = useRef<HTMLDivElement>(null)
-  const panelsRef    = useRef<HTMLDivElement>(null)
+  const cardsRef     = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     let ctx: import('gsap').Context | null = null
@@ -54,7 +54,7 @@ export default function AboutStrip() {
 
       ctx = gsap.context(() => {
 
-        // ── Statement reveal ──
+        // ─ Statement text reveal ─
         const lines = statementRef.current?.querySelectorAll('.reveal-line')
         if (lines) {
           gsap.from(lines, {
@@ -63,28 +63,26 @@ export default function AboutStrip() {
           })
         }
 
-        // ── Stacked scroll panels ──
-        // Each panel is position:sticky so it pins while the next slides over it.
-        // GSAP only drives the subtle scale-back on the outgoing panel.
-        if (panelsRef.current) {
-          const panels = gsap.utils.toArray<HTMLElement>('.approach-panel', panelsRef.current)
+        // ─ Stacked card shrink + blur ─
+        const cards = gsap.utils.toArray<HTMLElement>('.approach-card', cardsRef.current)
 
-          panels.forEach((panel, i) => {
-            if (i === panels.length - 1) return // last panel never gets pushed
+        cards.forEach((card, i) => {
+          if (i === cards.length - 1) return
 
-            gsap.to(panel, {
-              scale: 0.94,
-              borderRadius: '20px',
-              ease: 'none',
-              scrollTrigger: {
-                trigger: panel,
-                start: 'top top',
-                end: 'bottom top',
-                scrub: true,
-              },
-            })
+          gsap.to(card, {
+            scale: 0.88,
+            filter: 'blur(4px)',
+            borderRadius: '24px',
+            ease: 'none',
+            scrollTrigger: {
+              trigger: card,
+              start: 'top top',
+              end: 'bottom top',
+              scrub: true,
+            },
           })
-        }
+        })
+
       }, sectionRef)
     }
 
@@ -93,9 +91,9 @@ export default function AboutStrip() {
   }, [])
 
   return (
-    <section id="about" ref={sectionRef} className="relative bg-[#080808]">
+    <section id="about" ref={sectionRef} className="relative bg-[#0a0a0a]">
 
-      {/* ── Bold statement ── */}
+      {/* ─ Bold statement ─ */}
       <div className="container-width py-32 border-b border-white/[0.06]">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-end">
           <div ref={statementRef}>
@@ -137,34 +135,33 @@ export default function AboutStrip() {
         </div>
       </div>
 
-      {/* ── Approach label ── */}
-      <div className="bg-[#080808] container-width pt-20 pb-6">
+      {/* ─ Approach label ─ */}
+      <div className="px-4 md:px-6 pt-20 pb-4">
         <p className="font-mono text-xs text-white/30 uppercase tracking-widest">/ My Approach</p>
       </div>
 
-      {/* ── Stacked sticky panels ── */}
-      {/* Outer wrapper: enough height so panels have scroll room */}
-      <div ref={panelsRef} className="relative">
+      {/* ─ Stacked sticky cards ─ */}
+      <div ref={cardsRef} className="flex flex-col gap-0 px-4 md:px-6 pb-6">
         {APPROACH.map((item, i) => (
           <div
             key={item.num}
-            className="approach-panel sticky overflow-hidden"
+            className="approach-card sticky overflow-hidden"
             style={{
-              top: `${i * 12}px`,          // slight cascade offset so panels peek behind each other
+              top: `${60 + i * 16}px`,
               backgroundColor: item.bg,
+              borderRadius: '16px',
               zIndex: i + 1,
               transformOrigin: 'top center',
-              willChange: 'transform',
-              // give last panel extra bottom padding so page doesn't end abruptly
-              marginBottom: i === APPROACH.length - 1 ? '0' : '0',
+              willChange: 'transform, filter',
+              marginBottom: '12px',
             }}
           >
             {/* Ghost number */}
             <span
-              className="absolute right-0 top-1/2 -translate-y-1/2 font-sans font-black leading-none select-none pointer-events-none"
+              className="absolute right-4 bottom-0 font-sans font-black leading-none select-none pointer-events-none"
               style={{
-                fontSize: 'clamp(8rem, 22vw, 20rem)',
-                color: item.fg === '#080808' ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.05)',
+                fontSize: 'clamp(8rem, 22vw, 18rem)',
+                color: item.fg === '#080808' ? 'rgba(0,0,0,0.07)' : 'rgba(255,255,255,0.06)',
                 lineHeight: 1,
               }}
             >
@@ -172,27 +169,29 @@ export default function AboutStrip() {
             </span>
 
             {/* Content */}
-            <div className="relative z-10 container-width py-24 md:py-32">
-              <div className="max-w-2xl">
+            <div className="relative z-10 px-8 md:px-14 py-16 md:py-20">
+              <div className="mb-8">
                 <p
-                  className="font-mono text-xs uppercase tracking-widest mb-6"
+                  className="font-mono text-xs uppercase tracking-widest"
                   style={{ color: item.fg === '#080808' ? 'rgba(0,0,0,0.35)' : 'rgba(255,255,255,0.35)' }}
                 >
                   {item.num} / {APPROACH.length.toString().padStart(2, '0')}
                 </p>
-                <h3
-                  className="font-sans font-black uppercase leading-none tracking-tighter mb-8"
-                  style={{ fontSize: 'clamp(2.6rem, 7vw, 6.5rem)', color: item.fg }}
-                >
-                  {item.title}
-                </h3>
-                <p
-                  className="font-sans text-lg leading-relaxed max-w-lg"
-                  style={{ color: item.fg === '#080808' ? 'rgba(0,0,0,0.55)' : 'rgba(255,255,255,0.55)' }}
-                >
-                  {item.desc}
-                </p>
               </div>
+
+              <h3
+                className="font-sans font-black uppercase leading-none tracking-tighter mb-8"
+                style={{ fontSize: 'clamp(2.8rem, 8vw, 7rem)', color: item.fg }}
+              >
+                {item.title}
+              </h3>
+
+              <p
+                className="font-sans text-base md:text-lg leading-relaxed max-w-xl"
+                style={{ color: item.fg === '#080808' ? 'rgba(0,0,0,0.55)' : 'rgba(255,255,255,0.55)' }}
+              >
+                {item.desc}
+              </p>
             </div>
           </div>
         ))}
