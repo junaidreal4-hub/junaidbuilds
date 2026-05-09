@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import { Barlow, JetBrains_Mono, Bebas_Neue } from 'next/font/google'
 import './globals.css'
 import PageTransition from '@/components/PageTransition'
-import Grain from '@/components/Grain'
 
 const barlow = Barlow({
   subsets: ['latin'],
@@ -39,8 +38,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${barlow.variable} ${bebasNeue.variable} ${mono.variable} font-sans bg-[#080808] text-body subpixel-antialiased`}>
-        <Grain opacity={0.06} />
+      <body className={`${barlow.variable} ${bebasNeue.variable} ${mono.variable} font-sans bg-white text-body subpixel-antialiased`}>
         <PageTransition />
         {children}
       </body>
