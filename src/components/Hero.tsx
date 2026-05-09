@@ -12,7 +12,7 @@ export default function Hero() {
     update(); const id = setInterval(update, 1000); return () => clearInterval(id)
   }, [])
 
-  const FS = 'clamp(2.8rem, 10.5vw, 12rem)'
+  const FS = 'clamp(2.2rem, 7.5vw, 9rem)'
 
   return (
     <section
@@ -28,7 +28,7 @@ export default function Hero() {
       <div className="relative z-20 flex-1 flex items-center">
         <div className="w-full px-6 md:px-10">
 
-          {/* Line 1: Turning Ideas Into */}
+          {/* Line 1 */}
           <div className="overflow-hidden">
             <p
               className="font-sans font-black uppercase tracking-tighter opacity-0 animate-fade-up"
@@ -44,7 +44,7 @@ export default function Hero() {
             </p>
           </div>
 
-          {/* Line 2: Modern (ice blue italic) + Websites. (white) */}
+          {/* Line 2 */}
           <div className="overflow-hidden">
             <p
               className="font-sans font-black uppercase tracking-tighter opacity-0 animate-fade-up"
