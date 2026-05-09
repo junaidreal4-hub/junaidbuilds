@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 
 const APPROACH = [
   {
@@ -42,15 +42,19 @@ const APPROACH = [
 export default function AboutStrip() {
   const sectionRef   = useRef<HTMLElement>(null)
   const statementRef = useRef<HTMLDivElement>(null)
-  const [open, setOpen] = useState<number | null>(null)
+  const panelsRef    = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     let ctx: import('gsap').Context | null = null
+
     async function init() {
       const { gsap }          = await import('gsap')
       const { ScrollTrigger } = await import('gsap/ScrollTrigger')
       gsap.registerPlugin(ScrollTrigger)
+
       ctx = gsap.context(() => {
+
+        // ── Statement reveal ──
         const lines = statementRef.current?.querySelectorAll('.reveal-line')
         if (lines) {
           gsap.from(lines, {
@@ -58,14 +62,32 @@ export default function AboutStrip() {
             scrollTrigger: { trigger: statementRef.current, start: 'top 80%' },
           })
         }
-        sectionRef.current?.querySelectorAll('.panel-in').forEach((el) => {
-          gsap.from(el, {
-            x: -50, opacity: 0, duration: 0.9, ease: 'power3.out',
-            scrollTrigger: { trigger: el, start: 'top 85%' },
+
+        // ── Stacked scroll panels ──
+        // Each panel is position:sticky so it pins while the next slides over it.
+        // GSAP only drives the subtle scale-back on the outgoing panel.
+        if (panelsRef.current) {
+          const panels = gsap.utils.toArray<HTMLElement>('.approach-panel', panelsRef.current)
+
+          panels.forEach((panel, i) => {
+            if (i === panels.length - 1) return // last panel never gets pushed
+
+            gsap.to(panel, {
+              scale: 0.94,
+              borderRadius: '20px',
+              ease: 'none',
+              scrollTrigger: {
+                trigger: panel,
+                start: 'top top',
+                end: 'bottom top',
+                scrub: true,
+              },
+            })
           })
-        })
+        }
       }, sectionRef)
     }
+
     init()
     return () => { ctx?.revert() }
   }, [])
@@ -73,16 +95,19 @@ export default function AboutStrip() {
   return (
     <section id="about" ref={sectionRef} className="relative bg-[#080808]">
 
-      {/* ── SECTION 1 — Bold statement ── */}
+      {/* ── Bold statement ── */}
       <div className="container-width py-32 border-b border-white/[0.06]">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-end">
           <div ref={statementRef}>
             <p className="font-mono text-xs text-white/30 uppercase tracking-widest mb-10">/ About</p>
             {['My work is', 'driven by', 'logic, design,', '& precision.'].map((line, i) => (
               <div key={i} className="overflow-hidden mb-2">
-                <p className={`reveal-line font-sans font-black uppercase leading-none tracking-tighter ${
-                  i === 2 ? 'text-orange italic' : 'text-white'
-                }`} style={{ fontSize: 'clamp(2.4rem, 6vw, 5.5rem)' }}>
+                <p
+                  className={`reveal-line font-sans font-black uppercase leading-none tracking-tighter ${
+                    i === 2 ? 'text-orange italic' : 'text-white'
+                  }`}
+                  style={{ fontSize: 'clamp(2.4rem, 6vw, 5.5rem)' }}
+                >
                   {line}
                 </p>
               </div>
@@ -112,55 +137,67 @@ export default function AboutStrip() {
         </div>
       </div>
 
-      {/* ── SECTION 2 — Approach label ── */}
+      {/* ── Approach label ── */}
       <div className="bg-[#080808] container-width pt-20 pb-6">
         <p className="font-mono text-xs text-white/30 uppercase tracking-widest">/ My Approach</p>
       </div>
 
-      {/* ── SECTION 3 — Alternating panels (chkstepan style) ── */}
-      {APPROACH.map((item) => (
-        <div
-          key={item.num}
-          style={{ backgroundColor: item.bg }}
-          className="relative w-full overflow-hidden"
-        >
-          {/* Ghost number */}
-          <span
-            className="absolute right-0 top-1/2 -translate-y-1/2 font-sans font-black leading-none select-none pointer-events-none"
+      {/* ── Stacked sticky panels ── */}
+      {/* Outer wrapper: enough height so panels have scroll room */}
+      <div ref={panelsRef} className="relative">
+        {APPROACH.map((item, i) => (
+          <div
+            key={item.num}
+            className="approach-panel sticky overflow-hidden"
             style={{
-              fontSize: 'clamp(8rem, 22vw, 20rem)',
-              color: item.fg === '#080808' ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.05)',
-              lineHeight: 1,
+              top: `${i * 12}px`,          // slight cascade offset so panels peek behind each other
+              backgroundColor: item.bg,
+              zIndex: i + 1,
+              transformOrigin: 'top center',
+              willChange: 'transform',
+              // give last panel extra bottom padding so page doesn't end abruptly
+              marginBottom: i === APPROACH.length - 1 ? '0' : '0',
             }}
           >
-            {item.num}
-          </span>
+            {/* Ghost number */}
+            <span
+              className="absolute right-0 top-1/2 -translate-y-1/2 font-sans font-black leading-none select-none pointer-events-none"
+              style={{
+                fontSize: 'clamp(8rem, 22vw, 20rem)',
+                color: item.fg === '#080808' ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.05)',
+                lineHeight: 1,
+              }}
+            >
+              {item.num}
+            </span>
 
-          {/* Content */}
-          <div className="relative z-10 container-width py-16 md:py-20">
-            <div className="max-w-xl">
-              <p
-                className="panel-in font-mono text-xs uppercase tracking-widest mb-5"
-                style={{ color: item.fg === '#080808' ? 'rgba(0,0,0,0.35)' : 'rgba(255,255,255,0.35)' }}
-              >
-                {item.num}
-              </p>
-              <h3
-                className="panel-in font-sans font-black uppercase leading-none tracking-tighter mb-6"
-                style={{ fontSize: 'clamp(2.2rem, 6vw, 5.5rem)', color: item.fg }}
-              >
-                {item.title}
-              </h3>
-              <p
-                className="panel-in font-sans text-base leading-relaxed"
-                style={{ color: item.fg === '#080808' ? 'rgba(0,0,0,0.55)' : 'rgba(255,255,255,0.55)' }}
-              >
-                {item.desc}
-              </p>
+            {/* Content */}
+            <div className="relative z-10 container-width py-24 md:py-32">
+              <div className="max-w-2xl">
+                <p
+                  className="font-mono text-xs uppercase tracking-widest mb-6"
+                  style={{ color: item.fg === '#080808' ? 'rgba(0,0,0,0.35)' : 'rgba(255,255,255,0.35)' }}
+                >
+                  {item.num} / {APPROACH.length.toString().padStart(2, '0')}
+                </p>
+                <h3
+                  className="font-sans font-black uppercase leading-none tracking-tighter mb-8"
+                  style={{ fontSize: 'clamp(2.6rem, 7vw, 6.5rem)', color: item.fg }}
+                >
+                  {item.title}
+                </h3>
+                <p
+                  className="font-sans text-lg leading-relaxed max-w-lg"
+                  style={{ color: item.fg === '#080808' ? 'rgba(0,0,0,0.55)' : 'rgba(255,255,255,0.55)' }}
+                >
+                  {item.desc}
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
+
     </section>
   )
 }
