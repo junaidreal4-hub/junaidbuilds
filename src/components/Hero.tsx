@@ -36,18 +36,18 @@ export default function Hero() {
         />
       </div>
 
-      {/* ── Subtle vignette ── */}
+      {/* ── Vignette ── */}
       <div className="absolute inset-0 z-10 pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse at center, transparent 40%, rgba(8,8,8,0.7) 100%)' }}
+        style={{ background: 'radial-gradient(ellipse at center, transparent 35%, rgba(8,8,8,0.65) 100%)' }}
       />
 
-      {/* ── TOP-LEFT: name + role ── */}
+      {/* ── TOP-LEFT meta ── */}
       <div className="absolute top-24 left-6 md:left-10 z-20 pointer-events-none">
         <p className="font-mono text-[10px] uppercase tracking-[0.25em]" style={{ color: '#f97316' }}>mdjk.dev</p>
         <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/30 mt-1">Full-Stack Dev &amp; Designer</p>
       </div>
 
-      {/* ── TOP-RIGHT: availability + time ── */}
+      {/* ── TOP-RIGHT meta ── */}
       <div className="absolute top-24 right-6 md:right-10 z-20 pointer-events-none text-right">
         <div className="flex items-center justify-end gap-2 mb-1">
           <span className="relative flex h-1.5 w-1.5">
@@ -59,59 +59,45 @@ export default function Hero() {
         <p className="font-mono text-[10px] text-white/20 tabular-nums tracking-widest">{time} CET</p>
       </div>
 
-      {/* ── SCATTERED HEADLINE WORDS ── */}
-
-      {/* "Turning" — mid-left */}
-      <div className="absolute z-20 pointer-events-none" style={{ top: '38%', left: '5%' }}>
+      {/* ── SCENE TOP-LEFT: "Turning Ideas" ── */}
+      <div className="absolute z-20 pointer-events-none" style={{ top: '28%', left: '6%' }}>
         <h1 className="subpixel-antialiased uppercase" style={{ ...word, color: '#ffffff' }}>
           <SpecialText speed={14} delay={0.2}>Turning</SpecialText>
         </h1>
-      </div>
-
-      {/* "Ideas" — upper-center-left */}
-      <div className="absolute z-20 pointer-events-none" style={{ top: '28%', left: '28%' }}>
-        <h1 className="subpixel-antialiased uppercase" style={{ ...word, color: 'rgba(255,255,255,0.5)' }}>
-          <SpecialText speed={14} delay={0.35}>Ideas</SpecialText>
+        <h1 className="subpixel-antialiased uppercase mt-1" style={{ ...word, color: 'rgba(255,255,255,0.45)' }}>
+          <SpecialText speed={14} delay={0.38}>Ideas</SpecialText>
         </h1>
       </div>
 
-      {/* "Into" — upper-center-right */}
-      <div className="absolute z-20 pointer-events-none" style={{ top: '26%', right: '22%' }}>
+      {/* ── SCENE TOP-RIGHT: "Into" ── */}
+      <div className="absolute z-20 pointer-events-none text-right" style={{ top: '28%', right: '6%' }}>
         <h1 className="subpixel-antialiased uppercase" style={{ ...word, color: '#ffffff' }}>
           <SpecialText speed={14} delay={0.5}>Into</SpecialText>
         </h1>
       </div>
 
-      {/* "Modern" — lower-center-left */}
-      <div className="absolute z-20 pointer-events-none" style={{ top: '58%', left: '12%' }}>
-        <h1 className="subpixel-antialiased uppercase" style={{ ...word, color: 'rgba(255,255,255,0.22)' }}>
+      {/* ── SCENE BOTTOM-LEFT: "Modern &" ── */}
+      <div className="absolute z-20 pointer-events-none" style={{ bottom: '28%', left: '6%' }}>
+        <h1 className="subpixel-antialiased uppercase" style={{ ...word, color: 'rgba(255,255,255,0.45)' }}>
           <SpecialText speed={14} delay={0.65}>Modern</SpecialText>
         </h1>
-      </div>
-
-      {/* "&" — center */}
-      <div className="absolute z-20 pointer-events-none" style={{ top: '60%', left: '34%' }}>
-        <h1 className="subpixel-antialiased uppercase" style={{ ...word, color: 'rgba(255,255,255,0.15)' }}>
-          <SpecialText speed={14} delay={0.75}>&amp;</SpecialText>
+        <h1 className="subpixel-antialiased uppercase mt-1" style={{ ...word, color: 'rgba(255,255,255,0.2)' }}>
+          <SpecialText speed={14} delay={0.8}>&amp;</SpecialText>
         </h1>
       </div>
 
-      {/* "Interactive" — lower-center-right */}
-      <div className="absolute z-20 pointer-events-none" style={{ top: '62%', right: '10%' }}>
-        <h1 className="subpixel-antialiased uppercase" style={{ ...word, color: 'rgba(255,255,255,0.5)' }}>
-          <SpecialText speed={14} delay={0.85}>Interactive</SpecialText>
+      {/* ── SCENE BOTTOM-RIGHT: "Interactive Websites" ── */}
+      <div className="absolute z-20 pointer-events-none text-right" style={{ bottom: '28%', right: '6%' }}>
+        <h1 className="subpixel-antialiased uppercase" style={{ ...word, color: 'rgba(255,255,255,0.45)' }}>
+          <SpecialText speed={14} delay={0.9}>Interactive</SpecialText>
         </h1>
-      </div>
-
-      {/* "Websites." — bottom-center */}
-      <div className="absolute z-20 pointer-events-none" style={{ bottom: '22%', left: '50%', transform: 'translateX(-50%)' }}>
-        <h1 className="subpixel-antialiased uppercase" style={{ ...word, color: '#ffffff' }}>
-          <SpecialText speed={14} delay={1.0}>Websites.</SpecialText>
+        <h1 className="subpixel-antialiased uppercase mt-1" style={{ ...word, color: '#ffffff' }}>
+          <SpecialText speed={14} delay={1.05}>Websites.</SpecialText>
         </h1>
       </div>
 
       {/* ── BOTTOM-LEFT: CTAs ── */}
-      <div className="absolute bottom-20 left-6 md:left-10 z-20 pointer-events-auto">
+      <div className="absolute bottom-16 left-6 md:left-10 z-20 pointer-events-auto">
         <div className="flex flex-wrap gap-2">
           <a href="#work" className="btn-primary">See my work →</a>
           <a href="#contact" className="btn-ghost">Start a project</a>
@@ -119,10 +105,8 @@ export default function Hero() {
       </div>
 
       {/* ── BOTTOM-RIGHT: location ── */}
-      <div className="absolute bottom-20 right-6 md:right-10 z-20 pointer-events-none text-right">
-        <p className="font-mono text-[10px] uppercase tracking-widest text-white/25 leading-loose">
-          Berlin, Germany
-        </p>
+      <div className="absolute bottom-16 right-6 md:right-10 z-20 pointer-events-none text-right">
+        <p className="font-mono text-[10px] uppercase tracking-widest text-white/25">Berlin, Germany</p>
       </div>
 
       {/* ── Bottom bar ── */}
