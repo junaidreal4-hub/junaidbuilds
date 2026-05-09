@@ -17,7 +17,6 @@ const socials = [
 export default function Navbar() {
   const [open, setOpen] = useState(false)
 
-  // Lock body scroll when menu is open
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : ''
     return () => { document.body.style.overflow = '' }
@@ -27,11 +26,11 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Top bar */}
+      {/* Top bar — MDJK.DEV hard left, MENU hard right, full bleed */}
       <header className="fixed top-0 left-0 right-0 z-50 mix-blend-difference">
-        <div className="container-width flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-16 px-6 md:px-10">
 
-          {/* Wordmark */}
+          {/* Wordmark — far left */}
           <a
             href="/"
             onClick={close}
@@ -40,22 +39,19 @@ export default function Navbar() {
             mdjk.dev
           </a>
 
-          {/* Menu toggle */}
+          {/* Menu toggle — far right */}
           <button
             onClick={() => setOpen((v) => !v)}
             aria-label={open ? 'Close menu' : 'Open menu'}
             className="font-mono text-white text-xs tracking-widest uppercase flex items-center gap-3 group"
           >
             <span className="relative w-6 h-3.5 flex flex-col justify-between">
-              {/* Top bar */}
               <span className={`block h-px bg-white transition-all duration-500 origin-center ${
                 open ? 'rotate-45 translate-y-[7px]' : ''
               }`} />
-              {/* Middle bar */}
               <span className={`block h-px bg-white transition-all duration-300 ${
                 open ? 'opacity-0 scale-x-0' : ''
               }`} />
-              {/* Bottom bar */}
               <span className={`block h-px bg-white transition-all duration-500 origin-center ${
                 open ? '-rotate-45 -translate-y-[7px]' : ''
               }`} />
@@ -71,9 +67,7 @@ export default function Navbar() {
           open ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-full pointer-events-none'
         }`}
       >
-        <div className="container-width flex flex-col justify-between h-full pt-28 pb-12">
-
-          {/* Main nav links */}
+        <div className="flex flex-col justify-between h-full pt-28 pb-12 px-6 md:px-10">
           <nav className="flex flex-col gap-0">
             {links.map((l, i) => (
               <a
@@ -87,18 +81,15 @@ export default function Navbar() {
               >
                 <div className="flex items-end gap-6">
                   <span className="font-mono text-xs text-white/30 mb-1">{l.index}</span>
-                  <span className="font-sans font-black text-[clamp(3rem,10vw,8rem)] text-white tracking-tight leading-none group-hover:text-orange transition-colors duration-300">
+                  <span className="font-sans font-black text-[clamp(3rem,10vw,8rem)] text-white tracking-tight leading-none group-hover:text-cyan transition-colors duration-300">
                     {l.label}
                   </span>
                 </div>
-                <span className="font-mono text-xs text-white/30 mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  →
-                </span>
+                <span className="font-mono text-xs text-white/30 mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">→</span>
               </a>
             ))}
           </nav>
 
-          {/* Bottom strip — socials + location */}
           <div
             className={`flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pt-8 transition-all duration-700 ${
               open ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
