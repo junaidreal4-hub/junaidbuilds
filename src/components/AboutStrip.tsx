@@ -39,6 +39,9 @@ const APPROACH = [
   },
 ]
 
+// How much of each card peeks above the next one (in px)
+const PEEK = 72
+
 export default function AboutStrip() {
   const sectionRef   = useRef<HTMLElement>(null)
   const statementRef = useRef<HTMLDivElement>(null)
@@ -54,7 +57,7 @@ export default function AboutStrip() {
 
       ctx = gsap.context(() => {
 
-        // ─ Statement reveal ─
+        // Statement reveal
         const lines = statementRef.current?.querySelectorAll('.reveal-line')
         if (lines) {
           gsap.from(lines, {
@@ -63,13 +66,12 @@ export default function AboutStrip() {
           })
         }
 
-        // ─ ALL cards shrink + blur as next slides over ─
+        // Shrink + blur all cards as next slides over
         const cards = gsap.utils.toArray<HTMLElement>('.approach-card', cardsRef.current)
-
         cards.forEach((card) => {
           gsap.to(card, {
-            scale: 0.88,
-            filter: 'blur(4px)',
+            scale: 0.9,
+            filter: 'blur(3px)',
             ease: 'none',
             scrollTrigger: {
               trigger: card,
@@ -90,7 +92,7 @@ export default function AboutStrip() {
   return (
     <section id="about" ref={sectionRef} className="relative bg-[#0a0a0a]">
 
-      {/* ─ Bold statement ─ */}
+      {/* Bold statement */}
       <div className="container-width py-32 border-b border-white/[0.06]">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-end">
           <div ref={statementRef}>
@@ -132,19 +134,20 @@ export default function AboutStrip() {
         </div>
       </div>
 
-      {/* ─ Approach label ─ */}
+      {/* Approach label */}
       <div className="px-4 md:px-6 pt-20 pb-4">
         <p className="font-mono text-xs text-white/30 uppercase tracking-widest">/ My Approach</p>
       </div>
 
-      {/* ─ Stacked sticky cards ─ */}
+      {/* Stacked sticky cards — each one peeks PEEK px above the next */}
       <div ref={cardsRef} className="flex flex-col gap-0 px-4 md:px-6 pb-6">
         {APPROACH.map((item, i) => (
           <div
             key={item.num}
-            className="approach-card sticky overflow-hidden rounded-none"
+            className="approach-card sticky overflow-hidden"
             style={{
-              top: `${60 + i * 16}px`,
+              // Each card pins at an offset so PEEK px of the card above stays visible
+              top: `${80 + i * PEEK}px`,
               backgroundColor: item.bg,
               borderRadius: 0,
               zIndex: i + 1,
@@ -157,7 +160,7 @@ export default function AboutStrip() {
             <span
               className="absolute right-4 bottom-0 font-sans font-black leading-none select-none pointer-events-none"
               style={{
-                fontSize: 'clamp(6rem, 18vw, 14rem)',
+                fontSize: 'clamp(5rem, 15vw, 12rem)',
                 color: item.fg === '#080808' ? 'rgba(0,0,0,0.07)' : 'rgba(255,255,255,0.06)',
                 lineHeight: 1,
               }}
@@ -165,22 +168,14 @@ export default function AboutStrip() {
               {item.num}
             </span>
 
-            {/* Content — reduced vertical padding for shorter height */}
-            <div className="relative z-10 px-8 md:px-14 py-10 md:py-14">
-              <p
-                className="font-mono text-xs uppercase tracking-widest mb-5"
-                style={{ color: item.fg === '#080808' ? 'rgba(0,0,0,0.35)' : 'rgba(255,255,255,0.35)' }}
-              >
-                {item.num} / {APPROACH.length.toString().padStart(2, '0')}
-              </p>
-
+            {/* Content */}
+            <div className="relative z-10 px-8 md:px-14 py-8 md:py-10">
               <h3
-                className="font-sans font-black uppercase leading-none tracking-tighter mb-6"
-                style={{ fontSize: 'clamp(2.4rem, 6vw, 6rem)', color: item.fg }}
+                className="font-sans font-black uppercase leading-none tracking-tighter mb-4"
+                style={{ fontSize: 'clamp(2rem, 5vw, 5rem)', color: item.fg }}
               >
                 {item.title}
               </h3>
-
               <p
                 className="font-sans text-sm md:text-base leading-relaxed max-w-xl"
                 style={{ color: item.fg === '#080808' ? 'rgba(0,0,0,0.55)' : 'rgba(255,255,255,0.55)' }}
