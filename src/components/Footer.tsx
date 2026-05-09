@@ -1,3 +1,4 @@
+'use client'
 export default function Footer() {
   return (
     <footer className="relative bg-[#080808] border-t border-white/[0.06] overflow-hidden">
@@ -38,7 +39,7 @@ export default function Footer() {
           </a>
         </div>
 
-        {/* Middle row — 3 cols */}
+        {/* Middle row — 4 cols */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-10 py-14 border-b border-white/[0.06]">
 
           {/* Nav */}
