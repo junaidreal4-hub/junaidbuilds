@@ -13,6 +13,13 @@ export default function Hero() {
     update(); const id = setInterval(update, 1000); return () => clearInterval(id)
   }, [])
 
+  const displayFont = {
+    fontFamily: 'var(--font-display)',
+    fontWeight: 400,
+    letterSpacing: '0.02em',
+    WebkitFontSmoothing: 'auto' as const,
+  }
+
   return (
     <section
       className="relative overflow-hidden bg-[#080808]"
@@ -35,34 +42,34 @@ export default function Hero() {
       <div className="absolute top-0 left-0 right-0 z-20 pointer-events-none">
         <div className="grid grid-cols-4 border-b border-white/[0.06]">
 
-          {/* Col 1: Name + tagline */}
+          {/* Col 1: Name */}
           <div className="px-6 md:px-8 py-6 border-r border-white/[0.06]">
-            <p className="font-mono text-xs text-white uppercase tracking-widest mb-3">Md Junaid</p>
-            <p className="font-mono text-xs text-white uppercase tracking-widest">Khan</p>
-            <p className="font-mono text-[10px] text-white/30 mt-3 leading-relaxed">
+            <p className="text-sm text-white uppercase tracking-widest mb-3 font-medium">Md Junaid</p>
+            <p className="text-sm text-white uppercase tracking-widest font-medium">Khan</p>
+            <p className="text-[11px] text-white/30 mt-3 leading-relaxed font-mono">
               mdjk.dev is my personal brand &mdash; building fast, bespoke digital experiences since 2022.
             </p>
           </div>
 
-          {/* Col 2: Discipline headline */}
+          {/* Col 2: Discipline */}
           <div className="px-6 md:px-8 py-6 border-r border-white/[0.06]">
-            <p className="font-mono text-xs text-white uppercase tracking-widest leading-snug">
+            <p className="text-sm text-white uppercase tracking-widest leading-snug font-medium">
               Full-Stack<br />Development<br />&amp; Design
             </p>
           </div>
 
           {/* Col 3: What I do */}
           <div className="px-6 md:px-8 py-6 border-r border-white/[0.06]">
-            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/30 mb-3">What I do</p>
-            <p className="font-mono text-[10px] text-white/60 leading-relaxed">
+            <p className="text-[10px] uppercase tracking-[0.2em] text-white/30 mb-3 font-mono">What I do</p>
+            <p className="text-[11px] text-white/60 leading-relaxed">
               I build high-performance websites and web apps for startups and businesses &mdash; from concept to deployment.
             </p>
           </div>
 
           {/* Col 4: Services */}
           <div className="px-6 md:px-8 py-6">
-            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/30 mb-3">Services</p>
-            <ul className="font-mono text-[10px] text-white/60 space-y-1">
+            <p className="text-[10px] uppercase tracking-[0.2em] text-white/30 mb-3 font-mono">Services</p>
+            <ul className="text-[11px] text-white/60 space-y-1">
               <li>Web Design &amp; Branding</li>
               <li>React / Next.js Development</li>
               <li>Full-Stack Applications</li>
@@ -75,18 +82,24 @@ export default function Hero() {
 
       {/* ══ BOTTOM: large headline + CTAs ══ */}
       <div className="absolute bottom-0 left-0 right-0 z-20 pointer-events-none">
-        <div className="px-5 md:px-8 pt-6">
-          <h1 className="uppercase subpixel-antialiased leading-[0.88] tracking-tight text-white"
-            style={{ fontFamily: 'var(--font-mono)', fontWeight: 300, fontSize: 'clamp(3rem, 8.5vw, 9rem)', WebkitFontSmoothing: 'auto' }}>
-            <SpecialText speed={12} delay={0.1}>Turning Ideas Into</SpecialText>
+        <div className="px-5 md:px-8 pt-4">
+          <h1
+            className="uppercase leading-[0.9] tracking-wide text-white block"
+            style={{ ...displayFont, fontSize: 'clamp(3.5rem, 9vw, 10rem)' }}
+          >
+            <SpecialText speed={10} delay={0.1}>Turning Ideas Into</SpecialText>
           </h1>
-          <h1 className="uppercase subpixel-antialiased leading-[0.88] tracking-tight"
-            style={{ fontFamily: 'var(--font-mono)', fontWeight: 300, fontSize: 'clamp(3rem, 8.5vw, 9rem)', color: 'rgba(255,255,255,0.22)', WebkitFontSmoothing: 'auto' }}>
-            <SpecialText speed={12} delay={0.4}>Modern &amp; Interactive</SpecialText>
+          <h1
+            className="uppercase leading-[0.9] tracking-wide block"
+            style={{ ...displayFont, fontSize: 'clamp(3.5rem, 9vw, 10rem)', color: 'rgba(255,255,255,0.22)' }}
+          >
+            <SpecialText speed={10} delay={0.35}>Modern &amp; Interactive</SpecialText>
           </h1>
-          <h1 className="uppercase subpixel-antialiased leading-[0.88] tracking-tight text-white"
-            style={{ fontFamily: 'var(--font-mono)', fontWeight: 300, fontSize: 'clamp(3rem, 8.5vw, 9rem)', WebkitFontSmoothing: 'auto' }}>
-            <SpecialText speed={12} delay={0.7}>Websites.</SpecialText>
+          <h1
+            className="uppercase leading-[0.9] tracking-wide text-white block"
+            style={{ ...displayFont, fontSize: 'clamp(3.5rem, 9vw, 10rem)' }}
+          >
+            <SpecialText speed={10} delay={0.6}>Websites.</SpecialText>
           </h1>
         </div>
 
