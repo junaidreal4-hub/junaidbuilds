@@ -50,68 +50,86 @@ export default function Hero() {
       <Waves strokeColor="rgba(255,255,255,0.05)" backgroundColor="transparent" pointerSize={0.3} />
       <div className="absolute top-[-80px] left-[-80px] w-[500px] h-[500px] bg-orange/[0.04] rounded-full blur-[120px] pointer-events-none z-10" />
 
-      {/* Heading block — flex-1 vertically centres */}
+      {/* Main content — flex-1 centres vertically */}
       <div className="relative z-20 flex-1 flex items-center">
-        <div className="container-width w-full">
+        {/* Wide padding — px-6 on mobile, px-10 on desktop (less than container-width so text spans wider) */}
+        <div className="w-full px-6 md:px-10">
 
+          {/* Hero heading — spans edge to edge */}
           <div className="overflow-hidden">
             <p
-              className="font-sans font-black uppercase text-white leading-[0.88] tracking-tighter opacity-0 animate-fade-up"
-              style={{ fontSize: 'clamp(3rem, min(11vw, 14vh), 10rem)', animationDelay: '0ms', animationFillMode: 'forwards' }}
+              className="font-sans font-black uppercase text-white tracking-tighter opacity-0 animate-fade-up"
+              style={{
+                fontSize: 'clamp(3.5rem, min(13vw, 15vh), 13rem)',
+                lineHeight: 0.88,
+                animationDelay: '0ms',
+                animationFillMode: 'forwards',
+              }}
             >I Build</p>
           </div>
 
           <div className="overflow-hidden">
             <p
-              className="font-sans font-black uppercase leading-[0.88] tracking-tighter opacity-0 animate-fade-up flex flex-wrap items-baseline gap-x-4"
-              style={{ fontSize: 'clamp(3rem, min(11vw, 14vh), 10rem)', animationDelay: '80ms', animationFillMode: 'forwards' }}
+              className="font-sans font-black uppercase tracking-tighter opacity-0 animate-fade-up flex flex-wrap items-baseline gap-x-5"
+              style={{
+                fontSize: 'clamp(3.5rem, min(13vw, 15vh), 13rem)',
+                lineHeight: 0.88,
+                animationDelay: '80ms',
+                animationFillMode: 'forwards',
+              }}
             >
               <span className="text-white">Modern</span>
               <span className="text-orange italic">Websites</span>
             </p>
           </div>
 
-          <div className="overflow-hidden mb-5">
+          <div className="overflow-hidden mb-6">
             <p
-              className="font-sans font-black uppercase text-white leading-[0.88] tracking-tighter opacity-0 animate-fade-up"
-              style={{ fontSize: 'clamp(3rem, min(11vw, 14vh), 10rem)', animationDelay: '160ms', animationFillMode: 'forwards' }}
+              className="font-sans font-black uppercase text-white tracking-tighter opacity-0 animate-fade-up"
+              style={{
+                fontSize: 'clamp(3.5rem, min(13vw, 15vh), 13rem)',
+                lineHeight: 0.88,
+                animationDelay: '160ms',
+                animationFillMode: 'forwards',
+              }}
             >That Work.</p>
           </div>
 
+          {/* Tagline */}
           <p
-            className="font-mono text-[11px] md:text-xs text-white/40 uppercase tracking-widest opacity-0 animate-fade-up mb-8"
+            className="font-mono text-[11px] md:text-xs text-white/40 uppercase tracking-widest opacity-0 animate-fade-up mb-10"
             style={{ animationDelay: '260ms', animationFillMode: 'forwards' }}
           >
             Full-Stack Developer &amp; Designer  ·  Berlin, Germany
           </p>
 
-          {/* Stats */}
+          {/* Stats — full width, left-anchored */}
           <div
-            className="grid grid-cols-2 md:grid-cols-4 border-t border-white/[0.08] opacity-0 animate-fade-up"
+            className="grid grid-cols-2 md:grid-cols-4 border-t border-white/[0.08] opacity-0 animate-fade-up w-full"
             style={{ animationDelay: '360ms', animationFillMode: 'forwards' }}
           >
             {STATS.map((s, i) => (
               <div
                 key={s.label}
-                className={`py-5 flex flex-col gap-1.5 ${
+                className={`py-6 flex flex-col gap-2 pr-6 ${
                   i < STATS.length - 1 ? 'md:border-r border-white/[0.08]' : ''
-                } md:px-8 first:pl-0`}
+                } ${ i > 0 ? 'md:pl-8' : '' }`}
               >
                 <span
                   className="font-sans font-black text-white leading-none"
-                  style={{ fontSize: 'clamp(1.6rem, 2.5vw, 3rem)' }}
+                  style={{ fontSize: 'clamp(2rem, 3vw, 3.5rem)' }}
                 >
                   <Counter value={s.value} suffix={s.suffix} />
                 </span>
-                <span className="font-mono text-[9px] md:text-[10px] text-white/30 uppercase tracking-widest">{s.label}</span>
+                <span className="font-mono text-[10px] text-white/30 uppercase tracking-widest">{s.label}</span>
               </div>
             ))}
           </div>
         </div>
       </div>
 
-      {/* Bottom bar */}
-      <div className="relative z-20 container-width py-5 border-t border-white/[0.06] shrink-0">
+      {/* Bottom bar — same wide padding, left-anchored */}
+      <div className="relative z-20 w-full px-6 md:px-10 py-5 border-t border-white/[0.06] shrink-0">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-2">
