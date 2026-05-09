@@ -126,65 +126,58 @@ export default function AboutStrip() {
       </div>
 
       {/* Approach label */}
-      <div className="px-6 md:px-10 pt-20 pb-6">
+      <div className="px-4 md:px-6 pt-20 pb-4">
         <p className="font-mono text-xs text-white/30 uppercase tracking-widest">/ My Approach</p>
       </div>
 
       {/* Stacked sticky cards */}
-      <div ref={cardsRef} className="flex flex-col gap-0">
+      <div ref={cardsRef} className="flex flex-col gap-0 px-4 md:px-6 pb-6">
         {APPROACH.map((item, i) => (
           <div
             key={item.num}
             className="approach-card sticky overflow-hidden"
             style={{
-              top: `${60 + i * PEEK}px`,
+              top: `${80 + i * PEEK}px`,
               backgroundColor: item.bg,
+              borderRadius: 0,
               zIndex: i + 1,
               transformOrigin: 'top center',
               willChange: 'transform, filter',
+              marginBottom: '16px',
             }}
           >
-            {/* Ghost number — right side, vertically centred, partially cropped */}
+            {/* Ghost number */}
             <span
-              className="absolute right-0 top-1/2 -translate-y-1/2 font-black leading-none select-none pointer-events-none"
+              className="absolute right-4 bottom-0 font-black leading-none select-none pointer-events-none"
               style={{
-                fontSize: 'clamp(10rem, 28vw, 26rem)',
-                color: item.fg === '#080808' ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.07)',
+                fontSize: 'clamp(5rem, 15vw, 12rem)',
+                color: item.fg === '#080808' ? 'rgba(0,0,0,0.07)' : 'rgba(255,255,255,0.06)',
                 lineHeight: 1,
-                letterSpacing: '-0.05em',
               }}
             >
               {item.num}
             </span>
 
-            {/* Content: title top-left, desc bottom-left */}
-            <div
-              className="relative z-10 flex flex-col justify-between"
-              style={{ minHeight: '52vh', padding: '3.5rem 4rem' }}
-            >
-              {/* Top: title */}
-              <div>
-                <h3
-                  className="font-black uppercase leading-none tracking-tighter"
-                  style={{
-                    fontSize: 'clamp(3.5rem, 9vw, 9rem)',
-                    color: item.fg,
-                    maxWidth: '75%',
-                  }}
-                >
-                  {item.title}
-                </h3>
-              </div>
-
-              {/* Bottom: description */}
-              <div style={{ maxWidth: '44%' }}>
-                <p
-                  className="text-sm md:text-base leading-relaxed"
-                  style={{ color: item.fg === '#080808' ? 'rgba(0,0,0,0.5)' : 'rgba(255,255,255,0.5)' }}
-                >
-                  {item.desc}
-                </p>
-              </div>
+            {/* Content */}
+            <div className="relative z-10 px-8 md:px-14 py-10 md:py-14">
+              <h3
+                className="font-black uppercase leading-none tracking-tighter mb-6"
+                style={{ fontSize: 'clamp(2.6rem, 6vw, 6rem)', color: item.fg }}
+              >
+                {item.title}
+              </h3>
+              <p
+                className="text-sm md:text-base leading-relaxed"
+                style={{
+                  color: item.fg === '#080808' ? 'rgba(0,0,0,0.55)' : 'rgba(255,255,255,0.55)',
+                  maxWidth: '480px',
+                  marginLeft: 'auto',
+                  marginRight: 'auto',
+                  textAlign: 'center',
+                }}
+              >
+                {item.desc}
+              </p>
             </div>
           </div>
         ))}
