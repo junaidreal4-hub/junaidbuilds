@@ -26,7 +26,7 @@ export default function Hero() {
       style={{ minHeight: '100dvh' }}
     >
       {/* ── Spline 3D ── */}
-      <div className="absolute left-0 right-0 bottom-0 z-0 pointer-events-auto" style={{ top: '35%' }}>
+      <div className="absolute left-0 right-0 bottom-0 z-0 pointer-events-auto" style={{ top: '18%' }}>
         <SplineScene
           scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
           className="w-full h-full"
@@ -35,7 +35,7 @@ export default function Hero() {
 
       {/* ── Fade ── */}
       <div className="absolute inset-0 z-10 pointer-events-none" style={{
-        background: 'linear-gradient(to bottom, rgba(8,8,8,1) 0%, rgba(8,8,8,0.85) 30%, rgba(8,8,8,0.0) 55%, rgba(8,8,8,0.5) 100%)',
+        background: 'linear-gradient(to bottom, rgba(8,8,8,1) 0%, rgba(8,8,8,0.75) 22%, rgba(8,8,8,0.0) 45%, rgba(8,8,8,0.5) 100%)',
       }} />
 
       {/* ══ TOP: 4 info columns ══ */}
