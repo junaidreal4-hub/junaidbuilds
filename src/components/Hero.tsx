@@ -20,36 +20,40 @@ export default function Hero() {
       <Waves strokeColor="rgba(255,255,255,0.05)" backgroundColor="transparent" pointerSize={0.3} />
 
       {/* Cyan glow blob */}
-      <div className="absolute top-[-80px] left-[-80px] w-[500px] h-[500px] bg-cyan/[0.04] rounded-full blur-[120px] pointer-events-none z-10" />
+      <div
+        className="absolute top-[-80px] left-[-80px] w-[500px] h-[500px] rounded-full blur-[120px] pointer-events-none z-10"
+        style={{ background: 'rgba(6,182,212,0.06)' }}
+      />
 
       {/* Main content */}
       <div className="relative z-20 flex-1 flex items-center">
         <div className="w-full px-6 md:px-10">
 
-          {/* Line 1: I BUILD MODERN WEBSITES — all one line */}
+          {/* Line 1: full width */}
           <div className="overflow-hidden">
             <p
-              className="font-sans font-black uppercase text-white tracking-tighter opacity-0 animate-fade-up"
+              className="font-sans font-black uppercase tracking-tighter opacity-0 animate-fade-up whitespace-nowrap"
               style={{
-                fontSize: 'clamp(2.6rem, min(9.5vw, 12vh), 10rem)',
+                fontSize: 'clamp(2.2rem, 11.8vw, 13rem)',
                 lineHeight: 0.88,
+                color: '#f5f5f0',
                 animationDelay: '0ms',
                 animationFillMode: 'forwards',
               }}
             >
-              I Build{' '}
-              <span className="text-cyan italic">Modern</span>{' '}
-              Websites
+              I Build Modern{' '}
+              <span style={{ color: '#06B6D4', fontStyle: 'italic' }}>Websites</span>
             </p>
           </div>
 
-          {/* Line 2: That Works — pushed to the right */}
+          {/* Line 2: That Works. right aligned */}
           <div className="overflow-hidden flex justify-end">
             <p
-              className="font-sans font-black uppercase text-white tracking-tighter opacity-0 animate-fade-up"
+              className="font-sans font-black uppercase tracking-tighter opacity-0 animate-fade-up"
               style={{
-                fontSize: 'clamp(2.6rem, min(9.5vw, 12vh), 10rem)',
+                fontSize: 'clamp(2.2rem, 11.8vw, 13rem)',
                 lineHeight: 0.88,
+                color: '#f5f5f0',
                 animationDelay: '80ms',
                 animationFillMode: 'forwards',
               }}
@@ -60,10 +64,10 @@ export default function Hero() {
 
           {/* Tagline */}
           <p
-            className="font-mono text-[11px] md:text-xs text-white/40 uppercase tracking-widest opacity-0 animate-fade-up mt-8"
-            style={{ animationDelay: '180ms', animationFillMode: 'forwards' }}
+            className="font-mono text-[11px] md:text-xs uppercase tracking-widest opacity-0 animate-fade-up mt-8"
+            style={{ color: 'rgba(255,255,255,0.4)', animationDelay: '180ms', animationFillMode: 'forwards' }}
           >
-            Full-Stack Developer &amp; Designer &nbsp;·&nbsp; Berlin, Germany
+            Full-Stack Developer &amp; Designer &nbsp;&middot;&nbsp; Berlin, Germany
           </p>
 
         </div>
@@ -75,8 +79,8 @@ export default function Hero() {
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-2">
               <span className="relative flex h-1.5 w-1.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan opacity-60" />
-                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-cyan" />
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-60" style={{ background: '#06B6D4' }} />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full" style={{ background: '#06B6D4' }} />
               </span>
               <span className="font-mono text-xs text-white/40 uppercase tracking-widest">Available</span>
             </div>
