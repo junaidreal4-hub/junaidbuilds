@@ -54,7 +54,7 @@ export default function AboutStrip() {
 
       ctx = gsap.context(() => {
 
-        // ─ Statement text reveal ─
+        // ─ Statement reveal ─
         const lines = statementRef.current?.querySelectorAll('.reveal-line')
         if (lines) {
           gsap.from(lines, {
@@ -63,16 +63,13 @@ export default function AboutStrip() {
           })
         }
 
-        // ─ Stacked card shrink + blur ─
+        // ─ ALL cards shrink + blur as next slides over ─
         const cards = gsap.utils.toArray<HTMLElement>('.approach-card', cardsRef.current)
 
-        cards.forEach((card, i) => {
-          if (i === cards.length - 1) return
-
+        cards.forEach((card) => {
           gsap.to(card, {
             scale: 0.88,
             filter: 'blur(4px)',
-            borderRadius: '24px',
             ease: 'none',
             scrollTrigger: {
               trigger: card,
@@ -145,22 +142,22 @@ export default function AboutStrip() {
         {APPROACH.map((item, i) => (
           <div
             key={item.num}
-            className="approach-card sticky overflow-hidden"
+            className="approach-card sticky overflow-hidden rounded-none"
             style={{
               top: `${60 + i * 16}px`,
               backgroundColor: item.bg,
-              borderRadius: '16px',
+              borderRadius: 0,
               zIndex: i + 1,
               transformOrigin: 'top center',
               willChange: 'transform, filter',
-              marginBottom: '12px',
+              marginBottom: '8px',
             }}
           >
             {/* Ghost number */}
             <span
               className="absolute right-4 bottom-0 font-sans font-black leading-none select-none pointer-events-none"
               style={{
-                fontSize: 'clamp(8rem, 22vw, 18rem)',
+                fontSize: 'clamp(6rem, 18vw, 14rem)',
                 color: item.fg === '#080808' ? 'rgba(0,0,0,0.07)' : 'rgba(255,255,255,0.06)',
                 lineHeight: 1,
               }}
@@ -168,26 +165,24 @@ export default function AboutStrip() {
               {item.num}
             </span>
 
-            {/* Content */}
-            <div className="relative z-10 px-8 md:px-14 py-16 md:py-20">
-              <div className="mb-8">
-                <p
-                  className="font-mono text-xs uppercase tracking-widest"
-                  style={{ color: item.fg === '#080808' ? 'rgba(0,0,0,0.35)' : 'rgba(255,255,255,0.35)' }}
-                >
-                  {item.num} / {APPROACH.length.toString().padStart(2, '0')}
-                </p>
-              </div>
+            {/* Content — reduced vertical padding for shorter height */}
+            <div className="relative z-10 px-8 md:px-14 py-10 md:py-14">
+              <p
+                className="font-mono text-xs uppercase tracking-widest mb-5"
+                style={{ color: item.fg === '#080808' ? 'rgba(0,0,0,0.35)' : 'rgba(255,255,255,0.35)' }}
+              >
+                {item.num} / {APPROACH.length.toString().padStart(2, '0')}
+              </p>
 
               <h3
-                className="font-sans font-black uppercase leading-none tracking-tighter mb-8"
-                style={{ fontSize: 'clamp(2.8rem, 8vw, 7rem)', color: item.fg }}
+                className="font-sans font-black uppercase leading-none tracking-tighter mb-6"
+                style={{ fontSize: 'clamp(2.4rem, 6vw, 6rem)', color: item.fg }}
               >
                 {item.title}
               </h3>
 
               <p
-                className="font-sans text-base md:text-lg leading-relaxed max-w-xl"
+                className="font-sans text-sm md:text-base leading-relaxed max-w-xl"
                 style={{ color: item.fg === '#080808' ? 'rgba(0,0,0,0.55)' : 'rgba(255,255,255,0.55)' }}
               >
                 {item.desc}
