@@ -39,8 +39,8 @@ const APPROACH = [
   },
 ]
 
-// How much of each card peeks above the next one (in px)
-const PEEK = 72
+// How much of each card peeks above the next one
+const PEEK = 120
 
 export default function AboutStrip() {
   const sectionRef   = useRef<HTMLElement>(null)
@@ -56,8 +56,6 @@ export default function AboutStrip() {
       gsap.registerPlugin(ScrollTrigger)
 
       ctx = gsap.context(() => {
-
-        // Statement reveal
         const lines = statementRef.current?.querySelectorAll('.reveal-line')
         if (lines) {
           gsap.from(lines, {
@@ -66,7 +64,6 @@ export default function AboutStrip() {
           })
         }
 
-        // Shrink + blur all cards as next slides over
         const cards = gsap.utils.toArray<HTMLElement>('.approach-card', cardsRef.current)
         cards.forEach((card) => {
           gsap.to(card, {
@@ -81,7 +78,6 @@ export default function AboutStrip() {
             },
           })
         })
-
       }, sectionRef)
     }
 
@@ -100,7 +96,7 @@ export default function AboutStrip() {
             {['My work is', 'driven by', 'logic, design,', '& precision.'].map((line, i) => (
               <div key={i} className="overflow-hidden mb-2">
                 <p
-                  className={`reveal-line font-sans font-black uppercase leading-none tracking-tighter ${
+                  className={`reveal-line font-black uppercase leading-none tracking-tighter ${
                     i === 2 ? 'text-orange italic' : 'text-white'
                   }`}
                   style={{ fontSize: 'clamp(2.4rem, 6vw, 5.5rem)' }}
@@ -139,26 +135,25 @@ export default function AboutStrip() {
         <p className="font-mono text-xs text-white/30 uppercase tracking-widest">/ My Approach</p>
       </div>
 
-      {/* Stacked sticky cards — each one peeks PEEK px above the next */}
+      {/* Stacked sticky cards */}
       <div ref={cardsRef} className="flex flex-col gap-0 px-4 md:px-6 pb-6">
         {APPROACH.map((item, i) => (
           <div
             key={item.num}
             className="approach-card sticky overflow-hidden"
             style={{
-              // Each card pins at an offset so PEEK px of the card above stays visible
               top: `${80 + i * PEEK}px`,
               backgroundColor: item.bg,
               borderRadius: 0,
               zIndex: i + 1,
               transformOrigin: 'top center',
               willChange: 'transform, filter',
-              marginBottom: '8px',
+              marginBottom: '16px',
             }}
           >
             {/* Ghost number */}
             <span
-              className="absolute right-4 bottom-0 font-sans font-black leading-none select-none pointer-events-none"
+              className="absolute right-4 bottom-0 font-black leading-none select-none pointer-events-none"
               style={{
                 fontSize: 'clamp(5rem, 15vw, 12rem)',
                 color: item.fg === '#080808' ? 'rgba(0,0,0,0.07)' : 'rgba(255,255,255,0.06)',
@@ -169,15 +164,15 @@ export default function AboutStrip() {
             </span>
 
             {/* Content */}
-            <div className="relative z-10 px-8 md:px-14 py-8 md:py-10">
+            <div className="relative z-10 px-8 md:px-14 py-10 md:py-14">
               <h3
-                className="font-sans font-black uppercase leading-none tracking-tighter mb-4"
+                className="font-black uppercase leading-none tracking-tighter mb-4"
                 style={{ fontSize: 'clamp(2rem, 5vw, 5rem)', color: item.fg }}
               >
                 {item.title}
               </h3>
               <p
-                className="font-sans text-sm md:text-base leading-relaxed max-w-xl"
+                className="text-sm md:text-base leading-relaxed max-w-xl"
                 style={{ color: item.fg === '#080808' ? 'rgba(0,0,0,0.55)' : 'rgba(255,255,255,0.55)' }}
               >
                 {item.desc}

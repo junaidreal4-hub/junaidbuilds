@@ -1,10 +1,9 @@
 import type { Metadata } from 'next'
-import { Space_Grotesk, JetBrains_Mono } from 'next/font/google'
+import { JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 import PageTransition from '@/components/PageTransition'
 
-const space = Space_Grotesk({ subsets: ['latin'], variable: '--font-space', weight: ['300','400','500','600','700'] })
-const mono  = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono',  weight: ['400','700'] })
+const mono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono', weight: ['400', '700'] })
 
 export const metadata: Metadata = {
   title: 'mdjk.dev — Freelance Web Developer Berlin',
@@ -23,7 +22,8 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${space.variable} ${mono.variable} font-sans bg-[#080808] text-body antialiased`}>
+      <body className={`${mono.variable} font-sans bg-[#080808] text-body antialiased`}
+            style={{ fontFamily: "'Nohemi', sans-serif" }}>
         <PageTransition />
         {children}
       </body>
