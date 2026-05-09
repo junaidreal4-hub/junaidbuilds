@@ -1,196 +1,133 @@
 'use client'
-import { useEffect, useRef } from 'react'
+import { useRef, useState } from 'react'
+import Image from 'next/image'
 
 const projects = [
   {
-    index: '01',
-    title: 'VisualsbyRiju',
-    type: 'Creative Portfolio',
-    year: '2025',
-    desc: 'Cinematic portfolio for a professional video editor. Scroll animations, showreel section, and premium editorial design built for impact.',
+    index: '01', title: 'VisualsbyRiju',
+    type: 'Creative Portfolio', year: '2025',
+    desc: 'Cinematic portfolio for a professional video editor. Scroll animations, showreel section, premium editorial design.',
     stack: ['HTML', 'CSS', 'JavaScript', 'GSAP'],
     live: 'https://visualsbyriju.vercel.app',
     github: 'https://github.com/junaidreal4-hub/visualsbyriju',
-    bg: '#080808',
-    fg: '#ffffff',
+    image: '/projects/visualsbyriju.png',
   },
   {
-    index: '02',
-    title: 'Cookie & Dough',
-    type: 'Business Website',
-    year: '2025',
-    desc: 'Full brochure website for a Berlin bakery. Warm design system, menu showcase, location info, and an order inquiry form that converts.',
+    index: '02', title: 'Cookie & Dough',
+    type: 'Business Website', year: '2025',
+    desc: 'Full brochure website for a Berlin bakery. Warm design, menu showcase, location info, and order inquiry form.',
     stack: ['HTML', 'CSS', 'JavaScript'],
     live: null,
     github: 'https://github.com/junaidreal4-hub/Cookie-Dough',
-    bg: '#f97316',
-    fg: '#080808',
+    image: '/projects/cookiedough.png',
   },
   {
-    index: '03',
-    title: 'N88E Build',
-    type: 'Corporate Website',
-    year: '2025',
-    desc: '8-page corporate site with Google Sheets lead capture, live data visualisations, full SEO optimisation, and Vercel deployment.',
+    index: '03', title: 'N88E Build',
+    type: 'Corporate Website', year: '2025',
+    desc: '8-page corporate site with Google Sheets lead capture, data visualisations, SEO optimisation, and Vercel deployment.',
     stack: ['React', 'TypeScript', 'Vite', 'Tailwind'],
     live: null,
     github: 'https://github.com/junaidreal4-hub/N88E-Build-Website',
-    bg: '#f5f5f0',
-    fg: '#080808',
+    image: '/projects/n88e.png',
   },
   {
-    index: '04',
-    title: 'Strebo',
-    type: 'Full-Stack SaaS',
-    year: '2025–26',
-    desc: 'AI-powered job application assistant. Next.js, FastAPI, PostgreSQL, OpenAI API — built solo end to end from zero to production.',
+    index: '04', title: 'Strebo',
+    type: 'Full-Stack SaaS', year: '2025–26',
+    desc: 'AI-powered job application assistant. Next.js, FastAPI, PostgreSQL, OpenAI API — built solo end to end.',
     stack: ['Next.js', 'FastAPI', 'PostgreSQL', 'OpenAI'],
     live: null,
     github: 'https://github.com/junaidreal4-hub/Strebo',
-    bg: '#111827',
-    fg: '#ffffff',
+    image: '/projects/strebo.png',
   },
   {
-    index: '05',
-    title: 'mdjk.dev',
-    type: 'Personal Portfolio',
-    year: '2026',
-    desc: 'This portfolio — built with Next.js, Tailwind CSS, and GSAP scroll animations. Every section crafted from scratch. Deployed on Vercel.',
+    index: '05', title: 'mdjk.dev',
+    type: 'Personal Portfolio', year: '2026',
+    desc: 'This portfolio — built with Next.js, Tailwind CSS, and GSAP scroll animations. Deployed on Vercel.',
     stack: ['Next.js', 'Tailwind', 'TypeScript', 'GSAP'],
     live: 'https://mdjk.vercel.app',
     github: 'https://github.com/junaidreal4-hub/junaidbuilds',
-    bg: '#080808',
-    fg: '#ffffff',
+    image: '/projects/mdjk.png',
   },
 ]
 
 export default function Works() {
+  const [hovered, setHovered]   = useState<number | null>(null)
+  const [imgError, setImgError] = useState<boolean[]>(Array(projects.length).fill(false))
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
   const sectionRef = useRef<HTMLElement>(null)
 
-  useEffect(() => {
-    async function init() {
-      const { gsap }          = await import('gsap')
-      const { ScrollTrigger } = await import('gsap/ScrollTrigger')
-      gsap.registerPlugin(ScrollTrigger)
-
-      sectionRef.current?.querySelectorAll('.panel-title').forEach((el) => {
-        gsap.from(el, {
-          x: -60, opacity: 0, duration: 1, ease: 'power3.out',
-          scrollTrigger: { trigger: el, start: 'top 85%' },
-        })
-      })
-
-      sectionRef.current?.querySelectorAll('.panel-body').forEach((el) => {
-        gsap.from(el, {
-          y: 30, opacity: 0, duration: 0.9, ease: 'power3.out',
-          scrollTrigger: { trigger: el, start: 'top 88%' },
-        })
-      })
-    }
-    init()
-  }, [])
+  const handleMouseMove = (e: React.MouseEvent) => {
+    setMousePos({ x: e.clientX, y: e.clientY })
+  }
 
   return (
-    <section id="work" ref={sectionRef}>
+    <section id="work" ref={sectionRef} className="relative bg-[#080808] overflow-hidden" onMouseMove={handleMouseMove}>
 
-      {/* Section label */}
-      <div className="bg-[#080808] container-width pt-20 pb-6">
-        <p className="font-mono text-xs text-white/30 uppercase tracking-widest">/ Selected Work</p>
-      </div>
-
-      {/* Alternating panels */}
-      {projects.map((proj, i) => (
+      {/* Floating cursor image */}
+      {hovered !== null && (
         <div
-          key={proj.title}
-          style={{ backgroundColor: proj.bg }}
-          className="relative w-full overflow-hidden"
+          className="pointer-events-none fixed z-30 w-64 aspect-video rounded-xl overflow-hidden shadow-2xl transition-[left,top] duration-100"
+          style={{ left: mousePos.x + 24, top: mousePos.y - 60 }}
         >
-          {/* Giant ghost index number */}
-          <span
-            className="absolute right-0 top-1/2 -translate-y-1/2 font-sans font-black leading-none select-none pointer-events-none"
-            style={{
-              fontSize:  'clamp(10rem, 28vw, 26rem)',
-              color:     proj.fg === '#080808' ? 'rgba(0,0,0,0.07)' : 'rgba(255,255,255,0.05)',
-              lineHeight: 1,
-            }}
-          >
-            {proj.index}
-          </span>
-
-          {/* Content */}
-          <div className="relative z-10 container-width py-24 md:py-32">
-            <div className="max-w-2xl">
-
-              {/* Type + year */}
-              <p className="panel-body font-mono text-xs uppercase tracking-widest mb-6"
-                style={{ color: proj.fg === '#080808' ? 'rgba(0,0,0,0.4)' : 'rgba(255,255,255,0.35)' }}>
-                {proj.type} &nbsp;·&nbsp; {proj.year}
-              </p>
-
-              {/* Title */}
-              <h2
-                className="panel-title font-sans font-black uppercase leading-none tracking-tighter mb-8"
-                style={{
-                  fontSize: 'clamp(3rem, 9vw, 8rem)',
-                  color: proj.fg,
-                }}
-              >
-                {proj.title}
-              </h2>
-
-              {/* Description */}
-              <p
-                className="panel-body font-sans text-base md:text-lg leading-relaxed mb-10 max-w-lg"
-                style={{ color: proj.fg === '#080808' ? 'rgba(0,0,0,0.6)' : 'rgba(255,255,255,0.55)' }}
-              >
-                {proj.desc}
-              </p>
-
-              {/* Stack pills */}
-              <div className="panel-body flex flex-wrap gap-2 mb-12">
-                {proj.stack.map((t) => (
-                  <span
-                    key={t}
-                    className="font-mono text-xs uppercase tracking-widest px-3 py-1.5 rounded-full border"
-                    style={{
-                      borderColor: proj.fg === '#080808' ? 'rgba(0,0,0,0.2)' : 'rgba(255,255,255,0.15)',
-                      color:       proj.fg === '#080808' ? 'rgba(0,0,0,0.5)' : 'rgba(255,255,255,0.45)',
-                    }}
-                  >
-                    {t}
-                  </span>
-                ))}
-              </div>
-
-              {/* Links */}
-              <div className="panel-body flex flex-wrap gap-4">
-                {proj.live && (
-                  <a
-                    href={proj.live}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest"
-                    style={{ color: proj.fg }}
-                  >
-                    View Live
-                    <span className="group-hover:translate-x-1 transition-transform duration-200">↗</span>
-                  </a>
-                )}
-                <a
-                  href={proj.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest"
-                  style={{ color: proj.fg === '#080808' ? 'rgba(0,0,0,0.4)' : 'rgba(255,255,255,0.35)' }}
-                >
-                  GitHub
-                  <span className="group-hover:translate-x-1 transition-transform duration-200">↗</span>
-                </a>
-              </div>
+          {!imgError[hovered] ? (
+            <Image src={projects[hovered].image} alt={projects[hovered].title} fill className="object-cover"
+              onError={() => setImgError(prev => { const n=[...prev]; n[hovered]=true; return n })} />
+          ) : (
+            <div className="w-full h-full bg-[#111] flex items-center justify-center">
+              <span className="font-mono text-3xl text-white/10">{projects[hovered].index}</span>
             </div>
+          )}
+        </div>
+      )}
+
+      <div className="container-width py-24">
+        <div className="flex items-end justify-between mb-4 pb-6 border-b border-white/[0.06]">
+          <p className="font-mono text-xs text-white/30 uppercase tracking-widest">/ Selected Work</p>
+          <p className="font-mono text-xs text-white/20 uppercase tracking-widest hidden md:block">Hover to preview</p>
+        </div>
+
+        <div className="flex flex-col">
+          {projects.map((proj, i) => (
+            <a
+              key={proj.title}
+              href={proj.live ?? proj.github}
+              target="_blank" rel="noopener noreferrer"
+              onMouseEnter={() => setHovered(i)}
+              onMouseLeave={() => setHovered(null)}
+              className="group flex items-center justify-between py-7 border-b border-white/[0.06] transition-all duration-300 hover:pl-4"
+            >
+              <div className="flex items-center gap-6 md:gap-10">
+                <span className="font-mono text-xs text-white/20 group-hover:text-orange transition-colors shrink-0">{proj.index}</span>
+                <span className="font-sans font-black uppercase text-white tracking-tight leading-none transition-colors duration-300 group-hover:text-orange"
+                  style={{ fontSize: 'clamp(1.6rem, 4vw, 3.2rem)' }}>
+                  {proj.title}
+                </span>
+              </div>
+              <div className="hidden md:flex items-center gap-10">
+                <span className="font-mono text-xs text-white/30 uppercase tracking-widest">{proj.type}</span>
+                <span className="font-mono text-xs text-white/20">{proj.year}</span>
+                <span className="font-mono text-white/20 text-sm opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300">↗</span>
+              </div>
+              <div className="md:hidden flex items-center gap-4">
+                <span className="font-mono text-xs text-white/30">{proj.year}</span>
+                <span className="font-mono text-white/20 text-sm">↗</span>
+              </div>
+            </a>
+          ))}
+        </div>
+
+        {/* Marquee */}
+        <div className="mt-20 overflow-hidden border-t border-white/[0.06] pt-8">
+          <div className="flex gap-0 whitespace-nowrap animate-marquee">
+            {Array(6).fill(null).map((_, i) => (
+              <span key={i} className="font-sans font-black uppercase text-white/[0.04] tracking-tighter shrink-0"
+                style={{ fontSize: 'clamp(3rem, 8vw, 7rem)' }}>
+                Be Creative  ✱  Build Bold  ✱  Ship Fast  ✱  
+              </span>
+            ))}
           </div>
         </div>
-      ))}
+      </div>
     </section>
   )
 }

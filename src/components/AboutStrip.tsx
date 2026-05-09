@@ -6,31 +6,36 @@ const APPROACH = [
     num: '01',
     title: 'Performance First',
     desc: 'Every site I build is optimised for speed out of the box. Fast load times, clean code, no bloat. Your users notice — and so does Google.',
-    tag: 'Core Value',
+    bg: '#f5f5f0',
+    fg: '#080808',
   },
   {
     num: '02',
     title: 'Clean Engineering',
     desc: 'Maintainable, typed, documented code. No copy-paste spaghetti. Every component is purpose-built and yours to own long after I hand it over.',
-    tag: 'Core Value',
+    bg: '#4a7c59',
+    fg: '#ffffff',
   },
   {
     num: '03',
     title: 'Sharp Design',
     desc: 'Design that serves the goal. Not decoration — intention. I work at the intersection of aesthetics and function so your brand lands the right way.',
-    tag: 'Core Value',
+    bg: '#f5f5f0',
+    fg: '#080808',
   },
   {
     num: '04',
     title: 'Direct Communication',
     desc: 'No middlemen, no account managers. You work directly with me. Fast replies, clear updates, and no surprises on delivery day.',
-    tag: 'Core Value',
+    bg: '#080808',
+    fg: '#ffffff',
   },
   {
     num: '05',
     title: 'Reliable Delivery',
     desc: '1–3 week turnaround on most projects. I scope honestly, commit firmly, and ship on time. If something changes — you hear it from me first.',
-    tag: 'Core Value',
+    bg: '#f97316',
+    fg: '#080808',
   },
 ]
 
@@ -41,44 +46,26 @@ export default function AboutStrip() {
 
   useEffect(() => {
     let ctx: import('gsap').Context | null = null
-
     async function init() {
       const { gsap }          = await import('gsap')
       const { ScrollTrigger } = await import('gsap/ScrollTrigger')
       gsap.registerPlugin(ScrollTrigger)
-
       ctx = gsap.context(() => {
-        // Big statement line reveal
         const lines = statementRef.current?.querySelectorAll('.reveal-line')
         if (lines) {
           gsap.from(lines, {
-            y: '110%',
-            opacity: 0,
-            duration: 1,
-            stagger: 0.12,
-            ease: 'power4.out',
-            scrollTrigger: {
-              trigger: statementRef.current,
-              start: 'top 80%',
-            },
+            y: '110%', opacity: 0, duration: 1, stagger: 0.12, ease: 'power4.out',
+            scrollTrigger: { trigger: statementRef.current, start: 'top 80%' },
           })
         }
-
-        // Approach items fade up
-        gsap.from('.approach-item', {
-          y: 40,
-          opacity: 0,
-          duration: 0.7,
-          stagger: 0.1,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: '.approach-list',
-            start: 'top 75%',
-          },
+        sectionRef.current?.querySelectorAll('.panel-in').forEach((el) => {
+          gsap.from(el, {
+            x: -50, opacity: 0, duration: 0.9, ease: 'power3.out',
+            scrollTrigger: { trigger: el, start: 'top 85%' },
+          })
         })
       }, sectionRef)
     }
-
     init()
     return () => { ctx?.revert() }
   }, [])
@@ -89,50 +76,31 @@ export default function AboutStrip() {
       {/* ── SECTION 1 — Bold statement ── */}
       <div className="container-width py-32 border-b border-white/[0.06]">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-end">
-
-          {/* Left — big statement */}
           <div ref={statementRef}>
             <p className="font-mono text-xs text-white/30 uppercase tracking-widest mb-10">/ About</p>
-            <div className="overflow-hidden mb-3">
-              <p className="reveal-line font-sans font-black uppercase text-white leading-none tracking-tighter"
-                style={{ fontSize: 'clamp(2.8rem, 7vw, 6rem)' }}>
-                My work is
-              </p>
-            </div>
-            <div className="overflow-hidden mb-3">
-              <p className="reveal-line font-sans font-black uppercase text-white leading-none tracking-tighter"
-                style={{ fontSize: 'clamp(2.8rem, 7vw, 6rem)' }}>
-                driven by
-              </p>
-            </div>
-            <div className="overflow-hidden mb-3">
-              <p className="reveal-line font-sans font-black uppercase leading-none tracking-tighter text-orange italic"
-                style={{ fontSize: 'clamp(2.8rem, 7vw, 6rem)' }}>
-                logic, design,
-              </p>
-            </div>
-            <div className="overflow-hidden">
-              <p className="reveal-line font-sans font-black uppercase text-white leading-none tracking-tighter"
-                style={{ fontSize: 'clamp(2.8rem, 7vw, 6rem)' }}>
-                &amp; precision.
-              </p>
-            </div>
+            {['My work is', 'driven by', 'logic, design,', '& precision.'].map((line, i) => (
+              <div key={i} className="overflow-hidden mb-2">
+                <p className={`reveal-line font-sans font-black uppercase leading-none tracking-tighter ${
+                  i === 2 ? 'text-orange italic' : 'text-white'
+                }`} style={{ fontSize: 'clamp(2.4rem, 6vw, 5.5rem)' }}>
+                  {line}
+                </p>
+              </div>
+            ))}
           </div>
-
-          {/* Right — bio + facts */}
           <div className="flex flex-col gap-8">
             <p className="text-white/50 text-base leading-relaxed">
-              I&apos;m Junaid — a full-stack developer and designer based in Berlin. I work directly
-              with founders, startups, and businesses to build fast, custom websites and web
-              applications that actually move the needle. No templates. No agency overhead.
-              Just clean code, sharp design, and results you can measure.
+              I&apos;m Junaid — a full-stack developer and designer based in Berlin.
+              I work directly with founders, startups, and businesses to build fast,
+              custom websites and web applications that actually move the needle.
+              No templates. No agency overhead. Just clean code, sharp design, and results you can measure.
             </p>
             <div className="flex flex-col gap-0">
               {[
-                ['Location',     'Berlin, Germany'],
-                ['Available',    'New Projects ✔'],
-                ['Stack',        'Next.js · FastAPI · PostgreSQL'],
-                ['Education',    'M.Sc. Data Analytics, Berlin'],
+                ['Location',  'Berlin, Germany'],
+                ['Available', 'New Projects ✔'],
+                ['Stack',     'Next.js · FastAPI · PostgreSQL'],
+                ['Education', 'M.Sc. Data Analytics, Berlin'],
               ].map(([k, v]) => (
                 <div key={k} className="flex justify-between py-4 border-b border-white/[0.06]">
                   <span className="font-mono text-xs text-white/30 uppercase tracking-widest">{k}</span>
@@ -144,47 +112,55 @@ export default function AboutStrip() {
         </div>
       </div>
 
-      {/* ── SECTION 2 — Numbered approach accordion ── */}
-      <div className="container-width py-24">
-        <p className="font-mono text-xs text-white/30 uppercase tracking-widest mb-16">/ My Approach</p>
-
-        <div className="approach-list flex flex-col gap-0">
-          {APPROACH.map((item, i) => (
-            <div
-              key={item.num}
-              className="approach-item border-b border-white/[0.06]"
-            >
-              <button
-                onClick={() => setOpen(open === i ? null : i)}
-                className="w-full flex items-center justify-between py-7 text-left group"
-              >
-                <div className="flex items-center gap-8">
-                  <span className="font-mono text-xs text-white/20">{item.num}</span>
-                  <span className={`font-sans font-black uppercase tracking-tight transition-colors duration-300 group-hover:text-orange ${
-                    open === i ? 'text-orange' : 'text-white'
-                  }`}
-                    style={{ fontSize: 'clamp(1.4rem, 3.5vw, 2.8rem)' }}>
-                    {item.title}
-                  </span>
-                </div>
-                <span className={`font-mono text-white/30 text-xl transition-transform duration-500 ${
-                  open === i ? 'rotate-45' : ''
-                }`}>+</span>
-              </button>
-
-              {/* Expanded content */}
-              <div className={`overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] ${
-                open === i ? 'max-h-48 pb-8' : 'max-h-0'
-              }`}>
-                <div className="flex flex-col md:flex-row gap-6 md:gap-20 pl-14">
-                  <p className="text-white/40 text-sm leading-relaxed max-w-lg">{item.desc}</p>
-                  <span className="font-mono text-xs text-orange/60 uppercase tracking-widest shrink-0">{item.tag}</span>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+      {/* ── SECTION 2 — Approach label ── */}
+      <div className="bg-[#080808] container-width pt-20 pb-6">
+        <p className="font-mono text-xs text-white/30 uppercase tracking-widest">/ My Approach</p>
       </div>
+
+      {/* ── SECTION 3 — Alternating panels (chkstepan style) ── */}
+      {APPROACH.map((item) => (
+        <div
+          key={item.num}
+          style={{ backgroundColor: item.bg }}
+          className="relative w-full overflow-hidden"
+        >
+          {/* Ghost number */}
+          <span
+            className="absolute right-0 top-1/2 -translate-y-1/2 font-sans font-black leading-none select-none pointer-events-none"
+            style={{
+              fontSize: 'clamp(8rem, 22vw, 20rem)',
+              color: item.fg === '#080808' ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.05)',
+              lineHeight: 1,
+            }}
+          >
+            {item.num}
+          </span>
+
+          {/* Content */}
+          <div className="relative z-10 container-width py-16 md:py-20">
+            <div className="max-w-xl">
+              <p
+                className="panel-in font-mono text-xs uppercase tracking-widest mb-5"
+                style={{ color: item.fg === '#080808' ? 'rgba(0,0,0,0.35)' : 'rgba(255,255,255,0.35)' }}
+              >
+                {item.num}
+              </p>
+              <h3
+                className="panel-in font-sans font-black uppercase leading-none tracking-tighter mb-6"
+                style={{ fontSize: 'clamp(2.2rem, 6vw, 5.5rem)', color: item.fg }}
+              >
+                {item.title}
+              </h3>
+              <p
+                className="panel-in font-sans text-base leading-relaxed"
+                style={{ color: item.fg === '#080808' ? 'rgba(0,0,0,0.55)' : 'rgba(255,255,255,0.55)' }}
+              >
+                {item.desc}
+              </p>
+            </div>
+          </div>
+        </div>
+      ))}
     </section>
   )
 }
