@@ -12,14 +12,12 @@ export default function Hero() {
     update(); const id = setInterval(update, 1000); return () => clearInterval(id)
   }, [])
 
-  const FS = 'clamp(2rem, 6.5vw, 8rem)'
-
   return (
     <section
       className="relative flex flex-col pt-16 overflow-hidden bg-[#080808]"
       style={{ minHeight: '100dvh' }}
     >
-      {/* Spline 3D full background — pointer-events-auto so cursor tracking works */}
+      {/* ── Spline 3D background ── */}
       <div className="absolute inset-0 z-0 pointer-events-auto">
         <SplineScene
           scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
@@ -27,76 +25,95 @@ export default function Hero() {
         />
       </div>
 
-      {/* Dark overlay — pointer-events-none so mouse passes through to Spline */}
-      <div className="absolute inset-0 z-10 pointer-events-none"
-        style={{ background: 'linear-gradient(to bottom, rgba(8,8,8,0.45) 0%, rgba(8,8,8,0.25) 50%, rgba(8,8,8,0.65) 100%)' }}
+      {/* ── Gradient overlay ── */}
+      <div
+        className="absolute inset-0 z-10 pointer-events-none"
+        style={{
+          background:
+            'linear-gradient(to top, rgba(8,8,8,0.92) 0%, rgba(8,8,8,0.3) 40%, rgba(8,8,8,0.1) 100%)',
+        }}
       />
 
-      {/* Main content */}
-      <div className="relative z-20 flex-1 flex items-start pt-24 md:pt-32 pointer-events-none">
-        <div className="w-full px-6 md:px-10">
+      {/* ── Top-right availability badge ── */}
+      <div className="absolute top-24 right-6 md:right-10 z-20 pointer-events-none flex items-center gap-2">
+        <span className="relative flex h-1.5 w-1.5">
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-60" style={{ background: '#f97316' }} />
+          <span className="relative inline-flex h-1.5 w-1.5 rounded-full" style={{ background: '#f97316' }} />
+        </span>
+        <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest">Available for work</span>
+      </div>
 
-          {/* Line 1 */}
-          <div className="overflow-hidden">
-            <p
-              className="font-sans font-black uppercase tracking-tighter opacity-0 animate-fade-up"
-              style={{
-                fontSize: FS,
-                lineHeight: 0.9,
-                color: '#f5f5f0',
-                animationDelay: '0ms',
-                animationFillMode: 'forwards',
-              }}
-            >
-              Turning Ideas Into{' '}
-              <span style={{ color: '#f97316', fontStyle: 'italic' }}>Modern</span>
-            </p>
-          </div>
+      {/* ── Bottom-left hero text ── */}
+      <div className="absolute bottom-24 left-6 md:left-10 z-20 pointer-events-none max-w-3xl">
 
-          {/* Line 2 */}
-          <div className="overflow-hidden">
-            <p
-              className="font-sans font-black uppercase tracking-tighter opacity-0 animate-fade-up"
-              style={{
-                fontSize: FS,
-                lineHeight: 0.9,
-                color: '#f5f5f0',
-                animationDelay: '80ms',
-                animationFillMode: 'forwards',
-              }}
-            >
-              &amp; Interactive Websites.
-            </p>
-          </div>
+        {/* Eyebrow */}
+        <p
+          className="font-mono text-[10px] uppercase tracking-[0.25em] mb-5 opacity-0 animate-fade-up"
+          style={{ color: '#f97316', animationDelay: '0ms', animationFillMode: 'forwards' }}
+        >
+          Full-Stack Developer &amp; Designer &nbsp;/&nbsp; Berlin
+        </p>
 
-          {/* Tagline */}
-          <p
-            className="font-mono text-[11px] md:text-xs uppercase tracking-widest opacity-0 animate-fade-up mt-8"
-            style={{ color: 'rgba(255,255,255,0.4)', animationDelay: '180ms', animationFillMode: 'forwards' }}
+        {/* Headline line 1 */}
+        <div className="overflow-hidden">
+          <h1
+            className="font-sans font-bold uppercase tracking-tight leading-[0.92] opacity-0 animate-fade-up"
+            style={{
+              fontSize: 'clamp(2.8rem, 7vw, 7.5rem)',
+              color: '#ffffff',
+              animationDelay: '80ms',
+              animationFillMode: 'forwards',
+            }}
           >
-            Full-Stack Developer &amp; Designer &nbsp;&middot;&nbsp; Berlin, Germany
-          </p>
+            Turning Ideas
+          </h1>
+        </div>
 
+        {/* Headline line 2 */}
+        <div className="overflow-hidden">
+          <h1
+            className="font-sans font-bold uppercase tracking-tight leading-[0.92] opacity-0 animate-fade-up"
+            style={{
+              fontSize: 'clamp(2.8rem, 7vw, 7.5rem)',
+              color: 'rgba(255,255,255,0.18)',
+              animationDelay: '140ms',
+              animationFillMode: 'forwards',
+            }}
+          >
+            Into Interactive
+          </h1>
+        </div>
+
+        {/* Headline line 3 */}
+        <div className="overflow-hidden">
+          <h1
+            className="font-sans font-bold uppercase tracking-tight leading-[0.92] opacity-0 animate-fade-up"
+            style={{
+              fontSize: 'clamp(2.8rem, 7vw, 7.5rem)',
+              color: '#ffffff',
+              animationDelay: '200ms',
+              animationFillMode: 'forwards',
+            }}
+          >
+            Websites.
+          </h1>
+        </div>
+
+        {/* CTA row */}
+        <div
+          className="flex flex-wrap gap-3 mt-8 opacity-0 animate-fade-up pointer-events-auto"
+          style={{ animationDelay: '300ms', animationFillMode: 'forwards' }}
+        >
+          <a href="#work" className="btn-primary">See my work →</a>
+          <a href="#contact" className="btn-ghost">Start a project</a>
         </div>
       </div>
 
-      {/* Bottom bar — pointer-events-auto so buttons remain clickable */}
-      <div className="relative z-20 w-full px-6 md:px-10 py-5 border-t border-white/[0.06] shrink-0 pointer-events-auto">
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
-          <div className="flex items-center gap-6">
-            <div className="flex items-center gap-2">
-              <span className="relative flex h-1.5 w-1.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-60" style={{ background: '#f97316' }} />
-                <span className="relative inline-flex h-1.5 w-1.5 rounded-full" style={{ background: '#f97316' }} />
-              </span>
-              <span className="font-mono text-xs text-white/40 uppercase tracking-widest">Available</span>
-            </div>
-            <span className="font-mono text-xs text-white/30 tabular-nums">{time} CET</span>
-          </div>
-          <div className="flex flex-wrap gap-3">
-            <a href="#work" className="btn-primary">See my work →</a>
-            <a href="#contact" className="btn-ghost">Start a project</a>
-          </div>
+      {/* ── Bottom bar ── */}
+      <div className="absolute bottom-0 left-0 right-0 z-20 pointer-events-auto">
+        <div className="w-full px-6 md:px-10 py-4 border-t border-white/[0.06] flex items-center justify-between">
+          <span className="font-mono text-[10px] text-white/25 uppercase tracking-widest">mdjk.dev</span>
+          <span className="font-mono text-[10px] text-white/25 tabular-nums">{time} CET</span>
         </div>
       </div>
     </section>
