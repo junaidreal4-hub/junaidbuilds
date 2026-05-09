@@ -57,9 +57,10 @@ export default function Hero() {
         {/* Headline line 1 */}
         <div className="overflow-hidden">
           <h1
-            className="font-sans font-bold uppercase tracking-tight leading-[0.92] opacity-0 animate-fade-up"
+            className="font-sans uppercase tracking-tight leading-[0.92] opacity-0 animate-fade-up"
             style={{
               fontSize: 'clamp(1.6rem, 3.5vw, 3.8rem)',
+              fontWeight: 300,
               color: '#ffffff',
               animationDelay: '80ms',
               animationFillMode: 'forwards',
@@ -72,9 +73,10 @@ export default function Hero() {
         {/* Headline line 2 */}
         <div className="overflow-hidden">
           <h1
-            className="font-sans font-bold uppercase tracking-tight leading-[0.92] opacity-0 animate-fade-up"
+            className="font-sans uppercase tracking-tight leading-[0.92] opacity-0 animate-fade-up"
             style={{
               fontSize: 'clamp(1.6rem, 3.5vw, 3.8rem)',
+              fontWeight: 300,
               color: 'rgba(255,255,255,0.18)',
               animationDelay: '140ms',
               animationFillMode: 'forwards',
@@ -87,9 +89,10 @@ export default function Hero() {
         {/* Headline line 3 */}
         <div className="overflow-hidden">
           <h1
-            className="font-sans font-bold uppercase tracking-tight leading-[0.92] opacity-0 animate-fade-up"
+            className="font-sans uppercase tracking-tight leading-[0.92] opacity-0 animate-fade-up"
             style={{
               fontSize: 'clamp(1.6rem, 3.5vw, 3.8rem)',
+              fontWeight: 300,
               color: '#ffffff',
               animationDelay: '200ms',
               animationFillMode: 'forwards',
