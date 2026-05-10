@@ -39,7 +39,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${barlow.variable} ${bebasNeue.variable} ${mono.variable} font-sans bg-white text-body subpixel-antialiased`}>
+      <body className={`${barlow.variable} ${bebasNeue.variable} ${mono.variable} font-sans bg-white text-gray-900 subpixel-antialiased`}>
         <CustomCursor />
         <PageTransition />
         {children}
