@@ -20,8 +20,8 @@ export default function Hero() {
   const disp = {
     fontFamily: 'var(--font-display)',
     fontWeight: 800,
-    letterSpacing: '0.01em',
-    lineHeight: 0.88,
+    letterSpacing: '0.06em',
+    lineHeight: 0.9,
     WebkitFontSmoothing: 'antialiased' as const,
   }
 
@@ -63,13 +63,13 @@ export default function Hero() {
         <div className="flex items-baseline justify-between w-full">
           <h1
             className="uppercase"
-            style={{ ...disp, fontSize: 'clamp(2.2rem, 5.5vw, 6rem)', color: 'rgba(8,8,8,0.92)' }}
+            style={{ ...disp, fontSize: 'clamp(1.6rem, 4.2vw, 5rem)', color: 'rgba(8,8,8,0.92)' }}
           >
             <SpecialText speed={10} delay={0.05}>Turning Ideas</SpecialText>
           </h1>
           <h1
             className="uppercase"
-            style={{ ...disp, fontSize: 'clamp(2.2rem, 5.5vw, 6rem)', color: 'rgba(8,8,8,0.25)' }}
+            style={{ ...disp, fontSize: 'clamp(1.6rem, 4.2vw, 5rem)', color: 'rgba(8,8,8,0.22)' }}
           >
             <SpecialText speed={10} delay={0.2}>Into Reality</SpecialText>
           </h1>

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Barlow, JetBrains_Mono, Bebas_Neue } from 'next/font/google'
+import { Barlow, JetBrains_Mono, Orbitron } from 'next/font/google'
 import './globals.css'
 import PageTransition from '@/components/PageTransition'
 import CustomCursor from '@/components/CustomCursor'
@@ -10,10 +10,10 @@ const barlow = Barlow({
   weight: ['300', '400', '500', '600', '700'],
 })
 
-const bebasNeue = Bebas_Neue({
+const orbitron = Orbitron({
   subsets: ['latin'],
   variable: '--font-display',
-  weight: ['400'],
+  weight: ['400', '500', '600', '700', '800', '900'],
 })
 
 const mono = JetBrains_Mono({
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${barlow.variable} ${bebasNeue.variable} ${mono.variable} font-sans bg-white text-gray-900 subpixel-antialiased`}>
+      <body className={`${barlow.variable} ${orbitron.variable} ${mono.variable} font-sans bg-white text-gray-900 subpixel-antialiased`}>
         <CustomCursor />
         <PageTransition />
         {children}
