@@ -1,5 +1,6 @@
 'use client'
 import { useEffect, useRef } from 'react'
+import Image from 'next/image'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -9,40 +10,88 @@ const projects = [
   {
     num: '01',
     title: 'N88E Build',
-    desc: 'Full-stack corporate website — React, TypeScript, Vite. 8+ pages, Google Sheets API, SEO optimised.',
+    url: 'https://n88ebuild.com',
+    desc: 'Full-stack corporate site for a construction company. 8+ pages, Google Sheets API integration, multilingual SEO.',
     tags: ['React', 'TypeScript', 'Vite', 'Vercel'],
     year: '2025',
+    img: '/projects/n88e.png',
+    dark: false,
   },
   {
     num: '02',
     title: 'mdjk.dev',
-    desc: 'Personal freelance portfolio — Next.js, Tailwind CSS, GSAP animations, 3D Spline scene.',
+    url: 'https://mdjk.vercel.app',
+    desc: 'Personal freelance portfolio with GSAP scroll animations, 3D Spline scene and smooth page transitions.',
     tags: ['Next.js', 'GSAP', 'Spline', 'Tailwind'],
     year: '2025',
+    img: '/projects/mdjk.png',
+    dark: true,
   },
   {
     num: '03',
-    title: 'Customer Segmentation',
-    desc: 'RFM analysis on 10k+ users via Python & SQL. Visualised cohorts in Tableau.',
-    tags: ['Python', 'SQL', 'Tableau'],
+    title: 'Cookie Dough',
+    url: '#',
+    desc: 'E-commerce storefront for a Berlin-based dessert brand. Cart system, Stripe checkout, CMS-driven content.',
+    tags: ['Next.js', 'Stripe', 'Sanity', 'Tailwind'],
+    year: '2025',
+    img: '/projects/cookiedough.png',
+    dark: false,
+  },
+  {
+    num: '04',
+    title: 'Strebo',
+    url: '#',
+    desc: 'CV generation and document management app. PDF export, auth, role-based access and cloud storage.',
+    tags: ['FastAPI', 'PostgreSQL', 'React', 'Cloudinary'],
     year: '2024',
+    img: '/projects/strebo.png',
+    dark: true,
+  },
+  {
+    num: '05',
+    title: 'Visuals by Riju',
+    url: '#',
+    desc: 'Photography portfolio with immersive lightbox gallery, lazy-loaded media and custom cursor interactions.',
+    tags: ['Next.js', 'Framer Motion', 'Cloudinary'],
+    year: '2024',
+    img: '/projects/visualsbyriju.png',
+    dark: false,
   },
 ]
 
 export default function Projects() {
-  const sectionRef = useRef<HTMLElement>(null)
-  const itemsRef   = useRef<(HTMLDivElement | null)[]>([])
+  const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      itemsRef.current.forEach((el, i) => {
-        gsap.from(el, {
-          y: 50, opacity: 0, duration: 1, delay: i * 0.1, ease: 'power3.out',
-          scrollTrigger: { trigger: el, start: 'top 85%' },
-        })
+    const cards = gsap.utils.toArray<HTMLElement>('.proj-card')
+
+    cards.forEach((card, i) => {
+      // every card except the last one gets pinned
+      if (i === cards.length - 1) return
+
+      ScrollTrigger.create({
+        trigger: card,
+        start: 'top top',
+        end: () => `+=${(cards.length - i) * window.innerHeight}`,
+        pin: true,
+        pinSpacing: false,
       })
-    }, sectionRef)
-    return () => ctx.revert()
+
+      // scale down as next card comes up
+      gsap.to(card, {
+        scale: 0.92,
+        borderRadius: '20px',
+        ease: 'none',
+        scrollTrigger: {
+          trigger: card,
+          start: 'top top',
+          end: `+=${window.innerHeight}`,
+          scrub: true,
+        },
+      })
+    })
+
+    return () => ScrollTrigger.getAll().forEach(t => t.kill())
   }, [])
 
   const mono = {
@@ -52,57 +101,133 @@ export default function Projects() {
   }
 
   return (
-    <section
-      id="work"
-      ref={sectionRef}
-      style={{
-        background: '#0a0a0a',
-        padding: 'clamp(5rem,10vh,8rem) clamp(1.5rem,5vw,5rem)',
-      }}
-    >
-      <div className="flex items-center gap-4 mb-16">
-        <span style={{ ...mono, fontSize: '0.6rem', color: 'rgba(255,255,255,0.25)' }}>03 — Work</span>
-        <div className="flex-1" style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }} />
-      </div>
+    <section id="work" ref={containerRef}>
+      {projects.map((p, i) => (
+        <div
+          key={i}
+          className="proj-card"
+          style={{
+            position: 'relative',
+            width: '100%',
+            height: '100dvh',
+            overflow: 'hidden',
+            willChange: 'transform',
+          }}
+        >
+          {/* ── BACKGROUND SCREENSHOT ────────────────────────────── */}
+          <Image
+            src={p.img}
+            alt={p.title}
+            fill
+            style={{ objectFit: 'cover', objectPosition: 'top center' }}
+            priority={i === 0}
+            sizes="100vw"
+          />
 
-      <div className="flex flex-col">
-        {projects.map((p, i) => (
+          {/* dark overlay so text is always readable */}
           <div
-            key={i}
-            ref={el => { itemsRef.current[i] = el }}
-            className="group grid grid-cols-1 md:grid-cols-[4rem_1fr_auto] gap-4 md:gap-12 py-10 cursor-pointer"
-            style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}
+            style={{
+              position: 'absolute', inset: 0,
+              background: p.dark
+                ? 'linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.15) 60%, rgba(0,0,0,0.7) 100%)'
+                : 'linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.05) 60%, rgba(0,0,0,0.6) 100%)',
+            }}
+          />
+
+          {/* ── TOP META ───────────────────────────────────────── */}
+          <div
+            style={{
+              position: 'absolute',
+              top: 'clamp(2rem, 4vh, 3.5rem)',
+              left:  'clamp(1.5rem, 4vw, 4rem)',
+              right: 'clamp(1.5rem, 4vw, 4rem)',
+              display: 'flex',
+              alignItems: 'flex-start',
+              justifyContent: 'space-between',
+            }}
           >
-            <span style={{ ...mono, fontSize: '0.55rem', color: 'rgba(255,255,255,0.2)', paddingTop: '0.3rem' }}>{p.num}</span>
-            <div className="flex flex-col gap-3">
-              <h3
-                className="uppercase group-hover:translate-x-2 transition-transform duration-300"
-                style={{
-                  fontFamily: 'var(--font-display)',
-                  fontWeight: 700,
-                  fontSize: 'clamp(1.4rem, 3vw, 3.2rem)',
-                  letterSpacing: '0.04em',
-                  color: 'rgba(255,255,255,0.9)',
-                  lineHeight: 1,
-                }}
-              >{p.title}</h3>
-              <p style={{ fontFamily: 'var(--font-sans)', fontSize: '0.88rem', color: 'rgba(255,255,255,0.35)', lineHeight: 1.6, maxWidth: '55ch' }}>{p.desc}</p>
-              <div className="flex flex-wrap gap-2 mt-1">
+            {/* left: index + description + tags */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', maxWidth: '55ch' }}>
+              <span style={{ ...mono, fontSize: '0.55rem', color: 'rgba(255,255,255,0.4)' }}>
+                {p.num} — {p.year}
+              </span>
+              <p style={{
+                fontFamily: 'var(--font-sans)',
+                fontSize: 'clamp(0.8rem, 1vw, 0.95rem)',
+                color: 'rgba(255,255,255,0.75)',
+                lineHeight: 1.7,
+                fontWeight: 400,
+                maxWidth: '48ch',
+              }}>
+                {p.desc}
+              </p>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginTop: '0.25rem' }}>
                 {p.tags.map(tag => (
                   <span key={tag} style={{
-                    ...mono, fontSize: '0.5rem',
-                    color: 'rgba(255,255,255,0.3)',
-                    border: '1px solid rgba(255,255,255,0.1)',
+                    ...mono,
+                    fontSize: '0.48rem',
+                    color: 'rgba(255,255,255,0.5)',
+                    border: '1px solid rgba(255,255,255,0.2)',
                     borderRadius: '2px',
-                    padding: '0.25rem 0.6rem',
+                    padding: '0.2rem 0.55rem',
+                    backdropFilter: 'blur(4px)',
                   }}>{tag}</span>
                 ))}
               </div>
             </div>
-            <span style={{ ...mono, fontSize: '0.55rem', color: 'rgba(255,255,255,0.15)', alignSelf: 'start', paddingTop: '0.3rem' }}>{p.year}</span>
+
+            {/* right: visit link */}
+            {p.url !== '#' && (
+              <a
+                href={p.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-hover
+                style={{
+                  ...mono,
+                  fontSize: '0.5rem',
+                  color: 'rgba(255,255,255,0.5)',
+                  border: '1px solid rgba(255,255,255,0.2)',
+                  borderRadius: '2px',
+                  padding: '0.35rem 0.8rem',
+                  textDecoration: 'none',
+                  backdropFilter: 'blur(4px)',
+                  flexShrink: 0,
+                  marginTop: '0.1rem',
+                  transition: 'color 0.2s, border-color 0.2s',
+                }}
+              >
+                Visit ↗
+              </a>
+            )}
           </div>
-        ))}
-      </div>
+
+          {/* ── BOTTOM TITLE ──────────────────────────────────────── */}
+          <div
+            style={{
+              position: 'absolute',
+              bottom: 'clamp(2rem, 4vh, 3.5rem)',
+              left:   'clamp(1.5rem, 4vw, 4rem)',
+              right:  'clamp(1.5rem, 4vw, 4rem)',
+            }}
+          >
+            <h2
+              className="uppercase"
+              style={{
+                fontFamily: 'var(--font-display)',
+                fontWeight: 800,
+                fontSize: 'clamp(3rem, 8vw, 9rem)',
+                letterSpacing: '0.03em',
+                lineHeight: 0.85,
+                color: 'rgba(255,255,255,0.92)',
+                margin: 0,
+              }}
+            >
+              {p.title}
+            </h2>
+          </div>
+        </div>
+      ))}
     </section>
   )
 }
