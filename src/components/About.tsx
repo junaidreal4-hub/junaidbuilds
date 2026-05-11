@@ -26,14 +26,14 @@ export default function About() {
         scrollTrigger: { trigger: svgWrapRef.current, start: 'top 85%' },
       })
 
-      // ── ZOOM WIPE ───────────────────────────────────────
-      // Pins the SECOND section (svg-screen) so the SVG stays centred
-      // on screen while the user scrolls. Then scrubs scale up from
-      // the "+" symbol position (tweak X% to match your SVG layout).
+      // ── ZOOM WIPE FROM THE + ────────────────────────────────────
+      // transformOrigin X=39% matches the "+" position in the SVG.
+      // Because the origin is left-of-centre, as scale grows the "+"
+      // drifts toward the viewport centre — the "pull to centre" effect.
       gsap.to(svgWrapRef.current, {
         scale: 40,
         ease: 'none',
-        transformOrigin: '50% 50%', // ← adjust X% to the + position in your SVG
+        transformOrigin: '39% 50%',
         scrollTrigger: {
           trigger: '#svg-screen',
           start: 'top top',
@@ -58,7 +58,7 @@ export default function About() {
   return (
     <div style={{ background: '#fff' }}>
 
-      {/* ── BIO SECTION ──────────────────────────────────────── */}
+      {/* ── BIO SECTION ───────────────────────────────────── */}
       <section
         id="about"
         ref={sectionRef}
@@ -69,13 +69,11 @@ export default function About() {
           background: '#fff',
         }}
       >
-        {/* section label */}
         <div className="flex items-center gap-4 mb-16">
           <span style={{ ...mono, fontSize: '0.6rem', color: 'rgba(8,8,8,0.3)' }}>02 — About</span>
           <div className="flex-1" style={{ borderTop: '1px solid rgba(0,0,0,0.07)' }} />
         </div>
 
-        {/* Bio two-col */}
         <div ref={bioRef} className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 items-center">
           <div>
             <h2
@@ -136,9 +134,9 @@ export default function About() {
         </div>
       </section>
 
-      {/* ── SVG SCREEN ───────────────────────────────────────── */}
-      {/* Full viewport-height panel — SVG sits dead centre.          */}
-      {/* GSAP pins THIS div so SVG is mid-screen when zoom starts.   */}
+      {/* ── SVG SCREEN ──────────────────────────────────────── */}
+      {/* Full-viewport panel, SVG stretches edge-to-edge.            */}
+      {/* overflow:hidden clips the SVG during the zoom.              */}
       <div
         id="svg-screen"
         style={{
@@ -146,26 +144,30 @@ export default function About() {
           height: '100dvh',
           background: '#fff',
           display: 'flex',
-          alignItems: 'center',       // vertical centre
-          justifyContent: 'center',   // horizontal centre
+          alignItems: 'center',
           overflow: 'hidden',
         }}
       >
+        {/* svgWrapRef is the zoom target — no horizontal padding, full width */}
         <div
           ref={svgWrapRef}
           style={{
-            width: '90%',
-            maxWidth: '1200px',
+            width: '100%',
             willChange: 'transform',
-            transformOrigin: '50% 50%', // mirrors the gsap transformOrigin
+            transformOrigin: '39% 50%', // mirrors gsap value
+            lineHeight: 0,
           }}
         >
           <Image
             src="/title.svg"
             alt="Clarity + Performance"
-            width={1200}
-            height={600}
-            style={{ width: '100%', height: 'auto', display: 'block' }}
+            width={1920}
+            height={400}
+            style={{
+              width: '100%',
+              height: 'auto',
+              display: 'block',
+            }}
             priority
           />
         </div>
