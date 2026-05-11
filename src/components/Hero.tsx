@@ -55,11 +55,12 @@ export default function Hero() {
         background: 'linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,0.4) 12%, rgba(255,255,255,0) 26%, rgba(255,255,255,0) 100%)',
       }} />
 
-      {/* z-30: headline */}
+      {/* z-30: headline + tagline */}
       <div
         className="absolute left-0 right-0 z-30 pointer-events-none"
         style={{ top: '34%' }}
       >
+        {/* headline row */}
         <div className="flex items-baseline justify-between w-full px-6 md:px-10">
           <h1 className="uppercase" style={{ ...disp, fontSize: 'clamp(1.6rem, 4.2vw, 5rem)', color: 'rgba(8,8,8,0.92)' }}>
             <SpecialText speed={10} delay={0.05}>Turning Ideas</SpecialText>
@@ -74,26 +75,18 @@ export default function Hero() {
           <div style={{ marginTop: '0.6rem', borderBottom: '1px solid rgba(0,0,0,0.07)' }} />
         </div>
 
-        {/* sub-tags — static, stacked below divider */}
-        <div className="px-6 md:px-10 mt-3 flex flex-wrap gap-x-6 gap-y-1">
-          {[
-            'Build from just an idea',
-            'Interactive Websites',
-            'Modern Full-Stack Apps',
-            'API Integrations',
-            'Custom UI / UX',
-          ].map((tag, i) => (
-            <span
-              key={i}
-              style={{
-                ...mono,
-                color: i % 2 === 0 ? 'rgba(8,8,8,0.45)' : 'rgba(8,8,8,0.2)',
-                fontSize: '0.6rem',
-              }}
-            >
-              {tag}
-            </span>
-          ))}
+        {/* tagline sentence */}
+        <div className="px-6 md:px-10 mt-3">
+          <p style={{
+            fontFamily: 'var(--font-sans)',
+            fontSize: 'clamp(0.78rem, 1.1vw, 1rem)',
+            fontWeight: 400,
+            letterSpacing: '0.01em',
+            color: 'rgba(8,8,8,0.42)',
+            lineHeight: 1.5,
+          }}>
+            I build fast, interactive websites and full-stack apps — from idea to deployment.
+          </p>
         </div>
       </div>
 
