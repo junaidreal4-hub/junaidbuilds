@@ -8,7 +8,7 @@ gsap.registerPlugin(ScrollTrigger)
 
 export default function About() {
   const sectionRef = useRef<HTMLElement>(null)
-  const bioRef = useRef<HTMLDivElement>(null)
+  const bioRef     = useRef<HTMLDivElement>(null)
   const svgWrapRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -20,28 +20,26 @@ export default function About() {
         scrollTrigger: { trigger: sectionRef.current, start: 'top 70%' },
       })
 
-      // SVG fade + slight rise on enter
+      // SVG fade-in
       gsap.from(svgWrapRef.current, {
         y: 30, opacity: 0, duration: 1.2, ease: 'power3.out',
-        scrollTrigger: { trigger: svgWrapRef.current, start: 'top 80%' },
+        scrollTrigger: { trigger: svgWrapRef.current, start: 'top 85%' },
       })
 
-      // ── ZOOM WIPE ─────────────────────────────────────────────
-      // The SVG says "Clarity + Performance".
-      // transformOrigin is set to the horizontal & vertical centre of the "+"
-      // inside the SVG. Adjust the % values below if your "+" sits off-centre.
-      // Default: the "+" is roughly at 50% horizontally and 50% vertically.
-      // Change e.g. '55% 50%' if the + is slightly to the right of centre.
+      // ── ZOOM WIPE ───────────────────────────────────────
+      // Pins the SECOND section (svg-screen) so the SVG stays centred
+      // on screen while the user scrolls. Then scrubs scale up from
+      // the "+" symbol position (tweak X% to match your SVG layout).
       gsap.to(svgWrapRef.current, {
         scale: 40,
         ease: 'none',
-        transformOrigin: '50% 50%', // ← tweak this to align with the + in your SVG
+        transformOrigin: '50% 50%', // ← adjust X% to the + position in your SVG
         scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'bottom bottom',
+          trigger: '#svg-screen',
+          start: 'top top',
           end: '+=150%',
           scrub: 1.2,
-          pin: sectionRef.current,
+          pin: '#svg-screen',
           pinSpacing: true,
           anticipatePin: 1,
         },
@@ -58,7 +56,9 @@ export default function About() {
   }
 
   return (
-    <div style={{ background: '#fff', overflow: 'hidden' }}>
+    <div style={{ background: '#fff' }}>
+
+      {/* ── BIO SECTION ──────────────────────────────────────── */}
       <section
         id="about"
         ref={sectionRef}
@@ -67,7 +67,6 @@ export default function About() {
           minHeight: '100dvh',
           padding: 'clamp(5rem,10vh,8rem) clamp(1.5rem,5vw,5rem)',
           background: '#fff',
-          overflow: 'hidden',
         }}
       >
         {/* section label */}
@@ -77,7 +76,7 @@ export default function About() {
         </div>
 
         {/* Bio two-col */}
-        <div ref={bioRef} className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 items-center mb-20">
+        <div ref={bioRef} className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 items-center">
           <div>
             <h2
               className="uppercase"
@@ -119,8 +118,8 @@ export default function About() {
             <div className="flex gap-10 pt-6" style={{ borderTop: '1px solid rgba(0,0,0,0.06)' }}>
               {[
                 { num: '10+', label: 'Projects Shipped' },
-                { num: '3+', label: 'Years Coding' },
-                { num: '5+', label: 'Happy Clients' },
+                { num: '3+',  label: 'Years Coding'     },
+                { num: '5+',  label: 'Happy Clients'    },
               ].map(({ num, label }) => (
                 <div key={label} className="flex flex-col gap-1">
                   <span style={{
@@ -135,17 +134,30 @@ export default function About() {
             </div>
           </div>
         </div>
+      </section>
 
-        {/* ── SVG ZOOM TARGET ────────────────────────────────────── */}
+      {/* ── SVG SCREEN ───────────────────────────────────────── */}
+      {/* Full viewport-height panel — SVG sits dead centre.          */}
+      {/* GSAP pins THIS div so SVG is mid-screen when zoom starts.   */}
+      <div
+        id="svg-screen"
+        style={{
+          width: '100%',
+          height: '100dvh',
+          background: '#fff',
+          display: 'flex',
+          alignItems: 'center',       // vertical centre
+          justifyContent: 'center',   // horizontal centre
+          overflow: 'hidden',
+        }}
+      >
         <div
           ref={svgWrapRef}
           style={{
-            width: '100%',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
+            width: '90%',
+            maxWidth: '1200px',
             willChange: 'transform',
-            transformOrigin: '50% 50%',
+            transformOrigin: '50% 50%', // mirrors the gsap transformOrigin
           }}
         >
           <Image
@@ -157,7 +169,8 @@ export default function About() {
             priority
           />
         </div>
-      </section>
+      </div>
+
     </div>
   )
 }
