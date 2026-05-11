@@ -8,6 +8,7 @@ gsap.registerPlugin(ScrollTrigger)
 export default function About() {
   const sectionRef = useRef<HTMLElement>(null)
   const bioRef = useRef<HTMLDivElement>(null)
+  const bannerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -19,6 +20,16 @@ export default function About() {
         scrollTrigger: {
           trigger: sectionRef.current,
           start: 'top 75%',
+        },
+      })
+      gsap.from(bannerRef.current, {
+        y: 40,
+        opacity: 0,
+        duration: 1.2,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: bannerRef.current,
+          start: 'top 85%',
         },
       })
     }, sectionRef)
@@ -44,9 +55,8 @@ export default function About() {
         <div className="flex-1" style={{ borderTop: '1px solid rgba(0,0,0,0.07)' }} />
       </div>
 
-      {/* Bio — full width, two-col layout for headline vs text */}
-      <div ref={bioRef} className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 items-start">
-
+      {/* Bio — two-col */}
+      <div ref={bioRef} className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 items-start mb-24">
         {/* left: headline */}
         <div>
           <h2
@@ -66,7 +76,7 @@ export default function About() {
           </h2>
         </div>
 
-        {/* right: bio paragraphs + stats */}
+        {/* right: bio + stats */}
         <div className="flex flex-col gap-8 pt-2">
           <div className="flex flex-col gap-5">
             <p style={{
@@ -109,6 +119,31 @@ export default function About() {
             ))}
           </div>
         </div>
+      </div>
+
+      {/* ── Full-bleed dark banner ── */}
+      <div
+        ref={bannerRef}
+        style={{
+          margin: '0 calc(-1 * clamp(1.5rem,5vw,5rem))',
+          background: '#1a1a1a',
+          padding: 'clamp(2.5rem,5vw,4rem) clamp(1.5rem,4vw,4rem)',
+          overflow: 'hidden',
+        }}
+      >
+        <p
+          className="uppercase leading-none whitespace-nowrap"
+          style={{
+            fontFamily: 'var(--font-sans)',
+            fontWeight: 900,
+            fontSize: 'clamp(3.5rem, 10vw, 10rem)',
+            letterSpacing: '-0.02em',
+            color: '#ffffff',
+            lineHeight: 0.9,
+          }}
+        >
+          Clarity + Performance
+        </p>
       </div>
     </section>
   )
