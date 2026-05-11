@@ -57,7 +57,6 @@ export default function About() {
 
       {/* Bio — two-col */}
       <div ref={bioRef} className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 items-start mb-24">
-        {/* left: headline */}
         <div>
           <h2
             className="uppercase"
@@ -76,7 +75,6 @@ export default function About() {
           </h2>
         </div>
 
-        {/* right: bio + stats */}
         <div className="flex flex-col gap-8 pt-2">
           <div className="flex flex-col gap-5">
             <p style={{
@@ -99,7 +97,6 @@ export default function About() {
             </p>
           </div>
 
-          {/* stats */}
           <div className="flex gap-10 pt-6" style={{ borderTop: '1px solid rgba(0,0,0,0.06)' }}>
             {[
               { num: '10+', label: 'Projects Shipped' },
@@ -121,22 +118,22 @@ export default function About() {
         </div>
       </div>
 
-      {/* ── Full-bleed dark banner ── */}
+      {/* Full-bleed dark banner */}
       <div
         ref={bannerRef}
         style={{
           margin: '0 calc(-1 * clamp(1.5rem,5vw,5rem))',
           background: '#1a1a1a',
-          padding: 'clamp(2.5rem,5vw,4rem) clamp(1.5rem,4vw,4rem)',
+          padding: 'clamp(2rem,4vw,3.5rem) clamp(1.5rem,4vw,4rem)',
           overflow: 'hidden',
         }}
       >
         <p
-          className="uppercase leading-none whitespace-nowrap"
+          className="uppercase leading-none"
           style={{
             fontFamily: 'var(--font-sans)',
             fontWeight: 900,
-            fontSize: 'clamp(3.5rem, 10vw, 10rem)',
+            fontSize: 'clamp(2.5rem, 6.5vw, 7rem)',
             letterSpacing: '-0.02em',
             color: '#ffffff',
             lineHeight: 0.9,
