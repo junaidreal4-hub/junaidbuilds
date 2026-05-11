@@ -19,8 +19,8 @@ export default function Hero() {
 
   const disp = {
     fontFamily: 'var(--font-display)',
-    fontWeight: 400,
-    letterSpacing: '0.04em',
+    fontWeight: 600,
+    letterSpacing: '0.03em',
     lineHeight: 0.88,
     WebkitFontSmoothing: 'auto' as const,
   }
@@ -55,7 +55,7 @@ export default function Hero() {
         background: 'linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,0.4) 12%, rgba(255,255,255,0) 26%, rgba(255,255,255,0) 100%)',
       }} />
 
-      {/* z-30: headline — centered just above midpoint */}
+      {/* z-30: headline — just above center */}
       <div
         className="absolute left-0 right-0 z-30 pointer-events-none px-6 md:px-10"
         style={{ top: '34%' }}
@@ -63,13 +63,13 @@ export default function Hero() {
         <div className="flex items-baseline justify-between w-full">
           <h1
             className="uppercase"
-            style={{ ...disp, fontSize: 'clamp(2rem, 5vw, 5.5rem)', color: 'rgba(8,8,8,0.75)' }}
+            style={{ ...disp, fontSize: 'clamp(2rem, 5vw, 5.5rem)', color: 'rgba(8,8,8,0.82)' }}
           >
             <SpecialText speed={10} delay={0.05}>Turning Ideas</SpecialText>
           </h1>
           <h1
             className="uppercase"
-            style={{ ...disp, fontSize: 'clamp(2rem, 5vw, 5.5rem)', color: 'rgba(8,8,8,0.18)' }}
+            style={{ ...disp, fontSize: 'clamp(2rem, 5vw, 5.5rem)', color: 'rgba(8,8,8,0.22)' }}
           >
             <SpecialText speed={10} delay={0.2}>Into Reality</SpecialText>
           </h1>
