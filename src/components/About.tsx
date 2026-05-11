@@ -6,33 +6,35 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 export default function About() {
-  const wrapRef   = useRef<HTMLDivElement>(null)  // pinned wrapper
-  const bioRef    = useRef<HTMLDivElement>(null)
-  const dotRef    = useRef<HTMLSpanElement>(null)
+  const wrapRef = useRef<HTMLDivElement>(null)
+  const sectionRef = useRef<HTMLElement>(null)
+  const bioRef = useRef<HTMLDivElement>(null)
+  const dotRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
 
-      // bio fade-in on first enter
+      // bio fade in
       gsap.from(bioRef.current, {
         y: 50, opacity: 0, duration: 1.2, ease: 'power3.out',
-        scrollTrigger: { trigger: wrapRef.current, start: 'top 70%' },
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 70%' },
       })
 
-      // ── DOT ZOOM WIPE ──────────────────────────────────────────
-      // Pin the whole about block, then scrub the dot from its
-      // natural size → scale(80) so it fills & covers the screen.
-      // The dark Projects section underneath is revealed naturally.
+      // ── DOT ZOOM WIPE ────────────────────────────────────────────
+      // Pin the section, then scale the SVG square from ~font-size
+      // all the way up until it covers the entire viewport.
+      // Because the SVG bg is #0a0a0a and Projects is #0a0a0a,
+      // the transition is seamless — no pixelation (SVG scales infinitely).
       gsap.to(dotRef.current, {
-        scale: 80,
-        ease: 'power2.in',
+        scale: 200,
+        ease: 'none',
         transformOrigin: '50% 50%',
         scrollTrigger: {
-          trigger: wrapRef.current,
-          start: 'bottom bottom',   // starts when bottom of section hits bottom of viewport
-          end: '+=120%',            // slow – 1.2× viewport of scroll travel
-          scrub: 1,
-          pin: wrapRef.current,     // pins the about block during the zoom
+          trigger: sectionRef.current,
+          start: 'bottom bottom',
+          end: '+=150%',
+          scrub: 1.5,
+          pin: sectionRef.current,
           pinSpacing: true,
           anticipatePin: 1,
         },
@@ -49,11 +51,10 @@ export default function About() {
   }
 
   return (
-    // outer shell — overflow hidden so zooming dot doesn't cause scrollbar
-    <div style={{ background: '#fff', overflow: 'hidden' }}>
+    <div ref={wrapRef} style={{ background: '#fff', overflow: 'hidden' }}>
       <section
         id="about"
-        ref={wrapRef}
+        ref={sectionRef}
         className="relative flex flex-col justify-center"
         style={{
           minHeight: '100dvh',
@@ -71,7 +72,7 @@ export default function About() {
         {/* Bio two-col */}
         <div ref={bioRef} className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 items-center">
 
-          {/* left: headline — dot is isolated inside a span */}
+          {/* left: headline + SVG fullstop */}
           <div>
             <h2
               className="uppercase"
@@ -87,28 +88,27 @@ export default function About() {
             >
               Builder.<br />
               <span style={{ color: 'rgba(8,8,8,0.18)' }}>Designer.</span><br />
-              Developer
-              {/*
-                The dot — this is the zoom target.
-                It must be inline-block so transform works,
-                and have a background that matches the next section (#0a0a0a)
-                so as it zooms it paints over everything.
-              */}
-              <span
-                ref={dotRef}
-                style={{
-                  display: 'inline-block',
-                  width:  '0.18em',
-                  height: '0.18em',
-                  background: '#0a0a0a',
-                  borderRadius: '50%',
-                  verticalAlign: 'middle',
-                  marginLeft: '0.04em',
-                  marginBottom: '0.22em',
-                  willChange: 'transform',
-                  transformOrigin: '50% 50%',
-                }}
-              />
+              <span style={{ whiteSpace: 'nowrap', display: 'inline-flex', alignItems: 'baseline', gap: '0.05em' }}>
+                Developer
+                {/* SVG fullstop — inline, same visual weight as the font's full stop */}
+                <div
+                  ref={dotRef}
+                  style={{
+                    display: 'inline-block',
+                    width:  '0.22em',
+                    height: '0.22em',
+                    flexShrink: 0,
+                    alignSelf: 'flex-end',
+                    marginBottom: '0.08em',
+                    willChange: 'transform',
+                    transformOrigin: '50% 50%',
+                    // SVG as background — infinitely scalable, zero pixelation
+                    backgroundImage: 'url(/fullstop.svg)',
+                    backgroundSize: 'cover',
+                    backgroundRepeat: 'no-repeat',
+                  }}
+                />
+              </span>
             </h2>
           </div>
 
