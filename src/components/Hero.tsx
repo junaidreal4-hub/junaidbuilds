@@ -1,8 +1,49 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { SplineScene } from '@/components/ui/spline'
 import { SpecialText } from '@/components/ui/SpecialText'
 import { Waves } from '@/components/ui/waves'
+
+const TAGS = [
+  'Build from just an idea',
+  'Interactive Websites',
+  'Modern Full-Stack Apps',
+  'React & Next.js',
+  'API Integrations',
+  'Custom UI / UX',
+  'Fast & Scalable',
+  'Berlin-Based',
+  'Available Worldwide',
+]
+
+function TagStrip() {
+  const items = [...TAGS, ...TAGS]
+  return (
+    <div className="overflow-hidden w-full" style={{ maskImage: 'linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)' }}>
+      <div
+        className="flex gap-6 w-max"
+        style={{ animation: 'marquee 28s linear infinite' }}
+      >
+        {items.map((tag, i) => (
+          <span
+            key={i}
+            className="whitespace-nowrap flex items-center gap-6"
+            style={{
+              fontFamily: 'var(--font-mono)',
+              fontSize: '0.65rem',
+              letterSpacing: '0.16em',
+              textTransform: 'uppercase',
+              color: i % 2 === 0 ? 'rgba(8,8,8,0.55)' : 'rgba(8,8,8,0.2)',
+            }}
+          >
+            {tag}
+            <span style={{ color: 'rgba(8,8,8,0.12)', fontSize: '0.5rem' }}>◆</span>
+          </span>
+        ))}
+      </div>
+    </div>
+  )
+}
 
 export default function Hero() {
   const [time, setTime] = useState('')
@@ -35,6 +76,13 @@ export default function Hero() {
   return (
     <section className="relative overflow-hidden bg-white" style={{ minHeight: '100dvh' }}>
 
+      <style>{`
+        @keyframes marquee {
+          from { transform: translateX(0); }
+          to   { transform: translateX(-50%); }
+        }
+      `}</style>
+
       {/* z-0: Waves */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <Waves strokeColor="rgba(0,0,0,0.055)" backgroundColor="#ffffff" pointerSize={0} />
@@ -55,26 +103,25 @@ export default function Hero() {
         background: 'linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,0.4) 12%, rgba(255,255,255,0) 26%, rgba(255,255,255,0) 100%)',
       }} />
 
-      {/* z-30: headline */}
+      {/* z-30: headline + tag strip */}
       <div
-        className="absolute left-0 right-0 z-30 pointer-events-none px-6 md:px-10"
+        className="absolute left-0 right-0 z-30 pointer-events-none"
         style={{ top: '34%' }}
       >
-        <div className="flex items-baseline justify-between w-full">
-          <h1
-            className="uppercase"
-            style={{ ...disp, fontSize: 'clamp(1.6rem, 4.2vw, 5rem)', color: 'rgba(8,8,8,0.92)' }}
-          >
+        <div className="flex items-baseline justify-between w-full px-6 md:px-10">
+          <h1 className="uppercase" style={{ ...disp, fontSize: 'clamp(1.6rem, 4.2vw, 5rem)', color: 'rgba(8,8,8,0.92)' }}>
             <SpecialText speed={10} delay={0.05}>Turning Ideas</SpecialText>
           </h1>
-          <h1
-            className="uppercase"
-            style={{ ...disp, fontSize: 'clamp(1.6rem, 4.2vw, 5rem)', color: 'rgba(8,8,8,0.22)' }}
-          >
+          <h1 className="uppercase" style={{ ...disp, fontSize: 'clamp(1.6rem, 4.2vw, 5rem)', color: 'rgba(8,8,8,0.22)' }}>
             <SpecialText speed={10} delay={0.2}>Into Reality</SpecialText>
           </h1>
         </div>
-        <div style={{ marginTop: '0.6rem', borderBottom: '1px solid rgba(0,0,0,0.07)' }} />
+        <div className="px-6 md:px-10">
+          <div style={{ marginTop: '0.6rem', borderBottom: '1px solid rgba(0,0,0,0.07)' }} />
+        </div>
+        <div style={{ marginTop: '0.75rem' }}>
+          <TagStrip />
+        </div>
       </div>
 
       {/* z-30: bottom bar */}
