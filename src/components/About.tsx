@@ -8,7 +8,7 @@ gsap.registerPlugin(ScrollTrigger)
 
 export default function About() {
   const sectionRef = useRef<HTMLElement>(null)
-  const bioRef     = useRef<HTMLDivElement>(null)
+  const bioRef = useRef<HTMLDivElement>(null)
   const svgWrapRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -33,7 +33,7 @@ export default function About() {
       gsap.to(svgWrapRef.current, {
         scale: 40,
         ease: 'none',
-        transformOrigin: '39% 50%',
+        transformOrigin: '38% 50%',
         scrollTrigger: {
           trigger: '#svg-screen',
           start: 'top top',
@@ -116,8 +116,8 @@ export default function About() {
             <div className="flex gap-10 pt-6" style={{ borderTop: '1px solid rgba(0,0,0,0.06)' }}>
               {[
                 { num: '10+', label: 'Projects Shipped' },
-                { num: '3+',  label: 'Years Coding'     },
-                { num: '5+',  label: 'Happy Clients'    },
+                { num: '3+', label: 'Years Coding' },
+                { num: '5+', label: 'Happy Clients' },
               ].map(({ num, label }) => (
                 <div key={label} className="flex flex-col gap-1">
                   <span style={{
