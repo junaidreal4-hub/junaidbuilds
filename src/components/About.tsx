@@ -7,9 +7,9 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 export default function About() {
-  const sectionRef  = useRef<HTMLElement>(null)
-  const bioRef      = useRef<HTMLDivElement>(null)
-  const svgWrapRef  = useRef<HTMLDivElement>(null)
+  const sectionRef = useRef<HTMLElement>(null)
+  const bioRef     = useRef<HTMLDivElement>(null)
+  const plusRef    = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -20,18 +20,12 @@ export default function About() {
         scrollTrigger: { trigger: sectionRef.current, start: 'top 70%' },
       })
 
-      // SVG fade + slight rise on enter
-      gsap.from(svgWrapRef.current, {
-        y: 30, opacity: 0, duration: 1.2, ease: 'power3.out',
-        scrollTrigger: { trigger: svgWrapRef.current, start: 'top 80%' },
-      })
-
-      // ── ZOOM WIPE ─────────────────────────────────────────────
-      // Pin the section, scrub the SVG wrapper from normal → scale(25)
-      // The SVG is black → fills screen → Projects (dark) revealed underneath.
-      // SVG scales infinitely — no pixelation.
-      gsap.to(svgWrapRef.current, {
-        scale: 25,
+      // ── PLUS ZOOM WIPE ──────────────────────────────────────────
+      // Pin section while plus scales from center outward.
+      // transformOrigin '50% 50%' ensures it grows from dead center.
+      // scale(60) guarantees full coverage on any screen size.
+      gsap.to(plusRef.current, {
+        scale: 60,
         ease: 'none',
         transformOrigin: '50% 50%',
         scrollTrigger: {
@@ -60,7 +54,7 @@ export default function About() {
       <section
         id="about"
         ref={sectionRef}
-        className="relative flex flex-col justify-center"
+        className="relative flex flex-col"
         style={{
           minHeight: '100dvh',
           padding: 'clamp(5rem,10vh,8rem) clamp(1.5rem,5vw,5rem)',
@@ -75,7 +69,7 @@ export default function About() {
         </div>
 
         {/* Bio two-col */}
-        <div ref={bioRef} className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 items-center mb-20">
+        <div ref={bioRef} className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 items-center mb-16">
           <div>
             <h2
               className="uppercase"
@@ -134,18 +128,8 @@ export default function About() {
           </div>
         </div>
 
-        {/* ── SVG ZOOM TARGET ────────────────────────────────────── */}
-        <div
-          ref={svgWrapRef}
-          style={{
-            width: '100%',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            willChange: 'transform',
-            transformOrigin: '50% 50%',
-          }}
-        >
+        {/* SVG title — decorative, below content */}
+        <div className="w-full mb-16">
           <Image
             src="/title.svg"
             alt="Builder. Designer. Developer."
@@ -154,6 +138,31 @@ export default function About() {
             style={{ width: '100%', height: 'auto', display: 'block' }}
             priority
           />
+        </div>
+
+        {/* ── CENTERED PLUS — zoom portal ────────────────────────── */}
+        {/* This is the actual zoom target — a dark square with a + */}
+        {/* centered horizontally, GSAP scales it from center outward */}
+        <div className="flex justify-center items-center pb-12">
+          <div
+            ref={plusRef}
+            style={{
+              width:  '3.5rem',
+              height: '3.5rem',
+              background: '#0a0a0a',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              willChange: 'transform',
+              transformOrigin: '50% 50%',
+              flexShrink: 0,
+            }}
+          >
+            {/* Plus icon — inline SVG so it's crisp at any scale */}
+            <svg viewBox="0 0 24 24" fill="none" style={{ width: '50%', height: '50%' }}>
+              <path d="M12 4v16M4 12h16" stroke="white" strokeWidth="2.5" strokeLinecap="square"/>
+            </svg>
+          </div>
         </div>
       </section>
     </div>
