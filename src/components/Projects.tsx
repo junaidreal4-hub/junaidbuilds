@@ -9,7 +9,7 @@ const projects = [
   {
     num: '01',
     title: 'N88E Build',
-    desc: 'Full-stack corporate website — React, TypeScript, Vite. 8+ pages, Google Sheets API, SEO optimised. Deployed on Vercel.',
+    desc: 'Full-stack corporate website — React, TypeScript, Vite. 8+ pages, Google Sheets API, SEO optimised.',
     tags: ['React', 'TypeScript', 'Vite', 'Vercel'],
     year: '2025',
   },
@@ -23,7 +23,7 @@ const projects = [
   {
     num: '03',
     title: 'Customer Segmentation',
-    desc: 'RFM analysis on 10k+ users via Python & SQL. Visualised cohorts in Tableau. Drove reactivation strategy.',
+    desc: 'RFM analysis on 10k+ users via Python & SQL. Visualised cohorts in Tableau.',
     tags: ['Python', 'SQL', 'Tableau'],
     year: '2024',
   },
@@ -31,16 +31,13 @@ const projects = [
 
 export default function Projects() {
   const sectionRef = useRef<HTMLElement>(null)
-  const itemsRef = useRef<(HTMLDivElement | null)[]>([])
+  const itemsRef   = useRef<(HTMLDivElement | null)[]>([])
 
   useEffect(() => {
     const ctx = gsap.context(() => {
       itemsRef.current.forEach((el, i) => {
         gsap.from(el, {
-          y: 50, opacity: 0,
-          duration: 1,
-          delay: i * 0.12,
-          ease: 'power3.out',
+          y: 50, opacity: 0, duration: 1, delay: i * 0.1, ease: 'power3.out',
           scrollTrigger: { trigger: el, start: 'top 85%' },
         })
       })
@@ -61,17 +58,14 @@ export default function Projects() {
       style={{
         background: '#0a0a0a',
         padding: 'clamp(5rem,10vh,8rem) clamp(1.5rem,5vw,5rem)',
-        position: 'relative',
-        zIndex: 2,
       }}
     >
-      {/* section label */}
       <div className="flex items-center gap-4 mb-16">
         <span style={{ ...mono, fontSize: '0.6rem', color: 'rgba(255,255,255,0.25)' }}>03 — Work</span>
         <div className="flex-1" style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }} />
       </div>
 
-      <div className="flex flex-col" style={{ gap: 0 }}>
+      <div className="flex flex-col">
         {projects.map((p, i) => (
           <div
             key={i}
@@ -92,12 +86,7 @@ export default function Projects() {
                   lineHeight: 1,
                 }}
               >{p.title}</h3>
-              <p style={{
-                fontFamily: 'var(--font-sans)',
-                fontSize: '0.88rem',
-                color: 'rgba(255,255,255,0.35)',
-                lineHeight: 1.6, maxWidth: '55ch',
-              }}>{p.desc}</p>
+              <p style={{ fontFamily: 'var(--font-sans)', fontSize: '0.88rem', color: 'rgba(255,255,255,0.35)', lineHeight: 1.6, maxWidth: '55ch' }}>{p.desc}</p>
               <div className="flex flex-wrap gap-2 mt-1">
                 {p.tags.map(tag => (
                   <span key={tag} style={{
