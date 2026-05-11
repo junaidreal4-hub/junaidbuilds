@@ -1,17 +1,10 @@
 'use client'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { SplineScene } from '@/components/ui/spline'
 import { SpecialText } from '@/components/ui/SpecialText'
 
-// Common Spline robot object names to try
-const ROBOT_NAMES = ['Robot', 'robot', 'Character', 'character', 'Armature']
-
 export default function Hero() {
   const [time, setTime] = useState('')
-  const splineRef = useRef<any>(null)
-  const poseIndexRef = useRef(0)
-
-  // Clock
   useEffect(() => {
     const update = () => setTime(new Date().toLocaleTimeString('en-DE', {
       hour: '2-digit', minute: '2-digit', second: '2-digit',
@@ -19,33 +12,6 @@ export default function Hero() {
     }))
     update(); const id = setInterval(update, 1000); return () => clearInterval(id)
   }, [])
-
-  // Trigger a pose event on the robot using all known name candidates
-  const triggerPose = (eventType: string) => {
-    if (!splineRef.current) return
-    ROBOT_NAMES.forEach(name => {
-      try { splineRef.current.emitEvent(eventType, name) } catch (_) {}
-    })
-  }
-
-  // Auto-cycle poses every 5 seconds
-  useEffect(() => {
-    const events = ['mouseDown', 'mouseUp', 'mouseHover']
-    const id = setInterval(() => {
-      const event = events[poseIndexRef.current % events.length]
-      triggerPose(event)
-      poseIndexRef.current++
-    }, 5000)
-    return () => clearInterval(id)
-  }, [])
-
-  const handleSplineLoad = (spline: any) => {
-    splineRef.current = spline
-    // Trigger initial idle/default pose
-    setTimeout(() => triggerPose('mouseHover'), 800)
-  }
-
-  const handleSceneMouseMove = () => triggerPose('mouseHover')
 
   const displayFont = {
     fontFamily: 'var(--font-display)',
@@ -60,15 +26,10 @@ export default function Hero() {
       style={{ minHeight: '100dvh' }}
     >
       {/* ── Spline 3D ── */}
-      <div
-        className="absolute left-0 right-0 bottom-0 z-0 pointer-events-auto"
-        style={{ top: '18%' }}
-        onMouseMove={handleSceneMouseMove}
-      >
+      <div className="absolute left-0 right-0 bottom-0 z-0 pointer-events-auto" style={{ top: '18%' }}>
         <SplineScene
           scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
           className="w-full h-full"
-          onLoad={handleSplineLoad}
         />
       </div>
 
