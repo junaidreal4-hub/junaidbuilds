@@ -62,17 +62,9 @@ export default function Navbar() {
         ))}
       </nav>
 
-      {/* CTA — right */}
-      <a
-        href="#contact"
-        className="pointer-events-auto font-mono text-[11px] uppercase tracking-widest px-5 py-2 rounded-full transition-all duration-200"
-        style={{
-          background: '#f97316',
-          color: '#ffffff',
-        }}
-      >
-        Let’s Talk
-      </a>
+      {/* spacer to keep nav centered */}
+      <div className="w-24" />
+
     </header>
   )
 }
