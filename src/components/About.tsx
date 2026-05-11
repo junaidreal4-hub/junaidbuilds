@@ -29,8 +29,11 @@ export default function About() {
     <section
       id="about"
       ref={sectionRef}
-      className="bg-white relative"
-      style={{ padding: 'clamp(5rem,10vh,8rem) clamp(1.5rem,5vw,5rem)' }}
+      className="bg-white relative flex flex-col justify-center"
+      style={{
+        minHeight: '100dvh',
+        padding: 'clamp(5rem,10vh,8rem) clamp(1.5rem,5vw,5rem)',
+      }}
     >
       {/* section label */}
       <div className="flex items-center gap-4 mb-16">
@@ -39,7 +42,7 @@ export default function About() {
       </div>
 
       {/* Bio two-col */}
-      <div ref={bioRef} className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 items-start">
+      <div ref={bioRef} className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 items-center">
         <div>
           <h2
             className="uppercase"
