@@ -19,10 +19,10 @@ export default function Hero() {
 
   const disp = {
     fontFamily: 'var(--font-display)',
-    fontWeight: 600,
-    letterSpacing: '0.03em',
+    fontWeight: 800,
+    letterSpacing: '0.01em',
     lineHeight: 0.88,
-    WebkitFontSmoothing: 'auto' as const,
+    WebkitFontSmoothing: 'antialiased' as const,
   }
 
   const mono = {
@@ -40,7 +40,7 @@ export default function Hero() {
         <Waves strokeColor="rgba(0,0,0,0.055)" backgroundColor="#ffffff" pointerSize={0} />
       </div>
 
-      {/* z-10: 3D scene — flush bottom, slight side inset */}
+      {/* z-10: 3D scene — flush bottom */}
       <div className="absolute z-10 pointer-events-auto"
         style={{ top: '14%', bottom: 0, left: '6%', right: '6%' }}
       >
@@ -50,12 +50,12 @@ export default function Hero() {
         />
       </div>
 
-      {/* z-20: top fade vignette */}
+      {/* z-20: top fade */}
       <div className="absolute inset-0 z-20 pointer-events-none" style={{
         background: 'linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,0.4) 12%, rgba(255,255,255,0) 26%, rgba(255,255,255,0) 100%)',
       }} />
 
-      {/* z-30: headline — just above center */}
+      {/* z-30: headline */}
       <div
         className="absolute left-0 right-0 z-30 pointer-events-none px-6 md:px-10"
         style={{ top: '34%' }}
@@ -63,13 +63,13 @@ export default function Hero() {
         <div className="flex items-baseline justify-between w-full">
           <h1
             className="uppercase"
-            style={{ ...disp, fontSize: 'clamp(2rem, 5vw, 5.5rem)', color: 'rgba(8,8,8,0.82)' }}
+            style={{ ...disp, fontSize: 'clamp(2.2rem, 5.5vw, 6rem)', color: 'rgba(8,8,8,0.92)' }}
           >
             <SpecialText speed={10} delay={0.05}>Turning Ideas</SpecialText>
           </h1>
           <h1
             className="uppercase"
-            style={{ ...disp, fontSize: 'clamp(2rem, 5vw, 5.5rem)', color: 'rgba(8,8,8,0.22)' }}
+            style={{ ...disp, fontSize: 'clamp(2.2rem, 5.5vw, 6rem)', color: 'rgba(8,8,8,0.25)' }}
           >
             <SpecialText speed={10} delay={0.2}>Into Reality</SpecialText>
           </h1>
