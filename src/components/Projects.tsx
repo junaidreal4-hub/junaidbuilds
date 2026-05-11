@@ -41,10 +41,7 @@ export default function Projects() {
           duration: 1,
           delay: i * 0.12,
           ease: 'power3.out',
-          scrollTrigger: {
-            trigger: el,
-            start: 'top 85%',
-          },
+          scrollTrigger: { trigger: el, start: 'top 85%' },
         })
       })
     }, sectionRef)
@@ -65,7 +62,7 @@ export default function Projects() {
         background: '#0a0a0a',
         padding: 'clamp(5rem,10vh,8rem) clamp(1.5rem,5vw,5rem)',
         position: 'relative',
-        zIndex: 50,
+        zIndex: 2,
       }}
     >
       {/* section label */}
@@ -74,7 +71,6 @@ export default function Projects() {
         <div className="flex-1" style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }} />
       </div>
 
-      {/* project list */}
       <div className="flex flex-col" style={{ gap: 0 }}>
         {projects.map((p, i) => (
           <div
@@ -83,10 +79,7 @@ export default function Projects() {
             className="group grid grid-cols-1 md:grid-cols-[4rem_1fr_auto] gap-4 md:gap-12 py-10 cursor-pointer"
             style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}
           >
-            {/* number */}
             <span style={{ ...mono, fontSize: '0.55rem', color: 'rgba(255,255,255,0.2)', paddingTop: '0.3rem' }}>{p.num}</span>
-
-            {/* title + desc */}
             <div className="flex flex-col gap-3">
               <h3
                 className="uppercase group-hover:translate-x-2 transition-transform duration-300"
@@ -103,8 +96,7 @@ export default function Projects() {
                 fontFamily: 'var(--font-sans)',
                 fontSize: '0.88rem',
                 color: 'rgba(255,255,255,0.35)',
-                lineHeight: 1.6,
-                maxWidth: '55ch',
+                lineHeight: 1.6, maxWidth: '55ch',
               }}>{p.desc}</p>
               <div className="flex flex-wrap gap-2 mt-1">
                 {p.tags.map(tag => (
@@ -118,8 +110,6 @@ export default function Projects() {
                 ))}
               </div>
             </div>
-
-            {/* year */}
             <span style={{ ...mono, fontSize: '0.55rem', color: 'rgba(255,255,255,0.15)', alignSelf: 'start', paddingTop: '0.3rem' }}>{p.year}</span>
           </div>
         ))}

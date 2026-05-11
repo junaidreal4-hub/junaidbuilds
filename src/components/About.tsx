@@ -8,37 +8,28 @@ gsap.registerPlugin(ScrollTrigger)
 export default function About() {
   const sectionRef = useRef<HTMLElement>(null)
   const bioRef = useRef<HTMLDivElement>(null)
-  const dotRef = useRef<HTMLSpanElement>(null)
-  const overlayRef = useRef<HTMLDivElement>(null)
+  const plusRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
 
-      // bio fade in
       gsap.from(bioRef.current, {
         y: 50, opacity: 0, duration: 1.2, ease: 'power3.out',
         scrollTrigger: { trigger: sectionRef.current, start: 'top 75%' },
       })
 
-      // dot zoom + overlay fade — triggers as user scrolls out of About
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'bottom 80%',
-          end: 'bottom -10%',
-          scrub: 1.2,
-        },
-      })
-
-      tl.to(dotRef.current, {
-        scale: 300,
+      // plus zoom — scrubbed to scroll
+      gsap.to(plusRef.current, {
+        scale: 120,
         ease: 'power2.in',
         transformOrigin: 'center center',
-      }, 0)
-      .to(overlayRef.current, {
-        opacity: 1,
-        ease: 'power2.in',
-      }, 0)
+        scrollTrigger: {
+          trigger: plusRef.current,
+          start: 'center 70%',
+          end: 'center -30%',
+          scrub: 1,
+        },
+      })
 
     }, sectionRef)
     return () => ctx.revert()
@@ -54,22 +45,9 @@ export default function About() {
     <section
       id="about"
       ref={sectionRef}
-      className="bg-white relative"
-      style={{ padding: 'clamp(5rem,10vh,8rem) clamp(1.5rem,5vw,5rem)', paddingBottom: 'clamp(8rem,16vh,14rem)' }}
+      className="bg-white relative overflow-hidden"
+      style={{ padding: 'clamp(5rem,10vh,8rem) clamp(1.5rem,5vw,5rem)', paddingBottom: 'clamp(6rem,14vh,12rem)' }}
     >
-      {/* dark overlay that fades in as dot zooms */}
-      <div
-        ref={overlayRef}
-        style={{
-          position: 'fixed',
-          inset: 0,
-          background: '#0a0a0a',
-          opacity: 0,
-          pointerEvents: 'none',
-          zIndex: 40,
-        }}
-      />
-
       {/* section label */}
       <div className="flex items-center gap-4 mb-16">
         <span style={{ ...mono, fontSize: '0.6rem', color: 'rgba(8,8,8,0.3)' }}>02 — About</span>
@@ -77,7 +55,7 @@ export default function About() {
       </div>
 
       {/* Bio two-col */}
-      <div ref={bioRef} className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 items-start">
+      <div ref={bioRef} className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 items-start mb-24">
         <div>
           <h2
             className="uppercase"
@@ -88,22 +66,11 @@ export default function About() {
               letterSpacing: '0.04em',
               lineHeight: 0.88,
               color: 'rgba(8,8,8,0.9)',
-              position: 'relative',
             }}
           >
             Builder.<br />
             <span style={{ color: 'rgba(8,8,8,0.18)' }}>Designer.</span><br />
-            Developer
-            {/* THE DOT — zoom target */}
-            <span
-              ref={dotRef}
-              style={{
-                display: 'inline-block',
-                color: '#0a0a0a',
-                transformOrigin: 'center center',
-                willChange: 'transform',
-              }}
-            >.</span>
+            Developer.
           </h2>
         </div>
 
@@ -144,6 +111,41 @@ export default function About() {
               </div>
             ))}
           </div>
+        </div>
+      </div>
+
+      {/* ╌╌ PLUS PORTAL ╌╌ */}
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          paddingBottom: '4rem',
+          position: 'relative',
+          zIndex: 1,
+        }}
+      >
+        <div
+          ref={plusRef}
+          style={{
+            width: 'clamp(3rem,6vw,5rem)',
+            height: 'clamp(3rem,6vw,5rem)',
+            background: '#0a0a0a',
+            borderRadius: '4px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            willChange: 'transform',
+            flexShrink: 0,
+          }}
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            style={{ width: '55%', height: '55%' }}
+          >
+            <path d="M12 4v16M4 12h16" stroke="white" strokeWidth="2.5" strokeLinecap="round"/>
+          </svg>
         </div>
       </div>
     </section>
