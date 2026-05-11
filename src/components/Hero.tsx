@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react'
 import { SplineScene } from '@/components/ui/spline'
 import { SpecialText } from '@/components/ui/SpecialText'
+import { EtherealShadow } from '@/components/ui/etheral-shadow'
 
 export default function Hero() {
   const [time, setTime] = useState('')
@@ -25,32 +26,48 @@ export default function Hero() {
       className="relative overflow-hidden bg-white"
       style={{ minHeight: '100dvh' }}
     >
-      {/* ── Spline 3D ── */}
-      <div className="absolute left-0 right-0 bottom-0 z-0 pointer-events-auto" style={{ top: '18%' }}>
+      {/* ── Layer 0: Ethereal Shadow background ── */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <EtherealShadow
+          color="rgba(180,180,180,1)"
+          animation={{ scale: 100, speed: 90 }}
+          noise={{ opacity: 1, scale: 1.2 }}
+          sizing="fill"
+        />
+      </div>
+
+      {/* ── Layer 1: Spline 3D — pushed to the right ── */}
+      <div className="absolute bottom-0 z-10 pointer-events-auto" style={{ top: '10%', left: '30%', right: 0 }}>
         <SplineScene
           scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
           className="w-full h-full"
         />
       </div>
 
-      {/* ── Fade ── */}
-      <div className="absolute inset-0 z-10 pointer-events-none" style={{
-        background: 'linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,0.75) 22%, rgba(255,255,255,0.0) 45%, rgba(255,255,255,0.5) 100%)',
+      {/* ── Layer 2: Fade overlay ── */}
+      <div className="absolute inset-0 z-20 pointer-events-none" style={{
+        background: 'linear-gradient(to bottom, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.0) 40%, rgba(255,255,255,0.4) 100%)',
       }} />
 
-      {/* ══ BOTTOM: headline + meta bar ══ */}
-      <div className="absolute bottom-0 left-0 right-0 z-20 pointer-events-none">
+      {/* ══ Layer 3: Headline + meta ══ */}
+      <div className="absolute bottom-0 left-0 right-0 z-30 pointer-events-none">
         <div className="px-5 md:px-8 pt-4">
-          <h1 className="uppercase leading-[0.9] tracking-wide text-[#080808] block"
-            style={{ ...displayFont, fontSize: 'clamp(1.4rem, 3vw, 3.2rem)' }}>
+          <h1
+            className="uppercase leading-[0.88] tracking-wide block"
+            style={{ ...displayFont, fontSize: 'clamp(2.8rem, 7vw, 7.5rem)', color: 'rgba(8,8,8,0.55)' }}
+          >
             <SpecialText speed={10} delay={0.1}>Turning Ideas Into</SpecialText>
           </h1>
-          <h1 className="uppercase leading-[0.9] tracking-wide block"
-            style={{ ...displayFont, fontSize: 'clamp(1.4rem, 3vw, 3.2rem)', color: 'rgba(8,8,8,0.22)' }}>
+          <h1
+            className="uppercase leading-[0.88] tracking-wide block"
+            style={{ ...displayFont, fontSize: 'clamp(2.8rem, 7vw, 7.5rem)', color: 'rgba(8,8,8,0.18)' }}
+          >
             <SpecialText speed={10} delay={0.35}>Modern &amp; Interactive</SpecialText>
           </h1>
-          <h1 className="uppercase leading-[0.9] tracking-wide text-[#080808] block"
-            style={{ ...displayFont, fontSize: 'clamp(1.4rem, 3vw, 3.2rem)' }}>
+          <h1
+            className="uppercase leading-[0.88] tracking-wide block"
+            style={{ ...displayFont, fontSize: 'clamp(2.8rem, 7vw, 7.5rem)', color: 'rgba(8,8,8,0.55)' }}
+          >
             <SpecialText speed={10} delay={0.6}>Websites.</SpecialText>
           </h1>
         </div>
