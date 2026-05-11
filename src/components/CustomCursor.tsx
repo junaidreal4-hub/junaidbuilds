@@ -55,29 +55,34 @@ export default function CustomCursor() {
     }
   }, [visible])
 
-  const ringSize = clicked ? 20 : hovering ? 48 : 36
+  const ringSize = clicked ? 20 : hovering ? 56 : 36
 
+  // mix-blend-mode: difference makes the cursor always contrast the background:
+  // cursor is white (#fff), on dark bg it shows white, on light bg it inverts to black.
+  // On hover we scale the ring up and keep the same blend — still auto-inverts.
   return (
     <>
       <style>{`* { cursor: none !important; }`}</style>
 
-      {/* Dot — snaps instantly */}
+      {/* Dot — snaps instantly, blend-mode handles color */}
       <div
         ref={dotRef}
         style={{
           position: 'fixed', top: 0, left: 0,
           zIndex: 99999, pointerEvents: 'none',
           willChange: 'transform',
-          marginLeft: '-4px', marginTop: '-4px',
-          width: '8px', height: '8px',
+          marginLeft: '-5px', marginTop: '-5px',
+          width: hovering ? '10px' : '10px',
+          height: hovering ? '10px' : '10px',
           borderRadius: '50%',
-          background: hovering ? '#f97316' : '#080808',
+          background: '#fff',
+          mixBlendMode: 'difference',
           opacity: visible ? 1 : 0,
-          transition: 'background 0.2s ease, opacity 0.3s ease',
+          transition: 'opacity 0.3s ease',
         }}
       />
 
-      {/* Ring — lags behind */}
+      {/* Ring — lags behind, blend-mode handles color */}
       <div
         ref={ringRef}
         style={{
@@ -89,9 +94,11 @@ export default function CustomCursor() {
           width:  `${ringSize}px`,
           height: `${ringSize}px`,
           borderRadius: '50%',
-          border: `1.5px solid ${hovering ? '#f97316' : 'rgba(8,8,8,0.35)'}`,
+          border: '1.5px solid #fff',
+          mixBlendMode: 'difference',
           opacity: visible ? 1 : 0,
-          transition: 'width 0.3s ease, height 0.3s ease, margin 0.3s ease, border-color 0.2s ease, opacity 0.3s ease',
+          transition:
+            'width 0.3s ease, height 0.3s ease, margin 0.3s ease, opacity 0.3s ease',
         }}
       />
     </>
