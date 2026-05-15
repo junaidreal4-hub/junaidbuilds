@@ -102,13 +102,13 @@ export default function Projects() {
             <hr style={{ border: 'none', borderTop: `1px solid ${p.divider}` }} />
 
             {/* ── big title ── */}
-            <div>
+            <div style={{ lineHeight: 1 }}>
               <h2
                 className="uppercase"
                 style={{
                   fontFamily: 'var(--font-display)',
                   fontWeight: 800,
-                  fontSize: 'clamp(3.5rem, 10vw, 12rem)',
+                  fontSize: 'clamp(2.5rem, 7vw, 9rem)',
                   lineHeight: 0.85,
                   letterSpacing: '0.04em',
                   color: p.color,
@@ -124,14 +124,16 @@ export default function Projects() {
             <div style={{
               display: 'grid',
               gridTemplateColumns: '1fr 1fr',
-              gap: 'clamp(1.5rem, 3vw, 3rem)',
+              gap: 'clamp(1rem, 2.5vw, 2.5rem)',
               alignItems: 'start',
+              flex: 1,
+              minHeight: 0,
             }}>
-              {/* plain image — no browser chrome */}
+              {/* plain image */}
               <div style={{
                 borderRadius: '10px',
                 overflow: 'hidden',
-                boxShadow: `0 24px 70px rgba(0,0,0,0.6), 0 0 0 1px ${p.accent}18`,
+                boxShadow: `0 16px 50px rgba(0,0,0,0.55), 0 0 0 1px ${p.accent}18`,
                 position: 'relative',
                 width: '100%',
                 aspectRatio: '16/10',
@@ -147,31 +149,31 @@ export default function Projects() {
               </div>
 
               {/* meta */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.4rem', paddingTop: '0.5rem' }}>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
                   <span style={{ ...mono, fontSize: '0.5rem', opacity: 0.5 }}>Role</span>
                   <span style={{
                     fontFamily: 'var(--font-sans)',
-                    fontSize: 'clamp(0.9rem, 1.2vw, 1.1rem)',
+                    fontSize: 'clamp(0.8rem, 1.1vw, 1rem)',
                     fontStyle: 'italic',
                     opacity: 0.8,
                   }}>{p.role}</span>
                 </div>
 
-                <div style={{ borderTop: `1px solid ${p.divider}`, paddingTop: '1.2rem' }}>
-                  <span style={{ ...mono, fontSize: '0.5rem', opacity: 0.5, display: 'block', marginBottom: '0.6rem' }}>About</span>
+                <div style={{ borderTop: `1px solid ${p.divider}`, paddingTop: '0.8rem' }}>
+                  <span style={{ ...mono, fontSize: '0.5rem', opacity: 0.5, display: 'block', marginBottom: '0.4rem' }}>About</span>
                   <p style={{
                     fontFamily: 'var(--font-sans)',
-                    fontSize: 'clamp(0.82rem, 1.1vw, 1rem)',
-                    lineHeight: 1.75,
+                    fontSize: 'clamp(0.75rem, 1vw, 0.9rem)',
+                    lineHeight: 1.65,
                     opacity: 0.65,
                     maxWidth: '38ch',
                   }}>{p.desc}</p>
                 </div>
 
-                <div style={{ borderTop: `1px solid ${p.divider}`, paddingTop: '1.2rem' }}>
-                  <span style={{ ...mono, fontSize: '0.5rem', opacity: 0.5, display: 'block', marginBottom: '0.6rem' }}>Stack</span>
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem' }}>
+                <div style={{ borderTop: `1px solid ${p.divider}`, paddingTop: '0.8rem' }}>
+                  <span style={{ ...mono, fontSize: '0.5rem', opacity: 0.5, display: 'block', marginBottom: '0.4rem' }}>Stack</span>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.3rem' }}>
                     {p.tags.map(tag => (
                       <span key={tag} style={{
                         ...mono,
@@ -179,7 +181,7 @@ export default function Projects() {
                         color: p.accent,
                         border: `1px solid ${p.accent}30`,
                         borderRadius: '2px',
-                        padding: '0.2rem 0.55rem',
+                        padding: '0.18rem 0.5rem',
                       }}>{tag}</span>
                     ))}
                   </div>
@@ -196,13 +198,12 @@ export default function Projects() {
                       color: p.accent,
                       border: `1px solid ${p.accent}35`,
                       borderRadius: '3px',
-                      padding: '0.5rem 1rem',
+                      padding: '0.45rem 0.9rem',
                       textDecoration: 'none',
                       display: 'inline-flex',
                       alignItems: 'center',
                       gap: '0.4rem',
                       alignSelf: 'flex-start',
-                      marginTop: 'auto',
                       transition: 'opacity 0.2s',
                     }}
                   >
