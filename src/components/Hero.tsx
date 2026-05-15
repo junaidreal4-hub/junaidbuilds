@@ -3,12 +3,9 @@ import { useEffect, useState } from 'react'
 import { SplineScene } from '@/components/ui/spline'
 import { SpecialText } from '@/components/ui/SpecialText'
 import { Waves } from '@/components/ui/waves'
-import { useTheme } from '@/context/ThemeContext'
 
 export default function Hero() {
-  const { theme } = useTheme()
   const [time, setTime] = useState('')
-  const isDark = theme === 'dark'
 
   useEffect(() => {
     const update = () => setTime(new Date().toLocaleTimeString('en-DE', {
@@ -35,10 +32,6 @@ export default function Hero() {
     textTransform: 'uppercase' as const,
   }
 
-  const fadeOverlay = isDark
-    ? 'linear-gradient(to bottom, rgba(10,10,10,1) 0%, rgba(10,10,10,0.4) 12%, rgba(10,10,10,0) 26%, rgba(10,10,10,0) 100%)'
-    : 'linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,0.4) 12%, rgba(255,255,255,0) 26%, rgba(255,255,255,0) 100%)'
-
   return (
     <section
       className="relative overflow-hidden"
@@ -59,9 +52,10 @@ export default function Hero() {
         />
       </div>
 
-      {/* top fade */}
-      <div className="absolute inset-0 z-20 pointer-events-none"
-        style={{ background: fadeOverlay, transition: 'background 0.35s ease' }}
+      {/* top fade — theme-aware via CSS variable */}
+      <div
+        className="absolute inset-0 z-20 pointer-events-none hero-fade-overlay"
+        style={{ transition: 'background 0.35s ease' }}
       />
 
       {/* headline + tagline */}
@@ -107,7 +101,7 @@ export default function Hero() {
               color: 'var(--c-ink-mid)',
             }}
           >
-            <span style={{ ...mono, color: 'inherit' }}>Let's Work Together</span>
+            <span style={{ ...mono, color: 'inherit' }}>Let’s Work Together</span>
             <svg width="10" height="10" viewBox="0 0 10 10" fill="none"
               className="opacity-40 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200">
               <path d="M1 9L9 1M9 1H3M9 1V7" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
