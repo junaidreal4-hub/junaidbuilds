@@ -14,9 +14,11 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
     const smoother = ScrollSmoother.create({
       wrapper: wrapper.current!,
       content: content.current!,
-      smooth: 1.4,
+      smooth: 0.8,
       effects: true,
-      normalizeScroll: true,
+      // normalizeScroll disabled — it intercepts native scroll and
+      // breaks ScrollTrigger pins (e.g. FlowArt section stacking)
+      normalizeScroll: false,
     })
     return () => smoother.kill()
   }, [])
