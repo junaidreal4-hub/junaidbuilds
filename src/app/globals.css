@@ -2,39 +2,49 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  /* ── Light mode (default) ── */
-  html {
-    scroll-behavior: smooth;
-    background-color: #ffffff;
-    color: #080808;
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-
-  /* ── Dark mode ── applied when <html class="dark"> */
-  html.dark {
-    background-color: #0a0a0a;
-    color: #e8e2d6;
-  }
-
-  /* scrollbar — light */
-  ::-webkit-scrollbar        { width: 2px; }
-  ::-webkit-scrollbar-track  { background: #ffffff; }
-  ::-webkit-scrollbar-thumb  { background: rgba(8,8,8,0.12); border-radius: 2px; }
-
-  /* scrollbar — dark */
-  html.dark ::-webkit-scrollbar-track { background: #0a0a0a; }
-  html.dark ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  ::selection { background: #f97316; color: #ffffff; }
+/* ── Theme tokens ───────────────────────────────────────── */
+:root,
+[data-theme="light"] {
+  --c-bg:          #ffffff;
+  --c-bg-subtle:   #f8f7f4;
+  --c-ink:         rgba(8,8,8,0.92);
+  --c-ink-mid:     rgba(8,8,8,0.65);
+  --c-ink-faint:   rgba(8,8,8,0.38);
+  --c-ink-ghost:   rgba(8,8,8,0.18);
+  --c-ink-dim:     rgba(8,8,8,0.30);
+  --c-divider:     rgba(0,0,0,0.07);
+  --c-border:      rgba(0,0,0,0.12);
+  --c-wave-stroke: rgba(0,0,0,0.055);
 }
 
-/* ── Section / component dark overrides ── */
-/* These back up components that use inline styles tied to #0a0a0a etc.
-   Add more rules here as you build out dark-aware sections. */
+[data-theme="dark"] {
+  --c-bg:          #0a0a0a;
+  --c-bg-subtle:   #111110;
+  --c-ink:         rgba(240,234,220,0.92);
+  --c-ink-mid:     rgba(240,234,220,0.65);
+  --c-ink-faint:   rgba(240,234,220,0.38);
+  --c-ink-ghost:   rgba(240,234,220,0.18);
+  --c-ink-dim:     rgba(240,234,220,0.30);
+  --c-divider:     rgba(255,255,255,0.07);
+  --c-border:      rgba(255,255,255,0.12);
+  --c-wave-stroke: rgba(255,255,255,0.045);
+}
 
-html.dark body {
-  background-color: #0a0a0a;
-  color: #e8e2d6;
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: var(--c-bg);
+    color: var(--c-ink);
+    transition: background-color 0.35s ease, color 0.35s ease;
+  }
+  body {
+    background-color: var(--c-bg);
+    color: var(--c-ink);
+    transition: background-color 0.35s ease, color 0.35s ease;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  ::selection { background: #f97316; color: #ffffff; }
+  ::-webkit-scrollbar       { width: 2px; }
+  ::-webkit-scrollbar-track { background: var(--c-bg); }
+  ::-webkit-scrollbar-thumb { background: var(--c-border); border-radius: 2px; }
 }

@@ -3,33 +3,26 @@ import { useEffect, useRef } from 'react'
 import Image from 'next/image'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useTheme } from '@/context/ThemeContext'
 
 gsap.registerPlugin(ScrollTrigger)
 
 export default function About() {
+  const { theme } = useTheme()
   const sectionRef = useRef<HTMLElement>(null)
-  const bioRef = useRef<HTMLDivElement>(null)
+  const bioRef     = useRef<HTMLDivElement>(null)
   const svgWrapRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-
-      // bio fade-in
       gsap.from(bioRef.current, {
         y: 50, opacity: 0, duration: 1.2, ease: 'power3.out',
         scrollTrigger: { trigger: sectionRef.current, start: 'top 70%' },
       })
-
-      // SVG fade-in
       gsap.from(svgWrapRef.current, {
         y: 30, opacity: 0, duration: 1.2, ease: 'power3.out',
         scrollTrigger: { trigger: svgWrapRef.current, start: 'top 85%' },
       })
-
-      // ── ZOOM WIPE FROM THE + ────────────────────────────────────
-      // transformOrigin X=39% matches the "+" position in the SVG.
-      // Because the origin is left-of-centre, as scale grows the "+"
-      // drifts toward the viewport centre — the "pull to centre" effect.
       gsap.to(svgWrapRef.current, {
         scale: 40,
         ease: 'none',
@@ -44,7 +37,6 @@ export default function About() {
           anticipatePin: 1,
         },
       })
-
     })
     return () => ctx.revert()
   }, [])
@@ -56,9 +48,8 @@ export default function About() {
   }
 
   return (
-    <div style={{ background: '#fff' }}>
+    <div style={{ background: 'var(--c-bg)', transition: 'background 0.35s ease' }}>
 
-      {/* ── BIO SECTION ───────────────────────────────────── */}
       <section
         id="about"
         ref={sectionRef}
@@ -66,12 +57,13 @@ export default function About() {
         style={{
           minHeight: '100dvh',
           padding: 'clamp(5rem,10vh,8rem) clamp(1.5rem,5vw,5rem)',
-          background: '#fff',
+          background: 'var(--c-bg)',
+          transition: 'background 0.35s ease',
         }}
       >
         <div className="flex items-center gap-4 mb-16">
-          <span style={{ ...mono, fontSize: '0.6rem', color: 'rgba(8,8,8,0.3)' }}>02 — About</span>
-          <div className="flex-1" style={{ borderTop: '1px solid rgba(0,0,0,0.07)' }} />
+          <span style={{ ...mono, fontSize: '0.6rem', color: 'var(--c-ink-dim)' }}>02 — About</span>
+          <div className="flex-1" style={{ borderTop: '1px solid var(--c-divider)' }} />
         </div>
 
         <div ref={bioRef} className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 items-center">
@@ -84,11 +76,11 @@ export default function About() {
                 fontSize: 'clamp(2.4rem, 5vw, 6rem)',
                 letterSpacing: '0.04em',
                 lineHeight: 0.88,
-                color: 'rgba(8,8,8,0.9)',
+                color: 'var(--c-ink)',
               }}
             >
               Builder.<br />
-              <span style={{ color: 'rgba(8,8,8,0.18)' }}>Designer.</span><br />
+              <span style={{ color: 'var(--c-ink-ghost)' }}>Designer.</span><br />
               Developer.
             </h2>
           </div>
@@ -98,35 +90,36 @@ export default function About() {
               <p style={{
                 fontFamily: 'var(--font-sans)',
                 fontSize: 'clamp(0.9rem,1.1vw,1.05rem)',
-                color: 'rgba(8,8,8,0.65)',
-                lineHeight: 1.8, fontWeight: 400,
+                color: 'var(--c-ink-mid)',
+                lineHeight: 1.8,
               }}>
-                I’m a full-stack web developer based in Berlin, currently doing my Master’s in Data Analytics. I build fast, interactive websites and applications — from a blank canvas to a live product.
+                I&apos;m a full-stack web developer based in Berlin, currently doing my Master&apos;s in Data Analytics. I build fast, interactive websites and applications — from a blank canvas to a live product.
               </p>
               <p style={{
                 fontFamily: 'var(--font-sans)',
                 fontSize: 'clamp(0.9rem,1.1vw,1.05rem)',
-                color: 'rgba(8,8,8,0.38)',
-                lineHeight: 1.8, fontWeight: 400,
+                color: 'var(--c-ink-faint)',
+                lineHeight: 1.8,
               }}>
                 I work with startups and businesses worldwide, taking full ownership of the product — design, development and deployment. I care deeply about clean code, sharp UI and performance.
               </p>
             </div>
 
-            <div className="flex gap-10 pt-6" style={{ borderTop: '1px solid rgba(0,0,0,0.06)' }}>
+            <div className="flex gap-10 pt-6" style={{ borderTop: '1px solid var(--c-divider)' }}>
               {[
                 { num: '10+', label: 'Projects Shipped' },
-                { num: '3+', label: 'Years Coding' },
-                { num: '5+', label: 'Happy Clients' },
+                { num: '3+',  label: 'Years Coding'     },
+                { num: '5+',  label: 'Happy Clients'    },
               ].map(({ num, label }) => (
                 <div key={label} className="flex flex-col gap-1">
                   <span style={{
                     fontFamily: 'var(--font-display)',
                     fontSize: 'clamp(1.6rem,2.5vw,2.8rem)',
-                    fontWeight: 700, letterSpacing: '0.04em',
-                    color: 'rgba(8,8,8,0.88)',
+                    fontWeight: 700,
+                    letterSpacing: '0.04em',
+                    color: 'var(--c-ink)',
                   }}>{num}</span>
-                  <span style={{ ...mono, fontSize: '0.5rem', color: 'rgba(8,8,8,0.3)' }}>{label}</span>
+                  <span style={{ ...mono, fontSize: '0.5rem', color: 'var(--c-ink-dim)' }}>{label}</span>
                 </div>
               ))}
             </div>
@@ -134,45 +127,32 @@ export default function About() {
         </div>
       </section>
 
-      {/* ── SVG SCREEN ──────────────────────────────────────── */}
-      {/* Full-viewport panel, SVG stretches edge-to-edge.            */}
-      {/* overflow:hidden clips the SVG during the zoom.              */}
       <div
         id="svg-screen"
         style={{
           width: '100%',
           height: '100dvh',
-          background: '#fff',
+          background: 'var(--c-bg)',
           display: 'flex',
           alignItems: 'center',
           overflow: 'hidden',
+          transition: 'background 0.35s ease',
         }}
       >
-        {/* svgWrapRef is the zoom target — no horizontal padding, full width */}
         <div
           ref={svgWrapRef}
-          style={{
-            width: '100%',
-            willChange: 'transform',
-            transformOrigin: '39% 50%', // mirrors gsap value
-            lineHeight: 0,
-          }}
+          style={{ width: '100%', willChange: 'transform', transformOrigin: '39% 50%', lineHeight: 0 }}
         >
           <Image
             src="/title.svg"
             alt="Clarity + Performance"
             width={1920}
             height={400}
-            style={{
-              width: '100%',
-              height: 'auto',
-              display: 'block',
-            }}
+            style={{ width: '100%', height: 'auto', display: 'block' }}
             priority
           />
         </div>
       </div>
-
     </div>
   )
 }

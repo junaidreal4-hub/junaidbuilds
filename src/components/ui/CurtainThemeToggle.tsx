@@ -1,10 +1,6 @@
 'use client'
-import {
-  useState, useCallback, useRef, useEffect,
-  type ReactNode, type CSSProperties,
-} from 'react'
-
-export type Theme = 'light' | 'dark'
+import { useState, useCallback, useRef, type CSSProperties } from 'react'
+import { useTheme } from '@/context/ThemeContext'
 
 type CurtainPhase = 'idle' | 'falling' | 'rising'
 const EASING = 'cubic-bezier(0.76, 0, 0.24, 1)'
@@ -35,70 +31,32 @@ function SunIcon() {
   )
 }
 
-const LIGHT_CURTAIN = '#f3ede1'
-const DARK_CURTAIN  = '#0e0e0e'
-
-const BTN_LIGHT: CSSProperties = {
-  background: '#f3ede1',
-  color: '#1a1a1a',
-  boxShadow: '0 0 0 1.5px rgba(255,255,255,0.15)',
-}
-const BTN_DARK: CSSProperties = {
-  background: '#0e0e0e',
-  color: '#dfd8c6',
-  boxShadow: '0 0 0 1.5px rgba(0,0,0,0.35)',
-}
-
 interface Props {
-  /** Called after the theme switch completes so parent can react */
-  onThemeChange?: (theme: Theme) => void
-  /** Diameter of the button in px. Default: 36 */
   size?: number
-  /** Curtain animation duration in ms. Default: 550 */
   duration?: number
-  /** Extra className on the <button> element */
-  className?: string
-  /** Extra inline style on the <button> element */
   style?: CSSProperties
+  className?: string
 }
 
-export function CurtainThemeToggle({
-  onThemeChange,
-  size     = 36,
-  duration = 550,
-  className,
-  style,
-}: Props) {
-  const [theme, setTheme]     = useState<Theme>('light')
+export function CurtainThemeToggle({ size = 36, duration = 550, style, className }: Props) {
+  const { theme, toggle: ctxToggle } = useTheme()
   const [phase, setPhase]     = useState<CurtainPhase>('idle')
   const [hovered, setHovered] = useState(false)
   const [pressed, setPressed] = useState(false)
   const curtainColorRef       = useRef<string>('')
 
-  /* sync with Tailwind dark class on mount */
-  useEffect(() => {
-    const isDark = document.documentElement.classList.contains('dark')
-    setTheme(isDark ? 'dark' : 'light')
-  }, [])
+  const isDark = theme === 'dark'
 
-  const toggle = useCallback(() => {
+  const handleClick = useCallback(() => {
     if (phase !== 'idle') return
-    const next: Theme = theme === 'light' ? 'dark' : 'light'
-    curtainColorRef.current = next === 'dark' ? DARK_CURTAIN : LIGHT_CURTAIN
-
+    curtainColorRef.current = isDark ? '#ffffff' : '#0a0a0a'
     setPhase('falling')
     setTimeout(() => {
-      setTheme(next)
-      onThemeChange?.(next)
-      if (next === 'dark') {
-        document.documentElement.classList.add('dark')
-      } else {
-        document.documentElement.classList.remove('dark')
-      }
+      ctxToggle()
       setPhase('rising')
       setTimeout(() => setPhase('idle'), duration + 60)
     }, duration)
-  }, [phase, theme, duration, onThemeChange])
+  }, [phase, isDark, duration, ctxToggle])
 
   const curtainStyle: CSSProperties = {
     position: 'fixed',
@@ -112,17 +70,18 @@ export function CurtainThemeToggle({
   }
 
   const btnStyle: CSSProperties = {
-    width: size,
-    height: size,
+    width: size, height: size,
     borderRadius: '50%',
     border: 'none',
     cursor: 'pointer',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    background: isDark ? '#0a0a0a' : '#f3ede1',
+    color:      isDark ? '#dfd8c6' : '#1a1a1a',
+    boxShadow:  isDark ? '0 0 0 1.5px rgba(255,255,255,0.12)' : '0 0 0 1.5px rgba(0,0,0,0.10)',
     transform: `scale(${pressed ? 0.92 : hovered ? 1.12 : 1})`,
     transition: 'transform 0.15s ease, background 0.3s ease, color 0.3s ease',
-    ...(theme === 'light' ? BTN_LIGHT : BTN_DARK),
     ...style,
   }
 
@@ -132,15 +91,15 @@ export function CurtainThemeToggle({
       <button
         style={btnStyle}
         className={className}
-        onClick={toggle}
+        onClick={handleClick}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => { setHovered(false); setPressed(false) }}
         onMouseDown={() => setPressed(true)}
         onMouseUp={() => setPressed(false)}
-        aria-label={theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
-        aria-pressed={theme === 'dark'}
+        aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+        aria-pressed={isDark}
       >
-        {theme === 'light' ? <MoonIcon /> : <SunIcon />}
+        {isDark ? <SunIcon /> : <MoonIcon />}
       </button>
     </>
   )
