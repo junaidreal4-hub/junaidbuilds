@@ -3,12 +3,10 @@ import { useEffect, useRef } from 'react'
 import Image from 'next/image'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { useTheme } from '@/context/ThemeContext'
 
 gsap.registerPlugin(ScrollTrigger)
 
 export default function About() {
-  const { theme } = useTheme()
   const sectionRef = useRef<HTMLElement>(null)
   const bioRef     = useRef<HTMLDivElement>(null)
   const svgWrapRef = useRef<HTMLDivElement>(null)
