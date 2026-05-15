@@ -127,45 +127,23 @@ export default function Projects() {
               gap: 'clamp(1.5rem, 3vw, 3rem)',
               alignItems: 'start',
             }}>
-              {/* browser mockup */}
+              {/* plain image — no browser chrome */}
               <div style={{
                 borderRadius: '10px',
                 overflow: 'hidden',
-                background: '#0a0a0a',
                 boxShadow: `0 24px 70px rgba(0,0,0,0.6), 0 0 0 1px ${p.accent}18`,
+                position: 'relative',
+                width: '100%',
+                aspectRatio: '16/10',
               }}>
-                <div style={{
-                  height: '1.8rem',
-                  background: '#161616',
-                  borderBottom: '1px solid rgba(255,255,255,0.05)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  padding: '0 0.8rem',
-                  gap: '0.35rem',
-                }}>
-                  {['#ff5f57','#febc2e','#28c840'].map(c => (
-                    <div key={c} style={{
-                      width: '0.5rem', height: '0.5rem',
-                      borderRadius: '50%', background: c, flexShrink: 0,
-                    }} />
-                  ))}
-                  <div style={{
-                    flex: 1, height: '0.8rem',
-                    borderRadius: '3px',
-                    background: 'rgba(255,255,255,0.04)',
-                    margin: '0 0.4rem',
-                  }} />
-                </div>
-                <div style={{ position: 'relative', width: '100%', aspectRatio: '16/10' }}>
-                  <Image
-                    src={p.img}
-                    alt={p.title}
-                    fill
-                    style={{ objectFit: 'cover', objectPosition: 'top center' }}
-                    sizes="(max-width:768px) 90vw, 45vw"
-                    priority={i === 0}
-                  />
-                </div>
+                <Image
+                  src={p.img}
+                  alt={p.title}
+                  fill
+                  style={{ objectFit: 'cover', objectPosition: 'top center' }}
+                  sizes="(max-width:768px) 90vw, 45vw"
+                  priority={i === 0}
+                />
               </div>
 
               {/* meta */}
