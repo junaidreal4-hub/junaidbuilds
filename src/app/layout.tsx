@@ -1,9 +1,8 @@
 import type { Metadata } from 'next'
 import { Barlow, JetBrains_Mono, Orbitron } from 'next/font/google'
-import { ThemeProvider } from '@/context/ThemeContext'
+import './globals.css'
 import PageTransition from '@/components/PageTransition'
 import CustomCursor from '@/components/CustomCursor'
-import './globals.css'
 
 const barlow = Barlow({
   subsets: ['latin'],
@@ -39,13 +38,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" data-theme="light" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <body className={`${barlow.variable} ${orbitron.variable} ${mono.variable} font-sans subpixel-antialiased`}>
-        <ThemeProvider>
-          <CustomCursor />
-          <PageTransition />
-          {children}
-        </ThemeProvider>
+        <CustomCursor />
+        <PageTransition />
+        {children}
       </body>
     </html>
   )
