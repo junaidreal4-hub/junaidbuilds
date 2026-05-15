@@ -48,3 +48,14 @@
   ::-webkit-scrollbar-track { background: var(--c-bg); }
   ::-webkit-scrollbar-thumb { background: var(--c-border); border-radius: 2px; }
 }
+
+/* ── Hero top-fade overlay — theme-aware, no JS needed ── */
+.hero-fade-overlay {
+  background: linear-gradient(
+    to bottom,
+    var(--c-bg) 0%,
+    color-mix(in srgb, var(--c-bg) 40%, transparent) 12%,
+    transparent 26%,
+    transparent 100%
+  );
+}
