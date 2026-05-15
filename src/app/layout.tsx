@@ -1,40 +1,49 @@
 import type { Metadata } from 'next'
-import localFont from 'next/font/local'
+import { Barlow, JetBrains_Mono, Orbitron } from 'next/font/google'
 import { ThemeProvider } from '@/context/ThemeContext'
+import PageTransition from '@/components/PageTransition'
+import CustomCursor from '@/components/CustomCursor'
 import './globals.css'
 
-const fontSans = localFont({
-  src: '../../public/fonts/Satoshi-Variable.woff2',
+const barlow = Barlow({
+  subsets: ['latin'],
   variable: '--font-sans',
-  display: 'swap',
-  fallback: ['system-ui', 'sans-serif'],
+  weight: ['300', '400', '500', '600', '700'],
 })
 
-const fontDisplay = localFont({
-  src: '../../public/fonts/ClashDisplay-Variable.woff2',
+const orbitron = Orbitron({
+  subsets: ['latin'],
   variable: '--font-display',
-  display: 'swap',
-  fallback: ['Georgia', 'serif'],
+  weight: ['400', '500', '600', '700', '800', '900'],
 })
 
-const fontMono = localFont({
-  src: '../../public/fonts/GeistMono-Variable.woff2',
+const mono = JetBrains_Mono({
+  subsets: ['latin'],
   variable: '--font-mono',
-  display: 'swap',
-  fallback: ['monospace'],
+  weight: ['400', '500', '700'],
 })
 
 export const metadata: Metadata = {
-  title: 'Md Junaid Khan — Freelance Developer',
-  description:
-    'Full-stack web developer based in Berlin. I build fast, interactive websites and applications.',
+  title: 'mdjk.dev — Freelance Web Developer Berlin',
+  description: 'I build fast, bespoke websites and web applications for businesses in Berlin and worldwide. React, Next.js, full-stack development.',
+  keywords: 'freelance web developer Berlin, Next.js developer, React developer Berlin, full-stack developer',
+  openGraph: {
+    title:       'mdjk.dev — Freelance Web Developer Berlin',
+    description: 'Bespoke websites and web applications. No templates. No agency markup.',
+    url:         'https://mdjk.vercel.app',
+    siteName:    'mdjk.dev',
+    locale:      'en_DE',
+    type:        'website',
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" data-theme="light" suppressHydrationWarning>
-      <body className={`${fontSans.variable} ${fontDisplay.variable} ${fontMono.variable}`}>
+      <body className={`${barlow.variable} ${orbitron.variable} ${mono.variable} font-sans subpixel-antialiased`}>
         <ThemeProvider>
+          <CustomCursor />
+          <PageTransition />
           {children}
         </ThemeProvider>
       </body>
